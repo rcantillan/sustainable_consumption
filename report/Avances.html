@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="R. Cantillan">
+<meta name="dcterms.date" content="2025-03-17">
+
+<title>Análisis de Clases Latentes - Percepciones de Sustentabilidad</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Avances_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Avances_files/libs/quarto-html/quarto.js"></script>
+<script src="Avances_files/libs/quarto-html/popper.min.js"></script>
+<script src="Avances_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Avances_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Avances_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Avances_files/libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Avances_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Avances_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Avances_files/libs/bootstrap/bootstrap-a5e92929936548ece8858722a26d2119.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Avances_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="Avances_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#metodología" id="toc-metodología" class="nav-link" data-scroll-target="#metodología"><span class="header-section-number">2</span> Metodología</a>
+  <ul class="collapse">
+  <li><a href="#dicotomización-de-variables" id="toc-dicotomización-de-variables" class="nav-link" data-scroll-target="#dicotomización-de-variables"><span class="header-section-number">2.1</span> Dicotomización de variables</a></li>
+  </ul></li>
+  <li><a href="#comparar-modelos" id="toc-comparar-modelos" class="nav-link" data-scroll-target="#comparar-modelos"><span class="header-section-number">3</span> Comparar modelos</a></li>
+  <li><a href="#análisis-del-modelo-de-3-clases" id="toc-análisis-del-modelo-de-3-clases" class="nav-link" data-scroll-target="#análisis-del-modelo-de-3-clases"><span class="header-section-number">4</span> Análisis del modelo de 3 clases</a>
+  <ul class="collapse">
+  <li><a href="#tamaño-de-las-clases" id="toc-tamaño-de-las-clases" class="nav-link" data-scroll-target="#tamaño-de-las-clases"><span class="header-section-number">4.1</span> Tamaño de las clases</a></li>
+  </ul></li>
+  <li><a href="#probabilidades-condicionales-por-clase" id="toc-probabilidades-condicionales-por-clase" class="nav-link" data-scroll-target="#probabilidades-condicionales-por-clase"><span class="header-section-number">5</span> Probabilidades condicionales por clase</a>
+  <ul class="collapse">
+  <li><a href="#clase1-35.6-de-la-muestra" id="toc-clase1-35.6-de-la-muestra" class="nav-link" data-scroll-target="#clase1-35.6-de-la-muestra"><span class="header-section-number">5.0.1</span> Clase1 (35.6% de la muestra)</a></li>
+  <li><a href="#clase2-53.3-de-la-muestra" id="toc-clase2-53.3-de-la-muestra" class="nav-link" data-scroll-target="#clase2-53.3-de-la-muestra"><span class="header-section-number">5.0.2</span> Clase2 (53.3% de la muestra)</a></li>
+  <li><a href="#clase3-11.1-de-la-muestra" id="toc-clase3-11.1-de-la-muestra" class="nav-link" data-scroll-target="#clase3-11.1-de-la-muestra"><span class="header-section-number">5.0.3</span> Clase3 (11.1% de la muestra)</a></li>
+  </ul></li>
+  <li><a href="#perfiles-de-las-clases-latentes" id="toc-perfiles-de-las-clases-latentes" class="nav-link" data-scroll-target="#perfiles-de-las-clases-latentes"><span class="header-section-number">6</span> Perfiles de las clases latentes</a></li>
+  <li><a href="#calidad-de-la-clasificación" id="toc-calidad-de-la-clasificación" class="nav-link" data-scroll-target="#calidad-de-la-clasificación"><span class="header-section-number">7</span> Calidad de la clasificación</a></li>
+  <li><a href="#análisis-con-covariables" id="toc-análisis-con-covariables" class="nav-link" data-scroll-target="#análisis-con-covariables"><span class="header-section-number">8</span> Análisis con covariables</a>
+  <ul class="collapse">
+  <li><a href="#distribución-por-sexo" id="toc-distribución-por-sexo" class="nav-link" data-scroll-target="#distribución-por-sexo"><span class="header-section-number">8.0.1</span> Distribución por sexo</a></li>
+  <li><a href="#distribución-por-edad" id="toc-distribución-por-edad" class="nav-link" data-scroll-target="#distribución-por-edad"><span class="header-section-number">8.0.2</span> Distribución por edad</a></li>
+  <li><a href="#distribución-por-educacion" id="toc-distribución-por-educacion" class="nav-link" data-scroll-target="#distribución-por-educacion"><span class="header-section-number">8.0.3</span> Distribución por educacion</a></li>
+  <li><a href="#distribución-por-region" id="toc-distribución-por-region" class="nav-link" data-scroll-target="#distribución-por-region"><span class="header-section-number">8.0.4</span> Distribución por region</a></li>
+  </ul></li>
+  <li><a href="#interpretación-de-los-coeficientes" id="toc-interpretación-de-los-coeficientes" class="nav-link" data-scroll-target="#interpretación-de-los-coeficientes"><span class="header-section-number">9</span> Interpretación de los coeficientes</a></li>
+  <li><a href="#avances-lca" id="toc-avances-lca" class="nav-link" data-scroll-target="#avances-lca"><span class="header-section-number">10</span> Avances LCA</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Análisis de Clases Latentes - Percepciones de Sustentabilidad</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>R. Cantillan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 17, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>Este documento presenta los resultados del análisis de clases latentes aplicado a percepciones y prácticas de sustentabilidad. El objetivo es identificar patrones o tipologías en las respuestas de los participantes respecto a:</p>
+<ul>
+<li>Escala de Modo de Vida Imperial (MVI)</li>
+</ul>
+<p>Basado en las siguientes preguntas: Respecto a las siguientes frases y en una escala de 1 a 4, en donde 1 es muy en desacuerdo y 4 es muy de acuerdo ¿Qué tan de acuerdo está usted con las siguientes afirmaciones?</p>
+<p>P7_2: “Los problemas sociales, como la equidad, salud, etc., son más importantes que los problemas ambientales”<br>
+P7_4: “Se puede crecer económicamente sin dañar el medioambiente”<br>
+P7_5: “Los problemas ambientales son preocupaciones de los países desarrollados que tienen su situación socio-económica resuelta”<br>
+P4_2: “No es necesario cambiar nuestras costumbres, los problemas ambientales pueden resolverse con tecnología”<br>
+P4_4: “El progreso para Chile significa que la mayoría de nosotros podamos vivir como en los países desarrollados”</p>
+<ul>
+<li>Escala de Reflexividad Ambiental Antropocéntrica (RAA)</li>
+</ul>
+<p>P7_1: “Los problemas ambientales pueden resolverse cambiando nuestras costumbres”<br>
+P7_3: “Los modos de vida de las clases sociales más altas son más responsable de la crisis ambiental”<br>
+P4_1: Variables recodificada como “urgenciacrisis” (invertida): “La crisis ambiental es un problema que hay que enfrentar con urgencia”<br>
+P4_3: Variable recodificada como “actividadeshumanas” (invertida): “Las actividades humanas son la principal causa de los cambios climáticos”</p>
+<ul>
+<li>En “Tipologías del Auto-Engaño” indican que existe una contradicción entre el reconocimiento de la crisis ambiental (reflexividad) y la defensa del modelo de vida actual (modo de vida imperial). El documento plantea la necesidad de analizar conjuntamente estas dimensiones para identificar patrones de “auto-engaño societal”</li>
+</ul>
+</section>
+<section id="metodología" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Metodología</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar datos procesados previamente</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>(<span class="st">"objects"</span>, <span class="st">"vars_modelo.RData"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar estructura de los datos</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(vars_modelo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,000
+Columns: 9
+$ P7_2               &lt;dbl&gt; 1, 2, 1, 2, 1, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, …
+$ P7_4               &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, …
+$ P7_5               &lt;dbl&gt; 1, 2, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1, …
+$ P4_2               &lt;dbl&gt; 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, …
+$ P4_4               &lt;dbl&gt; 1, 2, 1, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, …
+$ P7_1               &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, …
+$ P7_3               &lt;dbl&gt; 1, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, …
+$ urgenciacrisis     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ actividadeshumanas &lt;dbl&gt; 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, …</code></pre>
+</div>
+</div>
+<section id="dicotomización-de-variables" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="dicotomización-de-variables"><span class="header-section-number">2.1</span> Dicotomización de variables</h2>
+<p>Para facilitar el análisis de clases latentes, se dicotomizaron las variables originales (que estaban en escala Likert de 1-4) en dos categorías:</p>
+<ul>
+<li>Categoría 1: Desacuerdo (valores originales 1-2)</li>
+<li>Categoría 2: Acuerdo (valores originales 3-4)</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular las frecuencias de cada categoría para cada variable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>frecuencias <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> <span class="fu">names</span>(vars_modelo),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Descripcion =</span> <span class="fu">c</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Problemas sociales &gt; ambientales"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Crecimiento sin daño ambiental"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Problemas ambientales de países desarrollados"</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"No cambiar costumbres, tecnología resolverá"</span>, </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Progreso es vivir como países desarrollados"</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Resolver problemas cambiando costumbres"</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Clases altas más responsables de crisis"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Urgencia de la crisis ambiental"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Actividades humanas causan cambios climáticos"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Agregar conteos y porcentajes</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>frecuencias<span class="sc">$</span>N_Desacuerdo <span class="ot">&lt;-</span> <span class="fu">sapply</span>(vars_modelo, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>frecuencias<span class="sc">$</span>N_Acuerdo <span class="ot">&lt;-</span> <span class="fu">sapply</span>(vars_modelo, <span class="cf">function</span>(x) <span class="fu">sum</span>(x <span class="sc">==</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>frecuencias<span class="sc">$</span>Total <span class="ot">&lt;-</span> frecuencias<span class="sc">$</span>N_Desacuerdo <span class="sc">+</span> frecuencias<span class="sc">$</span>N_Acuerdo</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>frecuencias<span class="sc">$</span>Pct_Desacuerdo <span class="ot">&lt;-</span> <span class="fu">round</span>(frecuencias<span class="sc">$</span>N_Desacuerdo <span class="sc">/</span> frecuencias<span class="sc">$</span>Total <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>frecuencias<span class="sc">$</span>Pct_Acuerdo <span class="ot">&lt;-</span> <span class="fu">round</span>(frecuencias<span class="sc">$</span>N_Acuerdo <span class="sc">/</span> frecuencias<span class="sc">$</span>Total <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar solo la tabla</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(frecuencias[, <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Descripcion"</span>, <span class="st">"N_Desacuerdo"</span>, <span class="st">"Pct_Desacuerdo"</span>, <span class="st">"N_Acuerdo"</span>, <span class="st">"Pct_Acuerdo"</span>)],</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Descripción"</span>, <span class="st">"N Desacuerdo"</span>, <span class="st">"% Desacuerdo"</span>, <span class="st">"N Acuerdo"</span>, <span class="st">"% Acuerdo"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Desacuerdo (Cat. 1)"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Acuerdo (Cat. 2)"</span> <span class="ot">=</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Desacuerdo (Cat. 1)
+</div></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Acuerdo (Cat. 2)
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Descripción</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N Desacuerdo</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Desacuerdo</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N Acuerdo</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">% Acuerdo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P7_2</td>
+<td style="text-align: left;">Problemas sociales &gt; ambientales</td>
+<td style="text-align: right;">1068</td>
+<td style="text-align: right;">53.4</td>
+<td style="text-align: right;">932</td>
+<td style="text-align: right;">46.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P7_4</td>
+<td style="text-align: left;">Crecimiento sin daño ambiental</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">1752</td>
+<td style="text-align: right;">87.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P7_5</td>
+<td style="text-align: left;">Problemas ambientales de países desarrollados</td>
+<td style="text-align: right;">1247</td>
+<td style="text-align: right;">62.4</td>
+<td style="text-align: right;">753</td>
+<td style="text-align: right;">37.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P4_2</td>
+<td style="text-align: left;">No cambiar costumbres, tecnología resolverá</td>
+<td style="text-align: right;">1372</td>
+<td style="text-align: right;">68.6</td>
+<td style="text-align: right;">628</td>
+<td style="text-align: right;">31.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P4_4</td>
+<td style="text-align: left;">Progreso es vivir como países desarrollados</td>
+<td style="text-align: right;">625</td>
+<td style="text-align: right;">31.2</td>
+<td style="text-align: right;">1375</td>
+<td style="text-align: right;">68.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P7_1</td>
+<td style="text-align: left;">Resolver problemas cambiando costumbres</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">1822</td>
+<td style="text-align: right;">91.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P7_3</td>
+<td style="text-align: left;">Clases altas más responsables de crisis</td>
+<td style="text-align: right;">1063</td>
+<td style="text-align: right;">53.1</td>
+<td style="text-align: right;">937</td>
+<td style="text-align: right;">46.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">urgenciacrisis</td>
+<td style="text-align: left;">Urgencia de la crisis ambiental</td>
+<td style="text-align: right;">1885</td>
+<td style="text-align: right;">94.2</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">5.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">actividadeshumanas</td>
+<td style="text-align: left;">Actividades humanas causan cambios climáticos</td>
+<td style="text-align: right;">1765</td>
+<td style="text-align: right;">88.2</td>
+<td style="text-align: right;">235</td>
+<td style="text-align: right;">11.8</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>#Seleccion N de clases</p>
+</section>
+</section>
+<section id="comparar-modelos" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Comparar modelos</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar tabla de resultados</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resultados, <span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Clases
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+Log_likelihood
+</th>
+<th style="text-align:right;">
+Entropia
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+17770.04
+</td>
+<td style="text-align:right;">
+17663.62
+</td>
+<td style="text-align:right;">
+-8812.81
+</td>
+<td style="text-align:right;">
+4.41
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+17605.52
+</td>
+<td style="text-align:right;">
+17443.09
+</td>
+<td style="text-align:right;">
+-8692.55
+</td>
+<td style="text-align:right;">
+4.35
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+17642.17
+</td>
+<td style="text-align:right;">
+17423.74
+</td>
+<td style="text-align:right;">
+-8672.87
+</td>
+<td style="text-align:right;">
+4.34
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+17679.72
+</td>
+<td style="text-align:right;">
+17405.27
+</td>
+<td style="text-align:right;">
+-8653.64
+</td>
+<td style="text-align:right;">
+4.33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+17722.10
+</td>
+<td style="text-align:right;">
+17391.64
+</td>
+<td style="text-align:right;">
+-8636.82
+</td>
+<td style="text-align:right;">
+4.32
+</td>
+</tr>
+</tbody>
+</table>
+<p>Criterios de información por número de clases</p>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de criterios de información</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(resultados) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Clases, <span class="at">y =</span> BIC, <span class="at">colour =</span> <span class="st">"BIC"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Clases, <span class="at">y =</span> BIC, <span class="at">colour =</span> <span class="st">"BIC"</span>), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Clases, <span class="at">y =</span> AIC, <span class="at">colour =</span> <span class="st">"AIC"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Clases, <span class="at">y =</span> AIC, <span class="at">colour =</span> <span class="st">"AIC"</span>), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Criterios de información por número de clases"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Valor"</span>, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">colour =</span> <span class="st">"Criterio"</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Avances_files/figure-html/comparar-modelos-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Criterios de información por número de clases</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="análisis-del-modelo-de-3-clases" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Análisis del modelo de 3 clases</h1>
+<section id="tamaño-de-las-clases" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="tamaño-de-las-clases"><span class="header-section-number">4.1</span> Tamaño de las clases</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>modelo_3 <span class="ot">&lt;-</span> lca3</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Examinar tamaños de clase </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tamano_clases <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Clase =</span> <span class="fu">paste</span>(<span class="st">"Clase"</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(modelo_3<span class="sc">$</span>P)),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Proporcion =</span> modelo_3<span class="sc">$</span>P,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Porcentaje =</span> <span class="fu">round</span>(modelo_3<span class="sc">$</span>P <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar tabla de tamaños</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tamano_clases, <span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Clase
+</th>
+<th style="text-align:right;">
+Proporcion
+</th>
+<th style="text-align:right;">
+Porcentaje
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1
+</td>
+<td style="text-align:right;">
+0.36
+</td>
+<td style="text-align:right;">
+35.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2
+</td>
+<td style="text-align:right;">
+0.53
+</td>
+<td style="text-align:right;">
+53.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3
+</td>
+<td style="text-align:right;">
+0.11
+</td>
+<td style="text-align:right;">
+11.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Distribución de casos en cada clase latente</p>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de barras para tamaños de clase</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tamano_clases, <span class="fu">aes</span>(<span class="at">x =</span> Clase, <span class="at">y =</span> Porcentaje, <span class="at">fill =</span> Clase)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(Porcentaje, <span class="st">"%"</span>)), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>), </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribución de casos por clase latente"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Porcentaje (%)"</span>, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Avances_files/figure-html/tamano-clases-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Distribución de casos en cada clase latente</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="probabilidades-condicionales-por-clase" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Probabilidades condicionales por clase</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nombres de las variables para mejor interpretación</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vars_nombres <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Problemas sociales &gt; ambientales (MVI)"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Crecimiento sin daño ambiental (MVI)"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Problemas ambientales de países desarrollados (MVI)"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"No cambiar costumbres, tecnología resolverá (MVI)"</span>, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Progreso es vivir como países desarrollados (MVI)"</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Resolver problemas cambiando costumbres (RAA)"</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Clases altas más responsables de crisis (RAA)"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Urgencia de la crisis ambiental (RAA)"</span>, </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Actividades humanas causan cambios climáticos (RAA)"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer probabilidades para la categoría "De acuerdo" (categoría 2)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>probs_acuerdo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variable =</span> vars_nombres,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Clase1 =</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(modelo_3<span class="sc">$</span>probs), <span class="cf">function</span>(i) modelo_3<span class="sc">$</span>probs[[i]][<span class="dv">1</span>, <span class="dv">2</span>]),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">Clase2 =</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(modelo_3<span class="sc">$</span>probs), <span class="cf">function</span>(i) modelo_3<span class="sc">$</span>probs[[i]][<span class="dv">2</span>, <span class="dv">2</span>]),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">Clase3 =</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(modelo_3<span class="sc">$</span>probs), <span class="cf">function</span>(i) modelo_3<span class="sc">$</span>probs[[i]][<span class="dv">3</span>, <span class="dv">2</span>])</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar tabla de probabilidades condicionales</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(probs_acuerdo, <span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span> <span class="st">"30em"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Probabilidad de estar 'De acuerdo'"</span> <span class="ot">=</span> <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Probabilidad de estar 'De acuerdo'
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clase1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clase2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clase3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; width: 30em;">Problemas sociales &gt; ambientales (MVI)</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 30em;">Crecimiento sin daño ambiental (MVI)</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">0.63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 30em;">Problemas ambientales de países desarrollados (MVI)</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">0.16</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 30em;">No cambiar costumbres, tecnología resolverá (MVI)</td>
+<td style="text-align: right;">0.57</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 30em;">Progreso es vivir como países desarrollados (MVI)</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 30em;">Resolver problemas cambiando costumbres (RAA)</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">0.74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 30em;">Clases altas más responsables de crisis (RAA)</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; width: 30em;">Urgencia de la crisis ambiental (RAA)</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; width: 30em;">Actividades humanas causan cambios climáticos (RAA)</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.57</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preparar datos para formato largo (mejor para ggplot)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>probs_long <span class="ot">&lt;-</span> probs_acuerdo <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"Clase"</span>), </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Clase"</span>, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Probabilidad"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignar un tipo a cada variable (MVI o RAA)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>probs_long <span class="ot">&lt;-</span> probs_long <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Tipo =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"MVI"</span>, Variable), <span class="st">"MVI"</span>, <span class="st">"RAA"</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Limpiar nombres de variables para la visualización</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Variable_limpia =</span> <span class="fu">gsub</span>(<span class="st">" </span><span class="sc">\\</span><span class="st">(MVI</span><span class="sc">\\</span><span class="st">)| </span><span class="sc">\\</span><span class="st">(RAA</span><span class="sc">\\</span><span class="st">)"</span>, <span class="st">""</span>, Variable),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Crear un orden para las variables</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Orden =</span> <span class="fu">row_number</span>())</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear el mapa de calor con ggplot2</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(probs_long, <span class="fu">aes</span>(<span class="at">x =</span> Clase, <span class="at">y =</span> <span class="fu">reorder</span>(Variable_limpia, <span class="sc">-</span>Orden), <span class="at">fill =</span> Probabilidad)) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, Probabilidad)), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">mid =</span> <span class="st">"royalblue"</span>, <span class="at">high =</span> <span class="st">"darkblue"</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">midpoint =</span> <span class="fl">0.5</span>, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Tipo <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">space =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Probabilidad de estar 'De acuerdo' por clase"</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>, <span class="at">x =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Avances_files/figure-html/heatmap-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption>Mapa de calor: Probabilidad de estar ‘De acuerdo’ por clase y variable</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="clase1-35.6-de-la-muestra" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="clase1-35.6-de-la-muestra"><span class="header-section-number">5.0.1</span> Clase1 (35.6% de la muestra)</h3>
+<p><strong>Alta probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>Problemas sociales &gt; ambientales (MVI)</li>
+<li>Crecimiento sin daño ambiental (MVI)</li>
+<li>Problemas ambientales de países desarrollados (MVI)</li>
+<li>Progreso es vivir como países desarrollados (MVI)</li>
+<li>Resolver problemas cambiando costumbres (RAA)</li>
+</ul>
+<p><strong>Baja probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>Urgencia de la crisis ambiental (RAA)</li>
+<li>Actividades humanas causan cambios climáticos (RAA)</li>
+</ul>
+</section>
+<section id="clase2-53.3-de-la-muestra" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="clase2-53.3-de-la-muestra"><span class="header-section-number">5.0.2</span> Clase2 (53.3% de la muestra)</h3>
+<p><strong>Alta probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>Crecimiento sin daño ambiental (MVI)</li>
+<li>Resolver problemas cambiando costumbres (RAA)</li>
+</ul>
+<p><strong>Baja probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>Problemas sociales &gt; ambientales (MVI)</li>
+<li>Problemas ambientales de países desarrollados (MVI)</li>
+<li>No cambiar costumbres, tecnología resolverá (MVI)</li>
+<li>Urgencia de la crisis ambiental (RAA)</li>
+<li>Actividades humanas causan cambios climáticos (RAA)</li>
+</ul>
+</section>
+<section id="clase3-11.1-de-la-muestra" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="clase3-11.1-de-la-muestra"><span class="header-section-number">5.0.3</span> Clase3 (11.1% de la muestra)</h3>
+<p><strong>Alta probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>Resolver problemas cambiando costumbres (RAA)</li>
+</ul>
+<p><strong>Baja probabilidad de estar de acuerdo con:</strong></p>
+<ul>
+<li>No cambiar costumbres, tecnología resolverá (MVI)</li>
+</ul>
+</section>
+</section>
+<section id="perfiles-de-las-clases-latentes" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Perfiles de las clases latentes</h1>
+<p>A partir de los resultados, podemos proponer los siguientes perfiles para las tres clases identificadas:</p>
+<p>Clase 1 - “Ecologistas reformistas”: Este grupo reconoce la crisis ambiental y la responsabilidad humana, pero cree que es posible el crecimiento económico sin daño ambiental. Ponen énfasis en cambiar costumbres y culpan especialmente a las clases altas.<br>
+Clase 2 - “Negacionistas conservadores”: Este grupo minimiza la crisis ambiental, cree que la tecnología resolverá los problemas sin necesidad de cambiar costumbres, y considera que los problemas sociales son más importantes que los ambientales.<br>
+Clase 3 - “Críticos radicales”: Este grupo reconoce fuertemente la crisis ambiental y la necesidad de cambios de costumbres, y son muy críticos del modelo de desarrollo actual. No creen que sea posible crecer económicamente sin daño ambiental.</p>
+</section>
+<section id="calidad-de-la-clasificación" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Calidad de la clasificación</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: calidad-clasificacion</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluar la calidad de clasificación</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>calidad_clasificacion <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">apply</span>(modelo_3<span class="sc">$</span>posterior, <span class="dv">1</span>, max))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>(<span class="st">"Probabilidad media de clasificación:"</span>, <span class="fu">round</span>(calidad_clasificacion, <span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probabilidad media de clasificación: 0.826</code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-con-covariables" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Análisis con covariables</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar covariables</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">here</span>(<span class="st">"objects"</span>, <span class="st">"covar.RData"</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear dataframe con clase latente y covariables</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>datos_completos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">clase_latente =</span> modelo_3<span class="sc">$</span>predclass)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>datos_completos <span class="ot">&lt;-</span> <span class="fu">cbind</span>(datos_completos, covar)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir niveles de referencia</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>datos_completos<span class="sc">$</span>edad <span class="ot">&lt;-</span> <span class="fu">relevel</span>(datos_completos<span class="sc">$</span>edad, <span class="at">ref =</span> <span class="st">"18 a 24 años"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>datos_completos<span class="sc">$</span>educacion <span class="ot">&lt;-</span> <span class="fu">relevel</span>(datos_completos<span class="sc">$</span>educacion, <span class="at">ref =</span> <span class="st">"Educación básica o menos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>#Tablas de contingencia</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para crear tabla de contingencia formateada</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>crear_tabla_contingencia <span class="ot">&lt;-</span> <span class="cf">function</span>(var_name) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  tabla <span class="ot">&lt;-</span> <span class="fu">table</span>(datos_completos<span class="sc">$</span>clase_latente, datos_completos[[var_name]])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  prop_tabla <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(tabla, <span class="dv">2</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Test chi-cuadrado</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tabla)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  p_valor <span class="ot">&lt;-</span> test<span class="sc">$</span>p.value</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Crear tabla para kable</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  df_tabla <span class="ot">&lt;-</span> <span class="fu">as.data.frame.matrix</span>(tabla)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  df_prop <span class="ot">&lt;-</span> <span class="fu">as.data.frame.matrix</span>(<span class="fu">round</span>(prop_tabla, <span class="dv">1</span>))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combinar conteos y porcentajes</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  df_combinado <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Clase =</span> <span class="fu">rownames</span>(df_tabla))</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> <span class="fu">names</span>(df_tabla)) {</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    df_combinado[[col]] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df_tabla[[col]], <span class="st">" ("</span>, df_prop[[col]], <span class="st">"%)"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"### Distribución por "</span>, var_name, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>))</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Mostrar tabla</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">kable</span>(df_combinado) <span class="sc">%&gt;%</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">**Test Chi-cuadrado:** χ² = "</span>, <span class="fu">round</span>(test<span class="sc">$</span>statistic, <span class="dv">2</span>), </span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>             <span class="st">", df = "</span>, test<span class="sc">$</span>parameter, </span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>             <span class="st">", p-value = "</span>, <span class="fu">format.pval</span>(p_valor, <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>))</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear tablas para cada covariable</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(var <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"sexo"</span>, <span class="st">"edad"</span>, <span class="st">"educacion"</span>, <span class="st">"region"</span>)) {</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crear_tabla_contingencia</span>(var)</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<section id="distribución-por-sexo" class="level3" data-number="8.0.1">
+<h3 data-number="8.0.1" class="anchored" data-anchor-id="distribución-por-sexo"><span class="header-section-number">8.0.1</span> Distribución por sexo</h3>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Clase
+</th>
+<th style="text-align:left;">
+1
+</th>
+<th style="text-align:left;">
+2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+267 (39.1%)
+</td>
+<td style="text-align:left;">
+488 (37.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+347 (50.8%)
+</td>
+<td style="text-align:left;">
+723 (54.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+69 (10.1%)
+</td>
+<td style="text-align:left;">
+106 (8%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test Chi-cuadrado:</strong> χ² = 4.07, df = 2, p-value = 0.131</p>
+</section>
+<section id="distribución-por-edad" class="level3" data-number="8.0.2">
+<h3 data-number="8.0.2" class="anchored" data-anchor-id="distribución-por-edad"><span class="header-section-number">8.0.2</span> Distribución por edad</h3>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Clase
+</th>
+<th style="text-align:left;">
+18 a 24 años
+</th>
+<th style="text-align:left;">
+25 a 34 años
+</th>
+<th style="text-align:left;">
+35 a 44 años
+</th>
+<th style="text-align:left;">
+45 a 54 años
+</th>
+<th style="text-align:left;">
+55 a 64 años
+</th>
+<th style="text-align:left;">
+65 años o más
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+99 (31%)
+</td>
+<td style="text-align:left;">
+137 (31.7%)
+</td>
+<td style="text-align:left;">
+120 (32.9%)
+</td>
+<td style="text-align:left;">
+120 (34.6%)
+</td>
+<td style="text-align:left;">
+146 (48%)
+</td>
+<td style="text-align:left;">
+133 (57.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+212 (66.5%)
+</td>
+<td style="text-align:left;">
+273 (63.2%)
+</td>
+<td style="text-align:left;">
+210 (57.5%)
+</td>
+<td style="text-align:left;">
+186 (53.6%)
+</td>
+<td style="text-align:left;">
+120 (39.5%)
+</td>
+<td style="text-align:left;">
+69 (29.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+8 (2.5%)
+</td>
+<td style="text-align:left;">
+22 (5.1%)
+</td>
+<td style="text-align:left;">
+35 (9.6%)
+</td>
+<td style="text-align:left;">
+41 (11.8%)
+</td>
+<td style="text-align:left;">
+38 (12.5%)
+</td>
+<td style="text-align:left;">
+31 (13.3%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test Chi-cuadrado:</strong> χ² = 132.75, df = 10, p-value = &lt;2e-16</p>
+</section>
+<section id="distribución-por-educacion" class="level3" data-number="8.0.3">
+<h3 data-number="8.0.3" class="anchored" data-anchor-id="distribución-por-educacion"><span class="header-section-number">8.0.3</span> Distribución por educacion</h3>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Clase
+</th>
+<th style="text-align:left;">
+Educación básica o menos
+</th>
+<th style="text-align:left;">
+Educación media
+</th>
+<th style="text-align:left;">
+Educación técnica
+</th>
+<th style="text-align:left;">
+Educación universitaria
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+58 (55.8%)
+</td>
+<td style="text-align:left;">
+266 (40.1%)
+</td>
+<td style="text-align:left;">
+183 (40.6%)
+</td>
+<td style="text-align:left;">
+248 (31.7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+27 (26%)
+</td>
+<td style="text-align:left;">
+324 (48.9%)
+</td>
+<td style="text-align:left;">
+231 (51.2%)
+</td>
+<td style="text-align:left;">
+488 (62.4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+19 (18.3%)
+</td>
+<td style="text-align:left;">
+73 (11%)
+</td>
+<td style="text-align:left;">
+37 (8.2%)
+</td>
+<td style="text-align:left;">
+46 (5.9%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test Chi-cuadrado:</strong> χ² = 70.01, df = 6, p-value = 4.07e-13</p>
+</section>
+<section id="distribución-por-region" class="level3" data-number="8.0.4">
+<h3 data-number="8.0.4" class="anchored" data-anchor-id="distribución-por-region"><span class="header-section-number">8.0.4</span> Distribución por region</h3>
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Clase
+</th>
+<th style="text-align:left;">
+1
+</th>
+<th style="text-align:left;">
+2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+462 (37%)
+</td>
+<td style="text-align:left;">
+291 (38.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+689 (55.2%)
+</td>
+<td style="text-align:left;">
+380 (50.7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+97 (7.8%)
+</td>
+<td style="text-align:left;">
+78 (10.4%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test Chi-cuadrado:</strong> χ² = 5.89, df = 2, p-value = 0.0525</p>
+<p>#Modelo multinomial con covariables</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear fórmula con covariables</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>f_multi <span class="ot">&lt;-</span> <span class="fu">cbind</span>(P7_2, P7_4, P7_5, P4_2, P4_4, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                 P7_1, P7_3, urgenciacrisis, </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                 actividadeshumanas) <span class="sc">~</span> sexo <span class="sc">+</span> edad <span class="sc">+</span> educacion <span class="sc">+</span> region</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos para análisis</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>datos_analisis <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  vars_modelo,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  covar)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar modelo</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>lca_multi <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(f_multi, datos_analisis, <span class="at">nclass =</span> <span class="dv">3</span>, </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">maxiter =</span> <span class="dv">1000</span>, <span class="at">nrep =</span> <span class="dv">5</span>, <span class="at">graphs =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model 1: llik = -8698.777 ... best llik = -8698.777
+Model 2: llik = -8536.726 ... best llik = -8536.726
+Model 3: llik = -8543.004 ... best llik = -8536.726
+Model 4: llik = -8536.726 ... best llik = -8536.726
+Model 5: llik = -8536.726 ... best llik = -8536.726
+Conditional item response (column) probabilities,
+ by outcome variable, for each class (row) 
+ 
+$P7_2
+           Pr(1)  Pr(2)
+class 1:  0.2143 0.7857
+class 2:  0.5347 0.4653
+class 3:  0.7011 0.2989
+
+$P7_4
+           Pr(1)  Pr(2)
+class 1:  0.0665 0.9335
+class 2:  0.3461 0.6539
+class 3:  0.0962 0.9038
+
+$P7_5
+           Pr(1)  Pr(2)
+class 1:  0.2937 0.7063
+class 2:  0.6733 0.3267
+class 3:  0.7833 0.2167
+
+$P4_2
+           Pr(1)  Pr(2)
+class 1:  0.3212 0.6788
+class 2:  0.7069 0.2931
+class 3:  0.8737 0.1263
+
+$P4_4
+           Pr(1)  Pr(2)
+class 1:  0.0752 0.9248
+class 2:  0.6028 0.3972
+class 3:  0.3608 0.6392
+
+$P7_1
+           Pr(1)  Pr(2)
+class 1:  0.0388 0.9612
+class 2:  0.2427 0.7573
+class 3:  0.0744 0.9256
+
+$P7_3
+           Pr(1)  Pr(2)
+class 1:  0.3047 0.6953
+class 2:  0.5782 0.4218
+class 3:  0.6396 0.3604
+
+$urgenciacrisis
+           Pr(1)  Pr(2)
+class 1:  0.9851 0.0149
+class 2:  0.6373 0.3627
+class 3:  1.0000 0.0000
+
+$actividadeshumanas
+           Pr(1)  Pr(2)
+class 1:  0.9527 0.0473
+class 2:  0.4866 0.5134
+class 3:  0.9491 0.0509
+
+Estimated class population shares 
+ 0.2936 0.1467 0.5597 
+ 
+Predicted class memberships (by modal posterior prob.) 
+ 0.2824 0.1207 0.5969 
+ 
+========================================================= 
+Fit for 3 latent classes: 
+========================================================= 
+2 / 1 
+                                 Coefficient  Std. error  t value  Pr(&gt;|t|)
+(Intercept)                         -0.93620     0.76161   -1.229     0.220
+sexo                                -0.40942     0.20711   -1.977     0.049
+edad25 a 34 años                     0.43303     0.60535    0.715     0.475
+edad35 a 44 años                     0.92787     0.59170    1.568     0.118
+edad45 a 54 años                     1.08395     0.59241    1.830     0.068
+edad55 a 64 años                     0.44006     0.59026    0.746     0.456
+edad65 años o más                    0.32137     0.59297    0.542     0.588
+educacionEducación media             0.07918     0.32730    0.242     0.809
+educacionEducación técnica          -0.30844     0.36350   -0.849     0.397
+educacionEducación universitaria    -0.01196     0.36731   -0.033     0.974
+region                               0.22719     0.19715    1.152     0.250
+========================================================= 
+3 / 1 
+                                 Coefficient  Std. error  t value  Pr(&gt;|t|)
+(Intercept)                          0.19948     0.68016    0.293     0.769
+sexo                                 0.51946     0.17559    2.958     0.003
+edad25 a 34 años                    -0.83028     0.32754   -2.535     0.012
+edad35 a 44 años                    -1.13766     0.32933   -3.454     0.001
+edad45 a 54 años                    -1.24333     0.33670   -3.693     0.000
+edad55 a 64 años                    -2.09448     0.33923   -6.174     0.000
+edad65 años o más                   -3.25479     0.41394   -7.863     0.000
+educacionEducación media             1.20827     0.48656    2.483     0.013
+educacionEducación técnica           1.15690     0.49791    2.324     0.021
+educacionEducación universitaria     2.20151     0.49799    4.421     0.000
+region                              -0.43507     0.16646   -2.614     0.009
+========================================================= 
+number of observations: 1997 
+number of estimated parameters: 49 
+residual degrees of freedom: 462 
+maximum log-likelihood: -8536.726 
+ 
+AIC(3): 17171.45
+BIC(3): 17445.82
+X^2(3): 610.0798 (Chi-square goodness of fit) 
+ 
+ALERT: estimation algorithm automatically restarted with new initial values 
+ </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar coeficientes</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_multi<span class="sc">$</span>coeff, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Coeficientes (log-odds)"</span> <span class="ot">=</span> <span class="fu">ncol</span>(lca_multi<span class="sc">$</span>coeff)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Coeficientes (log-odds)
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.936</td>
+<td style="text-align: right;">0.199</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: right;">-0.409</td>
+<td style="text-align: right;">0.519</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad25 a 34 años</td>
+<td style="text-align: right;">0.433</td>
+<td style="text-align: right;">-0.830</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad35 a 44 años</td>
+<td style="text-align: right;">0.928</td>
+<td style="text-align: right;">-1.138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad45 a 54 años</td>
+<td style="text-align: right;">1.084</td>
+<td style="text-align: right;">-1.243</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad55 a 64 años</td>
+<td style="text-align: right;">0.440</td>
+<td style="text-align: right;">-2.094</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad65 años o más</td>
+<td style="text-align: right;">0.321</td>
+<td style="text-align: right;">-3.255</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">educacionEducación media</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: right;">1.208</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">educacionEducación técnica</td>
+<td style="text-align: right;">-0.308</td>
+<td style="text-align: right;">1.157</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">educacionEducación universitaria</td>
+<td style="text-align: right;">-0.012</td>
+<td style="text-align: right;">2.202</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: right;">0.227</td>
+<td style="text-align: right;">-0.435</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Odds ratios</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>or <span class="ot">&lt;-</span> <span class="fu">exp</span>(lca_multi<span class="sc">$</span>coeff)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(or, <span class="at">digits =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">" "</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Odds Ratios"</span> <span class="ot">=</span> <span class="fu">ncol</span>(or)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Odds Ratios
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.392</td>
+<td style="text-align: right;">1.221</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: right;">0.664</td>
+<td style="text-align: right;">1.681</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad25 a 34 años</td>
+<td style="text-align: right;">1.542</td>
+<td style="text-align: right;">0.436</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad35 a 44 años</td>
+<td style="text-align: right;">2.529</td>
+<td style="text-align: right;">0.321</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad45 a 54 años</td>
+<td style="text-align: right;">2.956</td>
+<td style="text-align: right;">0.288</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad55 a 64 años</td>
+<td style="text-align: right;">1.553</td>
+<td style="text-align: right;">0.123</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">edad65 años o más</td>
+<td style="text-align: right;">1.379</td>
+<td style="text-align: right;">0.039</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">educacionEducación media</td>
+<td style="text-align: right;">1.082</td>
+<td style="text-align: right;">3.348</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">educacionEducación técnica</td>
+<td style="text-align: right;">0.735</td>
+<td style="text-align: right;">3.180</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">educacionEducación universitaria</td>
+<td style="text-align: right;">0.988</td>
+<td style="text-align: right;">9.039</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">region</td>
+<td style="text-align: right;">1.255</td>
+<td style="text-align: right;">0.647</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+</section>
+<section id="interpretación-de-los-coeficientes" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Interpretación de los coeficientes</h1>
+</section>
+<section id="avances-lca" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Avances LCA</h1>
+<p>El BIC, que penaliza más la complejidad del modelo, sugiere que el modelo de 3 clases ofrece el mejor equilibrio entre ajuste y simplicidad. Por otro lado, el AIC, que penaliza menos la complejidad, continúa favoreciendo modelos con más clases. De todas maneras, hay que considerar que el grupo más pequeño no sea menor a 5%. Lo mejor parece ser el modelo con 3 clases.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,444 @@
+---
+title: "Análisis de Clases Latentes - Percepciones de Sustentabilidad"
+author: "R. Cantillan"
+date: "`r Sys.Date()`"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    fig-width: 10
+    fig-height: 6
+execute:
+  warning: false
+  message: false
+---
+```{r}
+#| label: setup
+#| include: false
+
+library(here)
+library(tidyverse)
+library(haven)
+library(psych)
+library(poLCA)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(gridExtra)
+```
+
+# Introducción
+
+Este documento presenta los resultados del análisis de clases latentes aplicado a percepciones y prácticas de sustentabilidad. El objetivo es identificar patrones o tipologías en las respuestas de los participantes respecto a:
+
+- Escala de Modo de Vida Imperial (MVI)
+
+Basado en las siguientes preguntas: Respecto a las siguientes frases y en una escala de 1 a 4, en donde 1 es muy en desacuerdo y 4 es muy de acuerdo ¿Qué tan de acuerdo está usted con las siguientes afirmaciones?  
+
+P7_2: "Los problemas sociales, como la equidad, salud, etc., son más importantes que los problemas ambientales"   
+P7_4: "Se puede crecer económicamente sin dañar el medioambiente"  
+P7_5: "Los problemas ambientales son preocupaciones de los países desarrollados que tienen su situación socio-económica resuelta"  
+P4_2: "No es necesario cambiar nuestras costumbres, los problemas ambientales pueden resolverse con tecnología"  
+P4_4: "El progreso para Chile significa que la mayoría de nosotros podamos vivir como en los países desarrollados"  
+  
+
+- Escala de Reflexividad Ambiental Antropocéntrica (RAA)
+
+P7_1: "Los problemas ambientales pueden resolverse cambiando nuestras costumbres"  
+P7_3: "Los modos de vida de las clases sociales más altas son más responsable de la crisis ambiental"  
+P4_1: Variables recodificada como "urgenciacrisis" (invertida): "La crisis ambiental es un problema que hay que enfrentar con urgencia"  
+P4_3: Variable recodificada como "actividadeshumanas" (invertida): "Las actividades humanas son la principal causa de los cambios climáticos"  
+
+
+- En "Tipologías del Auto-Engaño" indican que existe una contradicción entre el reconocimiento de la crisis ambiental (reflexividad) y la defensa del modelo de vida actual (modo de vida imperial). El documento plantea la necesidad de analizar conjuntamente estas dimensiones para identificar patrones de "auto-engaño societal"
+
+
+# Metodología 
+
+```{r}
+#| label: cargar-datos
+# Cargar datos procesados previamente
+load(here("objects", "vars_modelo.RData"))
+
+# Mostrar estructura de los datos
+glimpse(vars_modelo)
+```
+
+
+## Dicotomización de variables
+
+Para facilitar el análisis de clases latentes, se dicotomizaron las variables originales (que estaban en escala Likert de 1-4) en dos categorías:
+
+- Categoría 1: Desacuerdo (valores originales 1-2)
+- Categoría 2: Acuerdo (valores originales 3-4)
+
+```{r}
+#| label: mostrar-dicotomizacion
+
+# Calcular las frecuencias de cada categoría para cada variable
+frecuencias <- data.frame(
+  Variable = names(vars_modelo),
+  Descripcion = c(
+    "Problemas sociales > ambientales",
+    "Crecimiento sin daño ambiental", 
+    "Problemas ambientales de países desarrollados", 
+    "No cambiar costumbres, tecnología resolverá", 
+    "Progreso es vivir como países desarrollados", 
+    "Resolver problemas cambiando costumbres", 
+    "Clases altas más responsables de crisis",
+    "Urgencia de la crisis ambiental", 
+    "Actividades humanas causan cambios climáticos"
+  )
+)
+
+# Agregar conteos y porcentajes
+frecuencias$N_Desacuerdo <- sapply(vars_modelo, function(x) sum(x == 1, na.rm = TRUE))
+frecuencias$N_Acuerdo <- sapply(vars_modelo, function(x) sum(x == 2, na.rm = TRUE))
+frecuencias$Total <- frecuencias$N_Desacuerdo + frecuencias$N_Acuerdo
+frecuencias$Pct_Desacuerdo <- round(frecuencias$N_Desacuerdo / frecuencias$Total * 100, 1)
+frecuencias$Pct_Acuerdo <- round(frecuencias$N_Acuerdo / frecuencias$Total * 100, 1)
+
+# Mostrar solo la tabla
+kable(frecuencias[, c("Variable", "Descripcion", "N_Desacuerdo", "Pct_Desacuerdo", "N_Acuerdo", "Pct_Acuerdo")],
+      col.names = c("Variable", "Descripción", "N Desacuerdo", "% Desacuerdo", "N Acuerdo", "% Acuerdo")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  add_header_above(c(" " = 2, "Desacuerdo (Cat. 1)" = 2, "Acuerdo (Cat. 2)" = 2))
+```
+
+
+
+#Seleccion N de clases 
+```{r}
+#| label: ajustar-modelos
+#| cache: true
+#| echo: false
+#| results: hide
+
+set.seed(1234)
+
+# Definir la fórmula para los modelos
+f <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4, 
+          P7_1, P7_3, urgenciacrisis, 
+          actividadeshumanas) ~ NULL
+
+# Ajustar modelos con diferentes números de clases
+lca2 <- poLCA(f, vars_modelo, nclass = 2, maxiter = 1000, nrep = 10, graphs = FALSE)
+lca3 <- poLCA(f, vars_modelo, nclass = 3, maxiter = 1000, nrep = 10, graphs = FALSE)
+lca4 <- poLCA(f, vars_modelo, nclass = 4, maxiter = 1000, nrep = 10, graphs = FALSE)
+lca5 <- poLCA(f, vars_modelo, nclass = 5, maxiter = 1000, nrep = 10, graphs = FALSE)
+lca6 <- poLCA(f, vars_modelo, nclass = 6, maxiter = 1000, nrep = 10, graphs = FALSE)
+
+# Lista de modelos y número de clases
+modelos <- list(lca2, lca3, lca4, lca5, lca6)
+n_clases <- 2:6
+
+# Crear tabla de comparación
+resultados <- data.frame(
+  Clases = n_clases,
+  BIC = sapply(modelos, function(x) x$bic),
+  AIC = sapply(modelos, function(x) x$aic),
+  Log_likelihood = sapply(modelos, function(x) x$llik),
+  Entropia = sapply(modelos, poLCA.entropy)
+)
+```
+
+
+# Comparar modelos 
+
+```{r}
+#| label: comparar-modelos
+#| fig-cap: "Criterios de información por número de clases"
+
+# Mostrar tabla de resultados
+kable(resultados, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+
+# Gráfico de criterios de información
+ggplot(resultados) +
+  geom_line(aes(x = Clases, y = BIC, colour = "BIC"), size = 1) +
+  geom_point(aes(x = Clases, y = BIC, colour = "BIC"), size = 3) +
+  geom_line(aes(x = Clases, y = AIC, colour = "AIC"), size = 1) +
+  geom_point(aes(x = Clases, y = AIC, colour = "AIC"), size = 3) +
+  theme_minimal() +
+  labs(title = "Criterios de información por número de clases",
+       y = "Valor", 
+       colour = "Criterio") +
+  theme(legend.position = "top")
+```
+
+
+# Análisis del modelo de 3 clases
+## Tamaño de las clases
+```{r}
+#| label: tamano-clases
+#| fig-cap: "Distribución de casos en cada clase latente"
+
+modelo_3 <- lca3
+
+# Examinar tamaños de clase 
+tamano_clases <- data.frame(
+  Clase = paste("Clase", 1:length(modelo_3$P)),
+  Proporcion = modelo_3$P,
+  Porcentaje = round(modelo_3$P * 100, 1)
+)
+
+# Mostrar tabla de tamaños
+kable(tamano_clases, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+
+# Gráfico de barras para tamaños de clase
+ggplot(tamano_clases, aes(x = Clase, y = Porcentaje, fill = Clase)) +
+  geom_bar(stat = "identity", width = 0.6) +
+  geom_text(aes(label = paste0(Porcentaje, "%")), 
+            position = position_stack(vjust = 0.5), 
+            color = "black", size = 4) +
+  theme_minimal() +
+  labs(title = "Distribución de casos por clase latente",
+       y = "Porcentaje (%)", 
+       x = "") +
+  theme(legend.position = "none")
+```
+
+
+
+# Probabilidades condicionales por clase
+
+```{r}
+#| label: probabilidades-condicionales
+
+# Nombres de las variables para mejor interpretación
+vars_nombres <- c(
+  "Problemas sociales > ambientales (MVI)", 
+  "Crecimiento sin daño ambiental (MVI)", 
+  "Problemas ambientales de países desarrollados (MVI)", 
+  "No cambiar costumbres, tecnología resolverá (MVI)", 
+  "Progreso es vivir como países desarrollados (MVI)", 
+  "Resolver problemas cambiando costumbres (RAA)", 
+  "Clases altas más responsables de crisis (RAA)",
+  "Urgencia de la crisis ambiental (RAA)", 
+  "Actividades humanas causan cambios climáticos (RAA)"
+)
+
+# Extraer probabilidades para la categoría "De acuerdo" (categoría 2)
+probs_acuerdo <- data.frame(
+  Variable = vars_nombres,
+  Clase1 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][1, 2]),
+  Clase2 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][2, 2]),
+  Clase3 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][3, 2])
+)
+
+# Mostrar tabla de probabilidades condicionales
+kable(probs_acuerdo, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  column_spec(1, width = "30em") %>%
+  add_header_above(c(" " = 1, "Probabilidad de estar 'De acuerdo'" = 3))
+```
+
+```{r}
+#| label: heatmap
+#| fig-cap: "Mapa de calor: Probabilidad de estar 'De acuerdo' por clase y variable"
+#| fig-width: 10
+#| fig-height: 8
+
+# Preparar datos para formato largo (mejor para ggplot)
+probs_long <- probs_acuerdo %>%
+  pivot_longer(cols = starts_with("Clase"), 
+               names_to = "Clase", 
+               values_to = "Probabilidad")
+
+# Asignar un tipo a cada variable (MVI o RAA)
+probs_long <- probs_long %>%
+  mutate(Tipo = ifelse(grepl("MVI", Variable), "MVI", "RAA"),
+         # Limpiar nombres de variables para la visualización
+         Variable_limpia = gsub(" \\(MVI\\)| \\(RAA\\)", "", Variable),
+         # Crear un orden para las variables
+         Orden = row_number())
+
+# Crear el mapa de calor con ggplot2
+ggplot(probs_long, aes(x = Clase, y = reorder(Variable_limpia, -Orden), fill = Probabilidad)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = sprintf("%.2f", Probabilidad)), color = "black", size = 3) +
+  scale_fill_gradient2(low = "lightblue", mid = "royalblue", high = "darkblue",
+                      midpoint = 0.5, limits = c(0, 1)) +
+  facet_grid(Tipo ~ ., scales = "free", space = "free") +
+  theme_minimal() +
+  labs(title = "Probabilidad de estar 'De acuerdo' por clase",
+       y = "", x = "") +
+  theme(axis.text.y = element_text(size = 9),
+        legend.position = "right",
+        strip.text = element_text(face = "bold"))
+```
+
+
+
+```{r}
+#| label: interpretar-clases
+#| results: asis
+#| echo: false
+
+# Definir umbrales 
+umbral_alto <- 0.7   # Probabilidad alta de estar de acuerdo
+umbral_bajo <- 0.3   # Probabilidad baja de estar de acuerdo
+
+# Preparar datos para interpretación
+matriz_prob <- as.matrix(probs_acuerdo[, -1])
+rownames(matriz_prob) <- probs_acuerdo$Variable
+
+# Interpretar cada clase
+for (i in 1:ncol(matriz_prob)) {
+  clase_nombre <- colnames(matriz_prob)[i]
+  tamano <- tamano_clases[i, "Porcentaje"]
+  cat(paste0("\n### ", clase_nombre, " (", tamano, "% de la muestra)\n"))
+  
+  # Características donde la clase tiene alta probabilidad de acuerdo
+  altas <- rownames(matriz_prob)[matriz_prob[, i] > umbral_alto]
+  if (length(altas) > 0) {
+    cat("\n**Alta probabilidad de estar de acuerdo con:**\n\n")
+    for (caract in altas) {
+      cat("- ", caract, "\n")
+    }
+  }
+  
+  # Características donde la clase tiene baja probabilidad de acuerdo
+  bajas <- rownames(matriz_prob)[matriz_prob[, i] < umbral_bajo]
+  if (length(bajas) > 0) {
+    cat("\n**Baja probabilidad de estar de acuerdo con:**\n\n")
+    for (caract in bajas) {
+      cat("- ", caract, "\n")
+    }
+  }
+  
+  cat("\n")
+}
+```
+
+# Perfiles de las clases latentes
+A partir de los resultados, podemos proponer los siguientes perfiles para las tres clases identificadas:
+
+Clase 1 - "Ecologistas reformistas": Este grupo reconoce la crisis ambiental y la responsabilidad humana, pero cree que es posible el crecimiento económico sin daño ambiental. Ponen énfasis en cambiar costumbres y culpan especialmente a las clases altas.  
+Clase 2 - "Negacionistas conservadores": Este grupo minimiza la crisis ambiental, cree que la tecnología resolverá los problemas sin necesidad de cambiar costumbres, y considera que los problemas sociales son más importantes que los ambientales.  
+Clase 3 - "Críticos radicales": Este grupo reconoce fuertemente la crisis ambiental y la necesidad de cambios de costumbres, y son muy críticos del modelo de desarrollo actual. No creen que sea posible crecer económicamente sin daño ambiental.
+
+
+
+
+# Calidad de la clasificación
+
+```{r}
+
+#| label: calidad-clasificacion
+
+# Evaluar la calidad de clasificación
+calidad_clasificacion <- mean(apply(modelo_3$posterior, 1, max))
+cat(paste("Probabilidad media de clasificación:", round(calidad_clasificacion, 3)))
+```
+
+
+# Análisis con covariables
+```{r}
+#| label: cargar-covariables
+#| eval: true
+
+# Cargar covariables
+load(here("objects", "covar.RData"))
+
+# Crear dataframe con clase latente y covariables
+datos_completos <- data.frame(clase_latente = modelo_3$predclass)
+datos_completos <- cbind(datos_completos, covar)
+
+# Definir niveles de referencia
+datos_completos$edad <- relevel(datos_completos$edad, ref = "18 a 24 años")
+datos_completos$educacion <- relevel(datos_completos$educacion, ref = "Educación básica o menos")
+```
+
+#Tablas de contingencia
+
+```{r}
+#| label: tablas-contingencia
+#| eval: true
+#| results: asis
+
+# Función para crear tabla de contingencia formateada
+crear_tabla_contingencia <- function(var_name) {
+  tabla <- table(datos_completos$clase_latente, datos_completos[[var_name]])
+  prop_tabla <- prop.table(tabla, 2) * 100
+  
+  # Test chi-cuadrado
+  test <- chisq.test(tabla)
+  p_valor <- test$p.value
+  
+  # Crear tabla para kable
+  df_tabla <- as.data.frame.matrix(tabla)
+  df_prop <- as.data.frame.matrix(round(prop_tabla, 1))
+  
+  # Combinar conteos y porcentajes
+  df_combinado <- data.frame(Clase = rownames(df_tabla))
+  
+  for (col in names(df_tabla)) {
+    df_combinado[[col]] <- paste0(df_tabla[[col]], " (", df_prop[[col]], "%)")
+  }
+  
+  cat(paste0("### Distribución por ", var_name, "\n\n"))
+  
+  # Mostrar tabla
+  print(kable(df_combinado) %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE))
+  
+  cat(paste0("\n**Test Chi-cuadrado:** χ² = ", round(test$statistic, 2), 
+             ", df = ", test$parameter, 
+             ", p-value = ", format.pval(p_valor, digits = 3), "\n\n"))
+}
+
+# Crear tablas para cada covariable
+for(var in c("sexo", "edad", "educacion", "region")) {
+  crear_tabla_contingencia(var)
+}
+```
+
+
+
+#Modelo multinomial con covariables
+
+```{r}
+#| label: modelo-multinomial
+#| eval: true
+#| cache: true
+
+# Crear fórmula con covariables
+f_multi <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4, 
+                 P7_1, P7_3, urgenciacrisis, 
+                 actividadeshumanas) ~ sexo + edad + educacion + region
+
+# Datos para análisis
+datos_analisis <- cbind(
+  vars_modelo,
+  covar)
+
+# Ajustar modelo
+lca_multi <- poLCA(f_multi, datos_analisis, nclass = 3, 
+                   maxiter = 1000, nrep = 5, graphs = FALSE)
+
+# Mostrar coeficientes
+kable(lca_multi$coeff, digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  add_header_above(c(" " = 1, "Coeficientes (log-odds)" = ncol(lca_multi$coeff)))
+
+# Odds ratios
+or <- exp(lca_multi$coeff)
+kable(or, digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) %>%
+  add_header_above(c(" " = 1, "Odds Ratios" = ncol(or)))
+```
+
+
+# Interpretación de los coeficientes
+
+
+
+# Avances LCA
+
+El BIC, que penaliza más la complejidad del modelo, sugiere que el modelo de 3 clases ofrece el mejor equilibrio entre ajuste y simplicidad. Por otro lado, el AIC, que penaliza menos la complejidad, continúa favoreciendo modelos con más clases. De todas maneras, hay que considerar que el grupo más pequeño no sea menor a 5%. Lo mejor parece ser el modelo con 3 clases. 

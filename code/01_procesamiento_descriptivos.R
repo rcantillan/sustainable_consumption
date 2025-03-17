@@ -61,6 +61,8 @@ covar <- covar %>%
 
 
 covar <- dplyr::select(covar, sexo, edad, educacion, region)
+
+save(covar, file = "objects/covar.RData")
   
 
 load("objects/vars_modelo.RData")
