@@ -61,15 +61,15 @@ f<- cbind(P7_2, P7_4, P7_5, P4_2, P4_4,
 
 # N de clases 
 lca2 <- poLCA(f, vars_modelo, nclass = 2, 
-              maxiter = 1000, nrep = 10)
+              maxiter = 1000, nrep = 10 , graphs=TRUE)
 lca3 <- poLCA(f, vars_modelo, nclass = 3,  # modelo con mejor ajuste
-              maxiter = 1000, nrep = 10)
+              maxiter = 1000, nrep = 10, graphs=TRUE)
 lca4 <- poLCA(f, vars_modelo, nclass = 4, 
-              maxiter = 1000, nrep = 10)
+              maxiter = 1000, nrep = 10, graphs=TRUE)
 lca5 <- poLCA(f, vars_modelo, nclass = 5, 
-              maxiter = 1000, nrep = 10)
+              maxiter = 1000, nrep = 10, graphs=TRUE)
 lca6 <- poLCA(f, vars_modelo, nclass = 6, 
-              maxiter = 1000, nrep = 10)
+              maxiter = 1000, nrep = 10, graphs=TRUE)
 
 #Comparar los modelos
 
@@ -281,7 +281,9 @@ f_multi <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4,
 
 #multinomial 
 lca_multi <- poLCA(f_multi, datos_analisis, nclass = 3, 
-                   maxiter = 1000, nrep = 5)
+                   maxiter = 1000, nrep = 5, graphs=TRUE)
+
+
 
 print("Coeficientes del modelo (interpretados como log-odds):")
 print(lca_multi$coeff)
@@ -291,8 +293,6 @@ print(lca_multi$coeff)
 or <- exp(lca_multi$coeff)
 print("Odds ratios:")
 print(or)
-
-
 
 
 # Guardar modelo y resultados para análisis
