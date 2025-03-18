@@ -120,11 +120,6 @@ tamano_clases <- data.frame(
 print(tamano_clases)
 
 
-
-# Extraer probabilidades condicionales
-probs_clase <- modelo_3$probs
-print(probs_clase)
-
 # Extraer tamaño de las clases
 class_sizes <- modelo_3$P
 
@@ -144,119 +139,212 @@ text(bp, modelo_3$P * 50, # Posición a mitad de la barra
 
 
 
-# Probabilidad de responder "De acuerdo" (categoría 2) en cada variable
+#_________________________Probabilidades condicionales por pregunta 
 
-vars_nombres <- c( "Problemas sociales > ambientales (MVI)", 
-                   "Crecimiento sin daño ambiental (MVI)", 
-                   "Problemas ambientales de países desarrollados (MVI)", 
-                   "No cambiar costumbres, tecnología resolverá (MVI)", 
-                   "Progreso es vivir como países desarrollados (MVI)", 
-                   "Resolver problemas cambiando costumbres (RAA)", 
-                   "Clases altas más responsables de crisis (RAA)",
-                   "Urgencia de la crisis ambiental (RAA)", 
-                   "Actividades humanas causan cambios climáticos (RAA)" )
+# Extraer probabilidades condicionales
+probs_clase <- modelo_3$probs
+print(probs_clase)
 
-# Extraer probabilidades para la categoría "De acuerdo" (categoría 2)
-probs_acuerdo <- data.frame(
-  Variable = vars_nombres,
-  Clase1 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][1, 2]),
-  Clase2 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][2, 2]),
-  Clase3 = sapply(1:length(modelo_3$probs), function(i) modelo_3$probs[[i]][3, 2])
+# Definir los nombres de variables
+vars_nombres <- c("Problemas sociales > ambientales (MVI)", 
+                  "Crecimiento sin daño ambiental (MVI)", 
+                  "Problemas ambientales de países desarrollados (MVI)", 
+                  "No cambiar costumbres, tecnología resolverá (MVI)", 
+                  "Progreso es vivir como países desarrollados (MVI)", 
+                  "Resolver problemas cambiando costumbres (RAA)", 
+                  "Clases altas más responsables de crisis (RAA)",
+                  "Urgencia de la crisis ambiental (RAA)", 
+                  "Actividades humanas causan cambios climáticos (RAA)")
+
+# Analizar las probabilidades para cada clase y crear una visualización más informativa
+# Crear un dataframe largo para visualización
+resultados_largo <- data.frame()
+
+for (i in 1:length(probs_clase)) {
+  var_nombre <- vars_nombres[i]
+  temp_df <- data.frame(
+    Variable = var_nombre,
+    Clase = rep(paste("Clase", 1:3), each = 2),
+    Respuesta = rep(c("Desacuerdo", "Acuerdo"), 3),
+    Probabilidad = c(probs_clase[[i]][1, 1], probs_clase[[i]][1, 2],
+                     probs_clase[[i]][2, 1], probs_clase[[i]][2, 2],
+                     probs_clase[[i]][3, 1], probs_clase[[i]][3, 2])
+  )
+  resultados_largo <- rbind(resultados_largo, temp_df)
+}
+
+
+
+# Gráfico de barras apiladas que muestra ambas probabilidades
+ggplot(resultados_largo, aes(x = Clase, y = Probabilidad, fill = Respuesta)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~ Variable, scales = "free_y", ncol = 3) +
+  scale_fill_manual(values = c("Desacuerdo" = "black", "Acuerdo" = "lightblue")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 8)) +
+  labs(title = "Probabilidades condicionales por clase latente",
+       subtitle = "Probabilidad de responder Acuerdo vs Desacuerdo para cada variable",
+       y = "Probabilidad")
+
+
+
+
+
+#_______________________________Probabilidades por clase
+
+# Definir los nombres 
+var_originales <- c("P7_2", "P7_4", "P7_5", "P4_2", "P4_4", 
+                    "P7_1", "P7_3", "urgenciacrisis", "actividadeshumanas")
+
+# Preparar los datos 
+LMmodelo <- data.frame()
+
+# Para cada variable y cada clase
+for (i in 1:length(probs_clase)) {
+  var_nombre <- var_originales[i]
+  
+  for (j in 1:3) { # Para las 3 clases
+    temp_df <- data.frame(
+      item = var_nombre,
+      state = j,
+      category = c(0, 1),  # 0 = Desacuerdo, 1 = Acuerdo
+      value = c(probs_clase[[i]][j, 1], probs_clase[[i]][j, 2])
+    )
+    LMmodelo <- rbind(LMmodelo, temp_df)
+  }
+}
+
+# Obtener porcentajes de las clases
+porcentajes <- round(modelo_3$P * 100, 0)
+
+# Formatear los datos 
+LMmodelo <- LMmodelo %>%
+  dplyr::mutate(clase = case_when(
+    state == 1 ~ paste0("Clase 1\n (", porcentajes[1], "%)"),
+    state == 2 ~ paste0("Clase 2\n (", porcentajes[2], "%)"),
+    state == 3 ~ paste0("Clase 3\n (", porcentajes[3], "%)")
+  )) %>%
+  dplyr::mutate(category = case_when(
+    category == 0 ~ "Desacuerdo",
+    category == 1 ~ "Acuerdo"
+  ))
+
+# Definir el orden de las variables
+level_order <- var_originales
+
+# Crear el gráfico con barras VERTICALES
+ggplot(LMmodelo, aes(x = factor(item, level = level_order), y = value, fill = category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_grid(clase ~ .) +
+  scale_fill_manual(values = c("#000000", "#A8D8E8")) +  
+  labs(x = "", y = "", fill = "") + 
+  theme(text = element_text(size = 15)) +
+  theme(
+    axis.ticks.x = element_blank(),
+    strip.text = element_text(size = 15),
+    panel.grid.major.x = element_blank(),
+    plot.title = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 10),
+    axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 11)
+  ) +
+  guides(fill = guide_legend(reverse = FALSE))
+
+
+
+#________________________ Cambio de orden del grafico 
+
+
+# Preparar los datos en formato adecuado
+LMmodelo <- data.frame()
+
+# Para cada variable y cada clase
+for (i in 1:length(probs_clase)) {
+  var_nombre <- var_originales[i]
+  
+  for (j in 1:3) { # Para las 3 clases
+    temp_df <- data.frame(
+      item = var_nombre,
+      state = j,
+      category = c(0, 1),  # 0 = Desacuerdo, 1 = Acuerdo
+      value = c(probs_clase[[i]][j, 1], probs_clase[[i]][j, 2])
+    )
+    LMmodelo <- rbind(LMmodelo, temp_df)
+  }
+}
+
+# Obtener porcentajes de las clases
+porcentajes <- round(modelo_3$P * 100, 0)
+
+# Formatear los datos 
+LMmodelo <- LMmodelo %>%
+  dplyr::mutate(clase = factor(paste0("Clase ", state, " (", porcentajes[state], "%)"),
+                               levels = paste0("Clase ", 1:3, " (", porcentajes[1:3], "%)"))) %>%
+  dplyr::mutate(category = factor(ifelse(category == 0, "Desacuerdo", "Acuerdo"),
+                                  levels = c("Desacuerdo", "Acuerdo")))
+
+# Mapeo simple para etiquetas más descriptivas
+etiquetas <- c(
+  "P7_2" = "P7_2: Problemas sociales > ambientales", 
+  "P7_4" = "P7_4: Crecimiento sin daño ambiental", 
+  "P7_5" = "P7_5: Problemas ambientales de países desarrollados", 
+  "P4_2" = "P4_2: No cambiar costumbres, tecnología resolverá", 
+  "P4_4" = "P4_4: Progreso como países desarrollados", 
+  "P7_1" = "P7_1: Resolver problemas cambiando costumbres", 
+  "P7_3" = "P7_3: Clases altas más responsables de crisis",
+  "urgenciacrisis" = "Urgencia de la crisis ambiental", 
+  "actividadeshumanas" = "Actividades humanas causan cambios"
 )
 
+# Crear el gráfico básico con barras HORIZONTALES
+ggplot(LMmodelo, aes(y = factor(item, levels = var_originales, labels = etiquetas[var_originales]), 
+                     x = value, fill = category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_grid(. ~ clase) +  # Clases en columnas
+  scale_fill_manual(values = c("Desacuerdo" = "#A8D8E8", "Acuerdo" = "#000000")) +
+  labs(x = "", y = "", fill = "Respuesta") + 
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 10),
+    strip.text = element_text(size = 11),
+    legend.position = "top",
+    panel.grid.major = element_blank()
+  )
 
-# Preparar matriz para el heatmap
-matriz_prob <- as.matrix(probs_acuerdo[, -1])
-rownames(matriz_prob) <- probs_acuerdo$Variable
-
-# Definir paleta de colores azules (sin blanco)
-mi_paleta <- colorRampPalette(c("lightblue", "royalblue", "darkblue"))(100)
-
-# Configurar márgenes para evitar superposiciones
-par(mar = c(5, 18, 4, 5))
-
-# Crear el heatmap con márgenes expandidos
-heatmap(matriz_prob, 
-        Rowv = NA, Colv = NA,    # Sin reordenar filas ni columnas
-        col = mi_paleta,         # Usar paleta personalizada
-        scale = "none",          # No estandarizar valores
-        margins = c(3, 18),      # Aumentar margen para las etiquetas
-        main = "Probabilidad de estar 'De acuerdo' por clase",
-        xlab = "", ylab = "",    # Eliminar etiquetas de ejes
-        cexRow = 0.9,            # Reducir tamaño de etiquetas de filas
-        cexCol = 1.0)            # Tamaño de etiquetas de columnas
-
-# Añadir leyenda de colores
-legend(x = "right", 
-       legend = c("0.0", "0.25", "0.5", "0.75", "1.0"), 
-       fill = mi_paleta[c(1, 25, 50, 75, 100)],
-       title = "Probabilidad",
-       cex = 0.8,
-       bty = "n")
-
-#_______________ Interpretar clases
-
-# Definir umbrales 
-umbral_alto <- 0.7   # Probabilidad alta de estar de acuerdo
-umbral_bajo <- 0.3   # Probabilidad baja de estar de acuerdo
-
-# Crear función simple para interpretar las clases
-interpretar_clases <- function(probs, tamanos_clase, umbral_alto = 0.7, umbral_bajo = 0.3) {
-  for (i in 1:ncol(probs)) {
-    clase_nombre <- colnames(probs)[i]
-    tamano <- tamanos_clase[i, "Porcentaje"]
-    cat(paste0("\n### ", clase_nombre, " (", tamano, "% de la muestra)\n"))
-    
-# Características donde la clase tiene alta probabilidad de acuerdo
-    altas <- rownames(probs)[probs[, i] > umbral_alto]
-    if (length(altas) > 0) {
-      cat("\nAlta probabilidad de estar de acuerdo con:\n")
-      for (caract in altas) {
-        cat("- ", caract, "\n")
-      }}
-    
-# Características donde la clase tiene baja probabilidad de acuerdo
-    bajas <- rownames(probs)[probs[, i] < umbral_bajo]
-    if (length(bajas) > 0) {
-      cat("\nBaja probabilidad de estar de acuerdo con:\n")
-      for (caract in bajas) {
-        cat("- ", caract, "\n")
-      }}
-    
-    cat("\n")}}
-
-# Ejecutar la interpretación
-interpretar_clases(matriz_prob, tamano_clases)     # A partir de esto sería importante decidir los nombres de cada clase en función de las características que las definen
 
 
 # Asignar clases a cada caso
 clases_asignadas <- modelo_3$predclass
+
 
 # Añadir predicciones de clase al conjunto de datos 
 datos$clase_latente <- clases_asignadas
 
 # Evaluar la calidad de clasificación
 calidad_clasificacion <- mean(apply(modelo_3$posterior, 1, max))
-print(paste("Probabilidad media de clasificación:", round(calidad_clasificacion, 3)))
+cat("Probabilidad media de clasificación correcta:", round(calidad_clasificacion, 3), "\n")
+
+
 
 
 # Cargar covariables
 load("objects/covar.RData")
 
 
-str(covar)
 # Crear dataframe con clase latente y covariables
-datos_completos <- cbind(clase_latente = datos$clase_latente, covar)
+datos_analisis <- data.frame(
+  clase_latente = factor(datos$clase_latente),
+  sexo = covar$sexo,
+  edad = covar$edad,
+  educacion = covar$educacion,
+  region = covar$region
+)
 
-#  factor la primera categoría como referencia
-datos_completos$edad <- relevel(datos_completos$edad, ref = "18 a 24 años")
-datos_completos$educacion <- relevel(datos_completos$educacion, ref = "Educación básica o menos")
-
-
-# Tablas de contingencia para todas las variables
+# Tablas de contingencia para cada covariable
 for(var in c("sexo", "edad", "educacion", "region")) {
   cat("\n\n### Distribución de clases por", var, "###\n")
-  tabla <- table(datos_completos$clase_latente, datos_completos[[var]])
+  tabla <- table(datos_analisis$clase_latente, datos_analisis[[var]])
   
   print(tabla)
   
@@ -269,9 +357,6 @@ for(var in c("sexo", "edad", "educacion", "region")) {
   print(test)
 }
 
-# conjunto de datos para el analisis 
-datos_analisis <- cbind(
-  dplyr::select(datos, P7_2, P7_4, P7_5, P4_2, P4_4, P7_1, P7_3, urgenciacrisis, actividadeshumanas),covar)
 
 # Crear fórmula
 f_multi <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4, 
@@ -279,32 +364,221 @@ f_multi <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4,
                  actividadeshumanas) ~ sexo + edad + educacion + region
 
 
-#multinomial 
-lca_multi <- poLCA(f_multi, datos_analisis, nclass = 3, 
-                   maxiter = 1000, nrep = 5, graphs=TRUE)
+# Combinar los dataframes
+datos_completos <- cbind(vars_modelo, covar)
 
 
 
-print("Coeficientes del modelo (interpretados como log-odds):")
-print(lca_multi$coeff)
 
-#odds ratio
+# Ajustar modelos con covariables para diferentes números de clases
+lca_cov2 <- poLCA(f_multi, datos_completos, nclass = 2, maxiter = 3000, nrep = 10)
+lca_cov3 <- poLCA(f_multi, datos_completos, nclass = 3, maxiter = 3000, nrep = 10)
+lca_cov4 <- poLCA(f_multi, datos_completos, nclass = 4, maxiter = 3000, nrep = 10)
+lca_cov5 <- poLCA(f_multi, datos_completos, nclass = 5, maxiter = 3000, nrep = 10)
+lca_cov6 <- poLCA(f_multi, datos_completos, nclass = 6, maxiter = 3000, nrep = 10)
 
-or <- exp(lca_multi$coeff)
-print("Odds ratios:")
-print(or)
 
 
-# Guardar modelo y resultados para análisis
-modelo_final <- modelo_3  # Asumiendo que este es tu modelo de 3 clases
-save(modelo_final, probs_acuerdo, tamano_clases, file = "objects/resultados_lca.RData")
+# Crear una lista con los modelos
+modelos_cov <- list(lca_cov2, lca_cov3, lca_cov4, lca_cov5, lca_cov6)
+n_clases <- 2:6
 
-# Asignar las clases latentes a tus datos originales
-datos_con_clases <- datos %>%
-  mutate(clase_latente = modelo_final$predclass)
+# Crear tabla de comparación
+resultados_cov <- data.frame(
+  Clases = n_clases,
+  BIC = sapply(modelos_cov, function(x) x$bic),
+  AIC = sapply(modelos_cov, function(x) x$aic),
+  Log_likelihood = sapply(modelos_cov, function(x) x$llik)
+)
 
-# Guardar el dataset con las clases asignadas
-save(datos_con_clases, file = "objects/datos_con_clases.RData")
-# Verificar que se guardaron correctamente
-load("objects/resultados_lca.RData")
-print(tamano_clases)
+# Ver resultados
+print(resultados_cov)
+
+# Añadir entropía
+resultados_cov$Entropia <- sapply(modelos_cov, poLCA.entropy)
+
+# Gráfico de criterios de información para modelos con covariables
+ggplot(resultados_cov, aes(x = Clases)) +
+  geom_line(aes(y = BIC, colour = "BIC"), size = 1) +
+  geom_point(aes(y = BIC, colour = "BIC"), size = 3) +
+  geom_line(aes(y = AIC, colour = "AIC"), size = 1) +
+  geom_point(aes(y = AIC, colour = "AIC"), size = 3) +
+  theme_minimal() +
+  labs(title = "Criterios de información por número de clases (Con covariables)",
+       y = "Valor", 
+       colour = "Criterio") +
+  theme(legend.position = "top")
+
+# Comparar modelos con y sin covariables
+resultados_combinados <- rbind(
+  transform(resultados, Tipo = "Sin covariables"),
+  transform(resultados_cov, Tipo = "Con covariables")
+)
+
+# Visualizar comparación
+ggplot(resultados_combinados, aes(x = Clases, y = BIC, color = Tipo, group = Tipo)) +
+  geom_line(size = 1) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "Comparación de BIC entre modelos con y sin covariables",
+       y = "BIC") +
+  theme(legend.position = "top")
+
+
+
+
+
+# Seleccionar el modelo de 3 clases con covariables
+modelo_cov3 <- lca_cov3
+
+# Examinar tamaños de clase y probabilidades condicionales
+tamano_clases_cov <- data.frame(
+  Clase = paste("Clase", 1:length(modelo_cov3$P)),
+  Proporcion = modelo_cov3$P,
+  Porcentaje = round(modelo_cov3$P * 100, 1)
+)
+print(tamano_clases_cov)
+
+# Extraer probabilidades condicionales
+probs_clase_cov <- modelo_cov3$probs
+print(probs_clase_cov)
+
+#  Visualizar probabilidades condicionales por pregunta
+resultados_largo_cov <- data.frame()
+
+for (i in 1:length(probs_clase_cov)) {
+  var_nombre <- vars_nombres[i]
+  temp_df <- data.frame(
+    Variable = var_nombre,
+    Clase = rep(paste("Clase", 1:3), each = 2),
+    Respuesta = rep(c("Desacuerdo", "Acuerdo"), 3),
+    Probabilidad = c(probs_clase_cov[[i]][1, 1], probs_clase_cov[[i]][1, 2],
+                     probs_clase_cov[[i]][2, 1], probs_clase_cov[[i]][2, 2],
+                     probs_clase_cov[[i]][3, 1], probs_clase_cov[[i]][3, 2])
+  )
+  resultados_largo_cov <- rbind(resultados_largo_cov, temp_df)
+}
+
+
+# Gráfico de barras apiladas
+ggplot(resultados_largo_cov, aes(x = Clase, y = Probabilidad, fill = Respuesta)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~ Variable, scales = "free_y", ncol = 3) +
+  scale_fill_manual(values = c("Desacuerdo" = "black", "Acuerdo" = "lightblue")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 8)) +
+  labs(title = "Probabilidades condicionales por clase latente (con covariables)",
+       subtitle = "Probabilidad de responder Acuerdo vs Desacuerdo para cada variable",
+       y = "Probabilidad")
+
+
+
+
+# Definir los nombres originales
+var_originales <- c("P7_2", "P7_4", "P7_5", "P4_2", "P4_4", 
+                    "P7_1", "P7_3", "urgenciacrisis", "actividadeshumanas")
+
+# Preparar los datos para el modelo con covariables
+LMmodelo_cov <- data.frame()
+
+# Para cada variable y cada clase
+for (i in 1:length(probs_clase_cov)) {
+  var_nombre <- var_originales[i]
+  
+  for (j in 1:3) { # Para las 3 clases
+    temp_df <- data.frame(
+      item = var_nombre,
+      state = j,
+      category = c(0, 1),  # 0 = Desacuerdo, 1 = Acuerdo
+      value = c(probs_clase_cov[[i]][j, 1], probs_clase_cov[[i]][j, 2])
+    )
+    LMmodelo_cov <- rbind(LMmodelo_cov, temp_df)
+  }
+}
+
+# Obtener porcentajes de las clases
+porcentajes_cov <- round(modelo_cov3$P * 100, 0)
+
+# Formatear los datos 
+LMmodelo_cov <- LMmodelo_cov %>%
+  dplyr::mutate(clase = factor(paste0("Clase ", state, " (", porcentajes_cov[state], "%)"),
+                               levels = paste0("Clase ", 1:3, " (", porcentajes_cov[1:3], "%)"))) %>%
+  dplyr::mutate(category = factor(ifelse(category == 0, "Desacuerdo", "Acuerdo"),
+                                  levels = c("Desacuerdo", "Acuerdo")))
+
+# Mapeo simple para etiquetas más descriptivas
+etiquetas <- c(
+  "P7_2" = "P7_2: Problemas sociales > ambientales", 
+  "P7_4" = "P7_4: Crecimiento sin daño ambiental", 
+  "P7_5" = "P7_5: Problemas ambientales de países desarrollados", 
+  "P4_2" = "P4_2: No cambiar costumbres, tecnología resolverá", 
+  "P4_4" = "P4_4: Progreso como países desarrollados", 
+  "P7_1" = "P7_1: Resolver problemas cambiando costumbres", 
+  "P7_3" = "P7_3: Clases altas más responsables de crisis",
+  "urgenciacrisis" = "Urgencia de la crisis ambiental", 
+  "actividadeshumanas" = "Actividades humanas causan cambios"
+)
+
+# Crear el gráfico horizontal con barras apiladas (como en tu código original)
+ggplot(LMmodelo_cov, aes(y = factor(item, levels = var_originales, labels = etiquetas[var_originales]), 
+                         x = value, fill = category)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_grid(. ~ clase) +  # Clases en columnas
+  scale_fill_manual(values = c("Desacuerdo" = "#A8D8E8", "Acuerdo" = "#000000")) +
+  labs(title = "Probabilidades condicionales por clase latente (con covariables)",
+       x = "", y = "", fill = "Respuesta") + 
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 10),
+    strip.text = element_text(size = 11),
+    legend.position = "top",
+    panel.grid.major = element_blank()
+  )
+
+
+
+#  Analizar los coeficientes del modelo (efecto de covariables)
+coeficientes <- modelo_cov3$coeff
+errores <- modelo_cov3$coeff.se
+odds_ratios <- exp(coeficientes)
+
+# Tabla de resultados
+tabla_coeficientes <- data.frame(
+  Variable = rownames(coeficientes),
+  Clase2_Coef = coeficientes[, 1],
+  Clase2_SE = errores[, 1],
+  Clase2_OR = odds_ratios[, 1],
+  Clase3_Coef = coeficientes[, 2],
+  Clase3_SE = errores[, 2],
+  Clase3_OR = odds_ratios[, 2]
+)
+
+print(tabla_coeficientes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

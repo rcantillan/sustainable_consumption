@@ -15,13 +15,24 @@ datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM 2810.sav"))
 
 covar <- dplyr::select(datos, M1,M2,M5,M61)
 
-
-
 # Renombrar 
 covar <- covar %>%
   rename(
     region = M1,  # región 1=maule, 2=rm
     sexo = M2,) # sexo 1=hombre, 2=mujer
+
+
+
+# Convertir 'sexo' y 'region' a factores 
+covar$sexo <- factor(covar$sexo, 
+                     levels = c(1, 2),
+                     labels = c("Hombre", "Mujer"))
+
+# 'edad' y 'educacion' ya son factores
+# 'region' necesita ser convertido a factor
+covar$region <- factor(covar$region,
+                       levels = c(1, 2),
+                       labels = c("Región del Maule", "Región Metropolitana"))
 
 
 # Recodificar 
@@ -65,26 +76,4 @@ covar <- dplyr::select(covar, sexo, edad, educacion, region)
 save(covar, file = "objects/covar.RData")
   
 
-load("objects/vars_modelo.RData")
-
-# Combinar variables y covariables en un solo dataframe
-datos_completos <- cbind(vars_modelo, covar)
-
-
-fc <- cbind(P7_2, P7_4, P7_5, P4_2, P4_4, 
-           P7_1, P7_3, urgenciacrisis, 
-           actividadeshumanas) ~ sexo + edad + educacion + region
-
-
-# N de clases 
-lca2 <- poLCA(fc, vars_modelo, nclass = 2, 
-              maxiter = 1000, nrep = 10)
-lca3 <- poLCA(fc, vars_modelo, nclass = 3,  # modelo con mejor ajuste
-              maxiter = 1000, nrep = 10)
-lca4 <- poLCA(fc, vars_modelo, nclass = 4, 
-              maxiter = 1000, nrep = 10)
-lca5 <- poLCA(fc, vars_modelo, nclass = 5, 
-              maxiter = 1000, nrep = 10)
-lca6 <- poLCA(fc, vars_modelo, nclass = 6, 
-              maxiter = 1000, nrep = 10)
 
