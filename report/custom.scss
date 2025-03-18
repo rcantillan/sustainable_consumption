@@ -1,0 +1,202 @@
+/*-- scss:defaults --*/
+
+// Definición de colores azules
+$primary-blue: #1565c0;           // Azul oscuro principal
+$darker-blue: #0d47a1;            // Azul aún más oscuro para hover
+$medium-blue: #4285f4;            // Azul medio para elementos secundarios
+$light-blue: #bbdefb;             // Azul claro para fondos
+$pale-blue: #e3f2fd;              // Azul pálido para bordes inactivos
+
+// Personalización de la Tabla de Contenidos
+$toc-color: $primary-blue;         // Color del texto de la TOC (azul oscuro)
+$toc-font-size: 0.9em;             // Tamaño de fuente de la TOC
+$toc-active-border: $primary-blue; // Color del borde izquierdo para el ítem activo
+$toc-inactive-border: $pale-blue;  // Color del borde izquierdo para ítems inactivos
+
+/*-- scss:rules --*/
+
+// Reglas para la tabla de contenidos
+#TOC {
+  font-size: $toc-font-size;
+  
+  .nav-link {
+    color: $primary-blue;
+    border-left: 3px solid $toc-inactive-border;
+    padding-left: 0.5em;
+    transition: all 0.2s ease-in-out;
+
+    &.active {
+      color: $darker-blue;
+      border-left-color: $toc-active-border;
+      font-weight: bold;
+    }
+
+    &:hover {
+      color: $darker-blue;
+      border-left-color: $medium-blue;
+    }
+  }
+}
+
+/* Estilo para el contenedor del título */
+.quarto-title-block {
+  margin-left: calc(0px - (100vw - 100%) / 2);
+  margin-right: calc(0px - (100vw - 100%) / 2);
+  padding-left: calc((100vw - 100%) / 2);
+  padding-right: calc((100vw - 100%) / 2);
+  background-color: $primary-blue;
+  color: white;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* Estilo para el título */
+.quarto-title-block .title {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+}
+
+/* Estilo para el subtítulo */
+.quarto-title-block .subtitle {
+  font-size: 1.5em;
+  font-style: normal;
+  opacity: 0.9;
+}
+
+/* Estilo para los metadatos del título */
+.quarto-title-block .quarto-title-meta {
+  opacity: 0.8;
+}
+
+/* Ajustes generales para todo el documento */
+body {
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Estilo para los encabezados */
+h1, h2, h3 {
+  color: $primary-blue;
+  font-weight: 600;
+}
+
+h4, h5, h6 {
+  color: $medium-blue;
+}
+
+/* Estilo para los enlaces */
+a {
+  color: $medium-blue;
+  text-decoration: none;
+  
+  &:hover {
+    color: $darker-blue;
+    text-decoration: underline;
+  }
+}
+
+/* Estilo para las tablas */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+  
+  th {
+    background-color: $primary-blue;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: $pale-blue;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: white;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+}
+
+/* Estilo para tablas con bootstrap styling */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: $pale-blue;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba($medium-blue, 0.1);
+}
+
+/* Estilo para los bloques de código */
+pre {
+  background-color: $pale-blue;
+  border-left: 3px solid $primary-blue;
+  padding: 1em;
+}
+
+/* Ajuste para el contenido principal */
+.quarto-container {
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilo para las figuras y gráficos */
+.figure {
+  text-align: center;
+  margin: 1.5em 0;
+  
+  img {
+    max-width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .figure-caption {
+    font-style: italic;
+    color: #666;
+    margin-top: 0.5em;
+  }
+}
+
+/* Estilo específico para gráficos y visualizaciones */
+.plot-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Mejorar visualización de elementos de navegación */
+.nav-tabs .nav-link.active {
+  color: $darker-blue;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  color: $medium-blue;
+}
+
+/* Ajustes para impresión */
+@media print {
+  .quarto-title-block {
+    background-color: white !important;
+    color: $darker-blue !important;
+    box-shadow: none !important;
+  }
+  
+  a {
+    color: $darker-blue !important;
+    text-decoration: underline !important;
+  }
+}

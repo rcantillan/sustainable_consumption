@@ -1,5 +1,5 @@
 ---
-title: "Análisis de Clases Latentes - Percepciones de Sustentabilidad"
+title: "Percepciones de Sustentabilidad (LCA)"
 author: "R. Cantillan"
 date: "`r Sys.Date()`"
 format:
@@ -7,13 +7,24 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
-    theme: cosmo
+    theme:
+          - cosmo
+          - custom.scss
+    css: custom.scss    
     code-fold: true
     fig-width: 10
     fig-height: 6
 execute:
   warning: false
   message: false
+image: "featured.jpg"
+title-block-banner: featured.jpg
+title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-style: default
+abstract: | 
+
+  Este estudio aplica análisis de clases latentes para identificar tipologías en percepciones de sustentabilidad. Examina la relación entre el Modo de Vida Imperial y la Reflexividad Ambiental Antropocéntrica, identificando tres clases distintas de respuestas. Incluye factores sociodemográficos como covariables y analiza el "auto-engaño societal" entre reconocimiento de crisis y defensa de modelos actuales.
+
 ---
 ```{r}
 #| label: setup
