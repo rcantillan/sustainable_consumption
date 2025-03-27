@@ -19,7 +19,7 @@ execute:
   message: false
 image: "featured.jpg"
 title-block-banner: featured.jpg
-title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-banner-color: "rgba(39, 24, 154, 0.8)"
 title-block-style: default
 abstract: | 
 

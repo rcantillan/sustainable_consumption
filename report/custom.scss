@@ -1,17 +1,17 @@
 /*-- scss:defaults --*/
 
-// Definición de colores azules
-$primary-blue: #1565c0;           // Azul oscuro principal
-$darker-blue: #0d47a1;            // Azul aún más oscuro para hover
-$medium-blue: #4285f4;            // Azul medio para elementos secundarios
-$light-blue: #bbdefb;             // Azul claro para fondos
-$pale-blue: #e3f2fd;              // Azul pálido para bordes inactivos
+// Definición de colores morados/violetas (versión oscura)
+$primary-purple: #4a148c;         // Morado oscuro principal
+$darker-purple: #3a1078;          // Morado muy oscuro para hover
+$medium-purple: #6a1b9a;          // Morado medio-oscuro para elementos secundarios
+$light-purple: #8e44ad;           // Morado medio para fondos
+$pale-purple: #b39ddb;            // Morado más claro para bordes inactivos
 
 // Personalización de la Tabla de Contenidos
-$toc-color: $primary-blue;         // Color del texto de la TOC (azul oscuro)
-$toc-font-size: 0.9em;             // Tamaño de fuente de la TOC
-$toc-active-border: $primary-blue; // Color del borde izquierdo para el ítem activo
-$toc-inactive-border: $pale-blue;  // Color del borde izquierdo para ítems inactivos
+$toc-color: $primary-purple;         // Color del texto de la TOC
+$toc-font-size: 0.9em;               // Tamaño de fuente de la TOC
+$toc-active-border: $primary-purple; // Color del borde izquierdo para el ítem activo
+$toc-inactive-border: $pale-purple;  // Color del borde izquierdo para ítems inactivos
 
 /*-- scss:rules --*/
 
@@ -20,20 +20,20 @@ $toc-inactive-border: $pale-blue;  // Color del borde izquierdo para ítems inac
   font-size: $toc-font-size;
   
   .nav-link {
-    color: $primary-blue;
+    color: $primary-purple;
     border-left: 3px solid $toc-inactive-border;
     padding-left: 0.5em;
     transition: all 0.2s ease-in-out;
 
     &.active {
-      color: $darker-blue;
+      color: $darker-purple;
       border-left-color: $toc-active-border;
       font-weight: bold;
     }
 
     &:hover {
-      color: $darker-blue;
-      border-left-color: $medium-blue;
+      color: $darker-purple;
+      border-left-color: $medium-purple;
     }
   }
 }
@@ -44,7 +44,7 @@ $toc-inactive-border: $pale-blue;  // Color del borde izquierdo para ítems inac
   margin-right: calc(0px - (100vw - 100%) / 2);
   padding-left: calc((100vw - 100%) / 2);
   padding-right: calc((100vw - 100%) / 2);
-  background-color: $primary-blue;
+  background-color: $primary-purple;
   color: white;
   padding-top: 2em;
   padding-bottom: 2em;
@@ -79,21 +79,21 @@ body {
 
 /* Estilo para los encabezados */
 h1, h2, h3 {
-  color: $primary-blue;
+  color: $primary-purple;
   font-weight: 600;
 }
 
 h4, h5, h6 {
-  color: $medium-blue;
+  color: $medium-purple;
 }
 
 /* Estilo para los enlaces */
 a {
-  color: $medium-blue;
+  color: $medium-purple;
   text-decoration: none;
   
   &:hover {
-    color: $darker-blue;
+    color: $darker-purple;
     text-decoration: underline;
   }
 }
@@ -105,16 +105,17 @@ table {
   margin-bottom: 1em;
   
   th {
-    background-color: $primary-blue;
-    color: white;
+    background-color: white; /* Cambiado de $primary-purple a white */
+    color: $primary-purple; /* Cambiado de white a $primary-purple para mantener legibilidad */
+    border-bottom: 2px solid $primary-purple; /* Añadido para mantener distinción visual */
   }
   
   tr:nth-child(even) {
-    background-color: $pale-blue;
+    background-color: white; /* Cambiado de $pale-purple a white */
   }
   
   tr:nth-child(odd) {
-    background-color: white;
+    background-color: white; /* Ya estaba en white, pero lo dejamos explícito */
   }
   
   th, td {
@@ -126,17 +127,17 @@ table {
 
 /* Estilo para tablas con bootstrap styling */
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: $pale-blue;
+  background-color: white; /* Cambiado de $pale-purple a white */
 }
 
 .table-hover tbody tr:hover {
-  background-color: rgba($medium-blue, 0.1);
+  background-color: #f8f8f8; /* Cambiado a un gris muy claro en lugar de color morado */
 }
 
 /* Estilo para los bloques de código */
 pre {
-  background-color: $pale-blue;
-  border-left: 3px solid $primary-blue;
+  background-color: $pale-purple;
+  border-left: 3px solid $primary-purple;
   padding: 1em;
 }
 
@@ -177,26 +178,26 @@ pre {
 
 /* Mejorar visualización de elementos de navegación */
 .nav-tabs .nav-link.active {
-  color: $darker-blue;
+  color: $darker-purple;
   border-color: #dee2e6 #dee2e6 #fff;
   font-weight: bold;
 }
 
 .nav-tabs .nav-link:hover {
   border-color: #e9ecef #e9ecef #dee2e6;
-  color: $medium-blue;
+  color: $medium-purple;
 }
 
 /* Ajustes para impresión */
 @media print {
   .quarto-title-block {
     background-color: white !important;
-    color: $darker-blue !important;
+    color: $darker-purple !important;
     box-shadow: none !important;
   }
   
   a {
-    color: $darker-blue !important;
+    color: $darker-purple !important;
     text-decoration: underline !important;
   }
 }

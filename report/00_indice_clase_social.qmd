@@ -21,7 +21,7 @@ execute:
   eval: true
 image: "featured.jpg"
 title-block-banner: featured.jpg
-title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-banner-color: "rgba(39, 24, 154, 0.8)"
 title-block-style: default
 abstract: |
   Este documento presenta una metodología multidimensional para la construcción de un indicador de clase social basado en prestigio ocupacional. Utilizando datos de la BBDD Consolidada Maule UCM, se desarrolla un índice compuesto que integra cuatro dimensiones: capital educativo (40%), posición ocupacional (35%), patrimonio material (20%) y patrones de consumo (5%). La metodología incorpora puntajes de prestigio ocupacional basados en escalas internacionales (Occupational Prestige Ratings). Se implementa un enfoque de categorización basado en percentiles específicos (25°, 60°, 85° y 95°) para reflejar adecuadamente la estructura piramidal característica de sociedades latinoamericanas. El resultado es un sistema de cinco clases sociales empíricamente fundamentado que corrige la sobreestimación de las clases altas.
