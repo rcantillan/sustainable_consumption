@@ -1,203 +1,91 @@
 /*-- scss:defaults --*/
 
-// Definición de colores morados/violetas (versión oscura)
-$primary-purple: #4a148c;         // Morado oscuro principal
-$darker-purple: #3a1078;          // Morado muy oscuro para hover
-$medium-purple: #6a1b9a;          // Morado medio-oscuro para elementos secundarios
-$light-purple: #8e44ad;           // Morado medio para fondos
-$pale-purple: #b39ddb;            // Morado más claro para bordes inactivos
-
 // Personalización de la Tabla de Contenidos
-$toc-color: $primary-purple;         // Color del texto de la TOC
-$toc-font-size: 0.9em;               // Tamaño de fuente de la TOC
-$toc-active-border: $primary-purple; // Color del borde izquierdo para el ítem activo
-$toc-inactive-border: $pale-purple;  // Color del borde izquierdo para ítems inactivos
+$toc-color: #392467;           // Color del texto de la TOC
+$toc-font-size: 0.9em;         // Tamaño de fuente de la TOC
+$toc-active-border: #392467;   // Color del borde izquierdo para el ítem activo
+$toc-inactive-border: #f1f1f1; // Color del borde izquierdo para ítems inactivos
 
 /*-- scss:rules --*/
 
-// Reglas para la tabla de contenidos
+// Reglas adicionales para asegurar que se apliquen los estilos
 #TOC {
   font-size: $toc-font-size;
   
   .nav-link {
-    color: $primary-purple;
+    color: $toc-color;
     border-left: 3px solid $toc-inactive-border;
     padding-left: 0.5em;
     transition: all 0.2s ease-in-out;
 
     &.active {
-      color: $darker-purple;
+      color: $toc-active-border;
       border-left-color: $toc-active-border;
       font-weight: bold;
     }
 
     &:hover {
-      color: $darker-purple;
-      border-left-color: $medium-purple;
+      color: darken($toc-active-border, 10%);
+      border-left-color: lighten($toc-active-border, 20%);
     }
   }
 }
 
-/* Estilo para el contenedor del título */
+/* Estilo para el contenedor principal */
 .quarto-title-block {
   margin-left: calc(0px - (100vw - 100%) / 2);
   margin-right: calc(0px - (100vw - 100%) / 2);
   padding-left: calc((100vw - 100%) / 2);
   padding-right: calc((100vw - 100%) / 2);
-  background-color: $primary-purple;
+  background-color: #392467;
   color: white;
   padding-top: 2em;
   padding-bottom: 2em;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
 
 /* Estilo para el título */
 .quarto-title-block .title {
   font-size: 2.5em;
   margin-bottom: 0.5em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  font-weight: 600;
 }
 
 /* Estilo para el subtítulo */
 .quarto-title-block .subtitle {
   font-size: 1.5em;
   font-style: normal;
-  opacity: 0.9;
 }
 
 /* Estilo para los metadatos del título */
 .quarto-title-block .quarto-title-meta {
-  opacity: 0.8;
-}
-
-/* Ajustes generales para todo el documento */
-body {
-  color: #333;
-  line-height: 1.6;
-}
-
-/* Estilo para los encabezados */
-h1, h2, h3 {
-  color: $primary-purple;
-  font-weight: 600;
-}
-
-h4, h5, h6 {
-  color: $medium-purple;
-}
-
-/* Estilo para los enlaces */
-a {
-  color: $medium-purple;
-  text-decoration: none;
-  
-  &:hover {
-    color: $darker-purple;
-    text-decoration: underline;
-  }
-}
-
-/* Estilo para las tablas */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 1em;
-  
-  th {
-    background-color: white; /* Cambiado de $primary-purple a white */
-    color: $primary-purple; /* Cambiado de white a $primary-purple para mantener legibilidad */
-    border-bottom: 2px solid $primary-purple; /* Añadido para mantener distinción visual */
-  }
-  
-  tr:nth-child(even) {
-    background-color: white; /* Cambiado de $pale-purple a white */
-  }
-  
-  tr:nth-child(odd) {
-    background-color: white; /* Ya estaba en white, pero lo dejamos explícito */
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-}
-
-/* Estilo para tablas con bootstrap styling */
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: white; /* Cambiado de $pale-purple a white */
-}
-
-.table-hover tbody tr:hover {
-  background-color: #f8f8f8; /* Cambiado a un gris muy claro en lugar de color morado */
-}
-
-/* Estilo para los bloques de código */
-pre {
-  background-color: $pale-purple;
-  border-left: 3px solid $primary-purple;
-  padding: 1em;
+  opacity: 0.7;
 }
 
 /* Ajuste para el contenido principal */
 .quarto-container {
-  padding-left: 15px;
-  padding-right: 15px;
-  max-width: 1200px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* Estilo para figuras y plots */
+.figure, .quarto-figure, .cell-output-display {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.figure img, .quarto-figure img, .plot-output img {
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
+  display: block;
 }
 
-/* Estilo para las figuras y gráficos */
-.figure {
+.figure-caption, figcaption {
+  margin-top: 0.5em;
+  font-style: italic;
+  font-size: 0.9em;
+  color: #666;
   text-align: center;
-  margin: 1.5em 0;
-  
-  img {
-    max-width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .figure-caption {
-    font-style: italic;
-    color: #666;
-    margin-top: 0.5em;
-  }
 }
 
-/* Estilo específico para gráficos y visualizaciones */
-.plot-container {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
 
-/* Mejorar visualización de elementos de navegación */
-.nav-tabs .nav-link.active {
-  color: $darker-purple;
-  border-color: #dee2e6 #dee2e6 #fff;
-  font-weight: bold;
-}
 
-.nav-tabs .nav-link:hover {
-  border-color: #e9ecef #e9ecef #dee2e6;
-  color: $medium-purple;
-}
-
-/* Ajustes para impresión */
-@media print {
-  .quarto-title-block {
-    background-color: white !important;
-    color: $darker-purple !important;
-    box-shadow: none !important;
-  }
-  
-  a {
-    color: $darker-purple !important;
-    text-decoration: underline !important;
-  }
-}
