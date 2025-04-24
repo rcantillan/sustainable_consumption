@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Roberto Cantillan">
+<meta name="dcterms.date" content="2025-04-24">
+
+<title>Análisis de Clases Latentes baterias encuesta de consumo crítico</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="03_reporte_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03_reporte_files/libs/quarto-html/quarto.js"></script>
+<script src="03_reporte_files/libs/quarto-html/popper.min.js"></script>
+<script src="03_reporte_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="03_reporte_files/libs/quarto-html/anchor.min.js"></script>
+<link href="03_reporte_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03_reporte_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03_reporte_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="03_reporte_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="03_reporte_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: rgba(0, 0, 0, 0.8);
+background: featured.jpg;
+      }
+</style>
+<link href="03_reporte_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="03_reporte_files/libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/datatables-binding-0.33/datatables.js"></script>
+
+<script src="03_reporte_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="03_reporte_files/libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<link href="03_reporte_files/libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link href="03_reporte_files/libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+
+<link href="03_reporte_files/libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/selectize-0.12.0/selectize.min.js"></script>
+
+<link href="03_reporte_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="03_reporte_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<script src="03_reporte_files/libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="03_reporte_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="custom.scss">
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Análisis de Clases Latentes baterias encuesta de consumo crítico</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Latent Class Analysis</div>
+                <div class="quarto-category">Multinomial regression</div>
+                <div class="quarto-category">Sustenaible Mobility</div>
+                <div class="quarto-category">Sustenaible Development</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Roberto Cantillan </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Departamento de Sociología
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 24, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      <p>Este documento presenta un análisis de clases latentes aplicado a datos de una encuesta sobre sociedad de consumo. Mediante la identificación de patrones subyacentes de respuesta, el análisis examina cinco baterías de variables (C3, O1, O2, O3, O4) relacionadas con actitudes, opiniones, satisfacción, creencias y valores. La metodología incluye la recodificación de escalas Likert a tres categorías (desacuerdo, neutral, acuerdo), el ajuste de modelos con diferente número de clases, y la evaluación de criterios de información para seleccionar el modelo óptimo. El análisis también explora la influencia de covariables sociodemográficas (sexo, edad y nivel socioeconómico) en la pertenencia a cada clase latente.</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En este documento</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">Introducción</a></li>
+  <li><a href="#preparación-de-datos" id="toc-preparación-de-datos" class="nav-link" data-scroll-target="#preparación-de-datos">Preparación de datos</a></li>
+  <li><a href="#función-para-análisis-de-clases-latentes" id="toc-función-para-análisis-de-clases-latentes" class="nav-link" data-scroll-target="#función-para-análisis-de-clases-latentes">Función para análisis de clases latentes</a></li>
+  <li><a href="#función-para-visualizar-resultados-con-etiquetas" id="toc-función-para-visualizar-resultados-con-etiquetas" class="nav-link" data-scroll-target="#función-para-visualizar-resultados-con-etiquetas">Función para visualizar resultados con etiquetas</a></li>
+  <li><a href="#verificación-de-etiquetas-disponibles" id="toc-verificación-de-etiquetas-disponibles" class="nav-link" data-scroll-target="#verificación-de-etiquetas-disponibles">Verificación de etiquetas disponibles</a></li>
+  <li><a href="#análisis-de-clases-latentes-por-baterías-de-variables" id="toc-análisis-de-clases-latentes-por-baterías-de-variables" class="nav-link" data-scroll-target="#análisis-de-clases-latentes-por-baterías-de-variables">Análisis de clases latentes por baterías de variables</a>
+  <ul class="collapse">
+  <li><a href="#batería-c3-variables-de-actitudes-hacia-el-consumo" id="toc-batería-c3-variables-de-actitudes-hacia-el-consumo" class="nav-link" data-scroll-target="#batería-c3-variables-de-actitudes-hacia-el-consumo">Batería C3: Variables de actitudes hacia el consumo</a></li>
+  <li><a href="#batería-o1-variables-de-opiniones-generales" id="toc-batería-o1-variables-de-opiniones-generales" class="nav-link" data-scroll-target="#batería-o1-variables-de-opiniones-generales">Batería O1: Variables de opiniones generales</a></li>
+  <li><a href="#batería-o2-variables-de-satisfacción" id="toc-batería-o2-variables-de-satisfacción" class="nav-link" data-scroll-target="#batería-o2-variables-de-satisfacción">Batería O2: Variables de satisfacción</a></li>
+  <li><a href="#batería-o3-variables-de-creencias" id="toc-batería-o3-variables-de-creencias" class="nav-link" data-scroll-target="#batería-o3-variables-de-creencias">Batería O3: Variables de creencias</a></li>
+  <li><a href="#batería-o4-variables-de-valores" id="toc-batería-o4-variables-de-valores" class="nav-link" data-scroll-target="#batería-o4-variables-de-valores">Batería O4: Variables de valores</a></li>
+  </ul></li>
+  <li><a href="#resumen-de-resultados" id="toc-resumen-de-resultados" class="nav-link" data-scroll-target="#resumen-de-resultados">Resumen de resultados</a></li>
+  <li><a href="#distribución-de-clases-por-batería" id="toc-distribución-de-clases-por-batería" class="nav-link" data-scroll-target="#distribución-de-clases-por-batería">Distribución de clases por batería</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Este documento presenta un análisis de clases latentes (LCA) aplicado a datos de una encuesta sobre sociedad de consumo. El análisis identifica patrones subyacentes de respuesta en diversas baterías de ítems (C3, O1, O2, O3, O4), considerando covariables sociodemográficas como sexo, edad y nivel socioeconómico.</p>
+</section>
+<section id="preparación-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="preparación-de-datos">Preparación de datos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar datos</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span>  <span class="fu">read_sav</span>(<span class="fu">here</span>(<span class="st">"datos"</span>, <span class="st">"Encuesta Sociedad de Consumo 2023.sav"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para recodificar variables a 3 categorías</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>recodificar_likert <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, vars) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(vars), </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">~</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                   . <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="sc">~</span> <span class="dv">1</span>,  <span class="co"># Desacuerdo</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                   . <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>,          <span class="co"># Neutral</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                   . <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">~</span> <span class="dv">3</span>,  <span class="co"># Acuerdo</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                   <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span>      <span class="co"># Valores perdidos</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                 )))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear dataset de trabajo y preparar variables sociodemográficas</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> a <span class="sc">%&gt;%</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NSE =</span> <span class="fu">as_factor</span>(NSE)) <span class="sc">%&gt;%</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">edad_cat =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> EDAD <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> EDAD <span class="sc">&lt;</span> <span class="dv">45</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&gt;=</span> <span class="dv">45</span> <span class="sc">&amp;</span> EDAD <span class="sc">&lt;</span> <span class="dv">55</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&gt;=</span> <span class="dv">55</span> <span class="sc">&amp;</span> EDAD <span class="sc">&lt;</span> <span class="dv">65</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      EDAD <span class="sc">&gt;=</span> <span class="dv">65</span> <span class="sc">~</span> <span class="dv">6</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">edad_cat =</span> <span class="fu">factor</span>(edad_cat, </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"18-24"</span>, <span class="st">"25-34"</span>, <span class="st">"35-44"</span>, <span class="st">"45-54"</span>, <span class="st">"55-64"</span>, <span class="st">"65+"</span>))</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para extraer etiquetas de variables</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>extraer_etiquetas <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, vars) {</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  etiquetas <span class="ot">&lt;-</span> <span class="fu">sapply</span>(vars, <span class="cf">function</span>(v) {</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Intentar obtener la etiqueta de la variable</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    etiqueta <span class="ot">&lt;-</span> <span class="fu">var_label</span>(datos[[v]])</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.null</span>(etiqueta) <span class="sc">||</span> <span class="fu">all</span>(etiqueta <span class="sc">==</span> <span class="st">""</span>)) {</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Si no hay etiqueta, usar el nombre de la variable</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">paste</span>(<span class="st">"Variable"</span>, v))</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Limpiar la etiqueta si es necesario</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>      etiqueta <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\r\n</span><span class="st">|</span><span class="sc">\n</span><span class="st">|</span><span class="sc">\r</span><span class="st">"</span>, <span class="st">" "</span>, <span class="fu">as.character</span>(etiqueta))</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      etiqueta <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">s+"</span>, <span class="st">" "</span>, etiqueta)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(etiqueta)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(etiquetas)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraer y revisar etiquetas para cada conjunto de variables</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>vars_c3 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"C3_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>etiquetas_c3 <span class="ot">&lt;-</span> <span class="fu">extraer_etiquetas</span>(a, vars_c3)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>vars_o1 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"O1_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>etiquetas_o1 <span class="ot">&lt;-</span> <span class="fu">extraer_etiquetas</span>(a, vars_o1)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>vars_o2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"O2_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>etiquetas_o2 <span class="ot">&lt;-</span> <span class="fu">extraer_etiquetas</span>(a, vars_o2)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>vars_o3 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"O3_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>etiquetas_o3 <span class="ot">&lt;-</span> <span class="fu">extraer_etiquetas</span>(a, vars_o3)</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>vars_o4 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"O4_"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>etiquetas_o4 <span class="ot">&lt;-</span> <span class="fu">extraer_etiquetas</span>(a, vars_o4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="función-para-análisis-de-clases-latentes" class="level2">
+<h2 class="anchored" data-anchor-id="función-para-análisis-de-clases-latentes">Función para análisis de clases latentes</h2>
+<p>Para evitar redundancias, definimos una función que realizará el análisis de clases latentes para cada conjunto de variables:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>realizar_lca <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, vars, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"Variables"</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recodificar variables</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  datos <span class="ot">&lt;-</span> <span class="fu">recodificar_likert</span>(datos, vars)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Construir fórmula</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  vars_formula <span class="ot">&lt;-</span> <span class="fu">paste</span>(vars, <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  formula_str <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"cbind("</span>, vars_formula, <span class="st">") ~ SEXO + edad_cat + NSE"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  f_cov <span class="ot">&lt;-</span> <span class="fu">as.formula</span>(formula_str)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ajustar modelos con diferente número de clases</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  modelos_cov <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ajustar modelos</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(n_clases)) {</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Ajustando modelo con"</span>, n_clases[i], <span class="st">"clases...</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    modelos_cov[[i]] <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(f_cov, datos, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                             <span class="at">nclass =</span> n_clases[i], </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">maxiter =</span> <span class="dv">1000</span>, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">nrep =</span> <span class="dv">5</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                             <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Verificar modelos válidos</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  modelos_validos <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">sapply</span>(modelos_cov, is.null)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  indices_validos <span class="ot">&lt;-</span> <span class="fu">which</span>(modelos_validos)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Si no hay modelos válidos, retornar NULL</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(indices_validos) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Crear vectores para resultados</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  clases <span class="ot">&lt;-</span> n_clases[indices_validos]</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  log_likelihood <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(indices_validos))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  bic_values <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(indices_validos))</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  aic_values <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(indices_validos))</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  entropia_values <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(indices_validos))</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraer valores de cada modelo válido</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(indices_validos)) {</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    idx <span class="ot">&lt;-</span> indices_validos[i]</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    modelo <span class="ot">&lt;-</span> modelos_cov[[idx]]</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    log_likelihood[i] <span class="ot">&lt;-</span> modelo<span class="sc">$</span>llik</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    bic_values[i] <span class="ot">&lt;-</span> modelo<span class="sc">$</span>bic</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    aic_values[i] <span class="ot">&lt;-</span> modelo<span class="sc">$</span>aic</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    entropia_values[i] <span class="ot">&lt;-</span> <span class="fu">poLCA.entropy</span>(modelo)</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tabla de resultados</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  resultados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">Clases =</span> clases,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">Log_likelihood =</span> log_likelihood,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">BIC =</span> bic_values,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">AIC =</span> aic_values,</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">Entropia =</span> entropia_values</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráficos de criterios de información</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(resultados, <span class="fu">aes</span>(<span class="at">x =</span> Clases)) <span class="sc">+</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> BIC, <span class="at">colour =</span> <span class="st">"BIC"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> BIC, <span class="at">colour =</span> <span class="st">"BIC"</span>), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> AIC, <span class="at">colour =</span> <span class="st">"AIC"</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> AIC, <span class="at">colour =</span> <span class="st">"AIC"</span>), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Criterios de información por número de clases -"</span>, nombre_conjunto),</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Valor"</span>, </span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">"Criterio"</span>) <span class="sc">+</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráfico de entropía</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(resultados, <span class="fu">aes</span>(<span class="at">x =</span> Clases, <span class="at">y =</span> Entropia)) <span class="sc">+</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Entropía por número de clases -"</span>, nombre_conjunto),</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Entropía"</span>) <span class="sc">+</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Seleccionar modelo óptimo (basado en BIC)</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  indice_optimo <span class="ot">&lt;-</span> <span class="fu">which.min</span>(resultados<span class="sc">$</span>BIC)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  clase_optima <span class="ot">&lt;-</span> clases[indice_optimo]</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  idx_optimo <span class="ot">&lt;-</span> indices_validos[indice_optimo]</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  modelo_optimo <span class="ot">&lt;-</span> modelos_cov[[idx_optimo]]</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Modelo óptimo según BIC:"</span>, clase_optima, <span class="st">"clases</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retornar resultados</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">modelos =</span> modelos_cov,</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">resultados =</span> resultados,</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    <span class="at">graficos_criterios =</span> <span class="fu">list</span>(<span class="at">p1 =</span> p1, <span class="at">p2 =</span> p2),</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="at">modelo_optimo =</span> modelo_optimo,</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">clase_optima =</span> clase_optima,</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">indice_optimo =</span> indice_optimo</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="función-para-visualizar-resultados-con-etiquetas" class="level2">
+<h2 class="anchored" data-anchor-id="función-para-visualizar-resultados-con-etiquetas">Función para visualizar resultados con etiquetas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>visualizar_lca <span class="ot">&lt;-</span> <span class="cf">function</span>(resultado_lca, vars, etiquetas_vars, <span class="at">nombre_conjunto =</span> <span class="st">"Variables"</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraer modelo óptimo</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  modelo_optimo <span class="ot">&lt;-</span> resultado_lca<span class="sc">$</span>modelo_optimo</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  n_clases <span class="ot">&lt;-</span> resultado_lca<span class="sc">$</span>clase_optima</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraer probabilidades condicionales</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  probs_clase_cov <span class="ot">&lt;-</span> modelo_optimo<span class="sc">$</span>probs</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Definir nombres de variables originales</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  var_originales <span class="ot">&lt;-</span> vars</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Usar las etiquetas extraídas para las variables</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  etiquetas <span class="ot">&lt;-</span> <span class="fu">setNames</span>(etiquetas_vars, vars)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Truncar etiquetas demasiado largas para el gráfico</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  etiquetas_truncadas <span class="ot">&lt;-</span> <span class="fu">sapply</span>(etiquetas, <span class="cf">function</span>(e) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">nchar</span>(e) <span class="sc">&gt;</span> <span class="dv">50</span>) {</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">paste0</span>(<span class="fu">substr</span>(e, <span class="dv">1</span>, <span class="dv">47</span>), <span class="st">"..."</span>))</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(e)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  etiquetas <span class="ot">&lt;-</span> <span class="fu">setNames</span>(etiquetas_truncadas, vars)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Preparar datos para el gráfico</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  LMmodelo_cov <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Para cada variable y cada clase</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(probs_clase_cov)) {</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    var_nombre <span class="ot">&lt;-</span> var_originales[i]</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Obtener las probabilidades para esta variable</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    probs <span class="ot">&lt;-</span> probs_clase_cov[[i]]</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_clases) {</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Verificar el número de categorías y adaptar el código</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="fu">ncol</span>(probs) <span class="sc">==</span> <span class="dv">5</span>) {</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Recodificar de 5 a 3 categorías</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        value_recoded <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sum</span>(probs[j, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]),  <span class="co"># Desacuerdo (1-2)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>          probs[j, <span class="dv">3</span>],         <span class="co"># Neutral (3)</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sum</span>(probs[j, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>])   <span class="co"># Acuerdo (4-5)</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Crear dataframe con 3 filas</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        temp_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">item =</span> <span class="fu">rep</span>(var_nombre, <span class="dv">3</span>),</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>          <span class="at">state =</span> <span class="fu">rep</span>(j, <span class="dv">3</span>),</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>          <span class="at">category =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,  <span class="co"># 1=Desacuerdo, 2=Neutral, 3=Acuerdo</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>          <span class="at">value =</span> value_recoded</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Si ya tenemos 3 categorías</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        temp_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>          <span class="at">item =</span> <span class="fu">rep</span>(var_nombre, <span class="fu">ncol</span>(probs)),</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>          <span class="at">state =</span> <span class="fu">rep</span>(j, <span class="fu">ncol</span>(probs)),</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>          <span class="at">category =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(probs),</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>          <span class="at">value =</span> probs[j, ]</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>      LMmodelo_cov <span class="ot">&lt;-</span> <span class="fu">rbind</span>(LMmodelo_cov, temp_df)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtener porcentajes de las clases</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  porcentajes_cov <span class="ot">&lt;-</span> <span class="fu">round</span>(modelo_optimo<span class="sc">$</span>P <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">0</span>)</span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Formatear los datos </span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>  LMmodelo_cov <span class="ot">&lt;-</span> LMmodelo_cov <span class="sc">%&gt;%</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">clase =</span> <span class="fu">factor</span>(</span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="st">"Clase "</span>, state, <span class="st">" ("</span>, porcentajes_cov[state], <span class="st">"%)"</span>),</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">paste0</span>(<span class="st">"Clase "</span>, <span class="dv">1</span><span class="sc">:</span>n_clases, <span class="st">" ("</span>, porcentajes_cov, <span class="st">"%)"</span>)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">category =</span> <span class="fu">factor</span>(</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ifelse</span>(category <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Desacuerdo"</span>, </span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ifelse</span>(category <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"Neutral"</span>, <span class="st">"Acuerdo"</span>)),</span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Desacuerdo"</span>, <span class="st">"Neutral"</span>, <span class="st">"Acuerdo"</span>)</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráfico horizontal con barras apiladas</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  p_probs <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(LMmodelo_cov, <span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">factor</span>(item, <span class="at">levels =</span> var_originales, <span class="at">labels =</span> etiquetas[var_originales]), </span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>                            <span class="at">x =</span> value, <span class="at">fill =</span> category)) <span class="sc">+</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(. <span class="sc">~</span> clase) <span class="sc">+</span>  <span class="co"># Clases en columnas</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Desacuerdo"</span> <span class="ot">=</span> <span class="st">"#A8D8E8"</span>, <span class="st">"Neutral"</span> <span class="ot">=</span> <span class="st">"#E8E8A8"</span>, <span class="st">"Acuerdo"</span> <span class="ot">=</span> <span class="st">"#000000"</span>)) <span class="sc">+</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Probabilidades condicionales por clase latente -"</span>, nombre_conjunto),</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Probabilidad"</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">fill =</span> <span class="st">"Respuesta"</span>) <span class="sc">+</span> </span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),  <span class="co"># Texto más pequeño para las etiquetas largas</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraer coeficientes y errores estándar</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>  coeficientes <span class="ot">&lt;-</span> modelo_optimo<span class="sc">$</span>coeff</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>  errores_est <span class="ot">&lt;-</span> modelo_optimo<span class="sc">$</span>coeff.se</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Si no hay coeficientes o hay menos de 2 clases, no generar gráfico de efectos</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(coeficientes) <span class="sc">||</span> n_clases <span class="sc">&lt;</span> <span class="dv">2</span>) {</span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">grafico_probs =</span> p_probs))</span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Nombres de las clases para las comparaciones</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  nombres_comparacion <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"Log-Odds(Clase"</span>, <span class="dv">2</span><span class="sc">:</span>n_clases, <span class="st">"/ Clase 1)"</span>)</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(coeficientes) <span class="ot">&lt;-</span> nombres_comparacion</span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(errores_est) <span class="ot">&lt;-</span> nombres_comparacion</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Convertir matrices a dataframes</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  df_coef <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(coeficientes) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Variable"</span>)</span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>  df_se <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(errores_est) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">"Variable"</span>)</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Unir coeficientes y errores estándar y calcular intervalos de confianza (95%)</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>  z_critico <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> df_coef <span class="sc">%&gt;%</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Variable, <span class="at">names_to =</span> <span class="st">"Comparacion"</span>, <span class="at">values_to =</span> <span class="st">"Estimado"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>      df_se <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Variable, <span class="at">names_to =</span> <span class="st">"Comparacion"</span>, <span class="at">values_to =</span> <span class="st">"SE"</span>),</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>      <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Comparacion"</span>)</span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(SE) <span class="sc">&amp;</span> <span class="fu">is.finite</span>(SE) <span class="sc">&amp;</span> SE <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_lower =</span> Estimado <span class="sc">-</span> z_critico <span class="sc">*</span> SE,</span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>      <span class="at">CI_upper =</span> Estimado <span class="sc">+</span> z_critico <span class="sc">*</span> SE,</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>      <span class="at">Comparacion =</span> <span class="fu">factor</span>(Comparacion, <span class="at">levels =</span> nombres_comparacion),</span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>      <span class="at">Variable =</span> <span class="fu">fct_rev</span>(<span class="fu">factor</span>(Variable))</span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráfico de efectos de covariables</span></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  p_covs <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> Estimado, <span class="at">y =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> CI_lower, <span class="at">xmax =</span> CI_upper), <span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Comparacion), <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> Comparacion, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">ncol =</span> <span class="fu">min</span>(n_clases<span class="dv">-1</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Efecto de covariables en la pertenencia a clases latentes -"</span>, nombre_conjunto),</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Modelo de"</span>, n_clases, <span class="st">"clases | Coeficientes vs Clase 1 | IC 95%"</span>),</span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Estimado del coeficiente (Log-Odds relativo a Clase 1)"</span>,</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Covariable / Nivel"</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">"lines"</span>)</span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">grafico_probs =</span> p_probs, <span class="at">grafico_covs =</span> p_covs))</span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="verificación-de-etiquetas-disponibles" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-de-etiquetas-disponibles">Verificación de etiquetas disponibles</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear una tabla con las etiquetas extraídas</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>etiquetas_todas <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Variable =</span> vars_c3, <span class="at">Etiqueta =</span> etiquetas_c3, Batería <span class="ot">=</span> <span class="st">"C3"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Variable =</span> vars_o1, <span class="at">Etiqueta =</span> etiquetas_o1, Batería <span class="ot">=</span> <span class="st">"O1"</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Variable =</span> vars_o2, <span class="at">Etiqueta =</span> etiquetas_o2, Batería <span class="ot">=</span> <span class="st">"O2"</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Variable =</span> vars_o3, <span class="at">Etiqueta =</span> etiquetas_o3, Batería <span class="ot">=</span> <span class="st">"O3"</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">Variable =</span> vars_o4, <span class="at">Etiqueta =</span> etiquetas_o4, Batería <span class="ot">=</span> <span class="st">"O4"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar las etiquetas</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(etiquetas_todas, </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">filter =</span> <span class="st">'top'</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">10</span>, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                             <span class="at">autoWidth =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                             <span class="at">columnDefs =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">width =</span> <span class="st">'60%'</span>, <span class="at">targets =</span> <span class="dv">2</span>))),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">caption =</span> <span class="st">"Etiquetas de las variables utilizadas en el análisis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e48b0266b9845c79d10a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e48b0266b9845c79d10a">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Etiquetas de las variables utilizadas en el análisis<\/caption>","data":[["C3_1","C3_2","C3_3","C3_4","C3_5","C3_6","C3_7","C3_8","C3_9","C3_10","C3_11","C3_12","C3_13","C3_14","C3_15","C3_16","O1_1","O1_2","O1_3","O1_4","O1_5","O1_6","O1_7","O1_8","O1_9","O1_10","O2_1","O2_2","O2_3","O2_4","O2_5","O2_6","O2_7","O2_8","O2_9","O2_10","O2_11","O2_12","O2_13","O2_14","O3_1","O3_2","O3_3","O3_4","O3_5","O3_6","O3_7","O3_8","O3_9","O3_10","O4_1","O4_2","O4_3","O4_4","O4_5","O4_6","O4_7","O4_8","O4_9","O4_10","O4_11","O4_12"],["C3_1","C3_2","C3_3","C3_4","C3_5","C3_6","C3_7","C3_8","C3_9","C3_10","C3_11","C3_12","C3_13","C3_14","C3_15","C3_16","O1_1","O1_2","O1_3","O1_4","O1_5","O1_6","O1_7","O1_8","O1_9","O1_10","O2_1","O2_2","O2_3","O2_4","O2_5","O2_6","O2_7","O2_8","O2_9","O2_10","O2_11","O2_12","O2_13","O2_14","O3_1","O3_2","O3_3","O3_4","O3_5","O3_6","O3_7","O3_8","O3_9","O3_10","O4_1","O4_2","O4_3","O4_4","O4_5","O4_6","O4_7","O4_8","O4_9","O4_10","O4_11","O4_12"],["En general, uno se viste de acuerdo a lo que es_¿Qué piensa sobre las siguientes afirmaciones?","En algunas situaciones, es necesario y legítimo endeudarse para poder comprar lo que uno quiere_¿Qué piensa sobre las siguientes afirmaciones?","Me siento orgulloso/a cuando puedo darles a mis hijos aquellos bienes que mis padres no pudieron darme a mí._¿Qué piensa sobre las siguientes afirmaciones?","En mi barrio hay gente que se endeuda para aparentar un mayor estatus social._¿Qué piensa sobre las siguientes afirmaciones?","Tengo mucha ropa en mi armario, aunque no la uso._¿Qué piensa sobre las siguientes afirmaciones?","Es mejor dos prendas de ropa de menor calidad por el precio de una de buena calidad_¿Qué piensa sobre las siguientes afirmaciones?","Si me es posible, me gusta tener los últimos bienes tecnológicos_¿Qué piensa sobre las siguientes afirmaciones?","Me gusta conocer y aprovechar las ofertas de las tiendas y supermercados_¿Qué piensa sobre las siguientes afirmaciones?","La gente que me conoce dice que soy “marquero/a”_¿Qué piensa sobre las siguientes afirmaciones?","Aunque uno no esté pendiente de las marcas, es cierto que ellas dicen algo de la persona que las usa._¿Qué piensa sobre las siguientes afirmaciones?","Con lo difícil que está la vida, a veces es bueno darse un gusto comprándose algo que a uno lo haga sentirse bien_¿Qué piensa sobre las siguientes afirmaciones?","Usualmente, pruebo las nuevas tecnologías y luego se las recomiendo a las personas que me rodean_¿Qué piensa sobre las siguientes afirmaciones?","Prefiero dejar de ganar dinero a cambio de más tiempo con mi familia y amigos_¿Qué piensa sobre las siguientes afirmaciones?","La forma en que uno consume algunos bienes tiene que ver con la postura política de uno_¿Qué piensa sobre las siguientes afirmaciones?","Es difícil expresar una opinión política si uno está ocupado comprando y consumiendo_¿Qué piensa sobre las siguientes afirmaciones?","Disfruto compartir con amigos o familiares en centros comerciales_¿Qué piensa sobre las siguientes afirmaciones?","Compra algún producto en Amazon, Ali Express, E-Bay, Wish u otra tienda fuera del país_¿Qué tan seguido usted…?","Viaja fuera del país en avión_¿Qué tan seguido usted…?","Ve alguna serie o película en Netflix, Youtube o similar_¿Qué tan seguido usted…?","Usa Uber, Rappi o Pedidos Ya_¿Qué tan seguido usted…?","Compra ropa de segunda mano_¿Qué tan seguido usted…?","Cultiva y cosecha sus propios alimentos_¿Qué tan seguido usted…?","Repara su ropa, accesorios y/o electrodomésticos_¿Qué tan seguido usted…?","Adquiere productos con la etiqueta “comercio justo”_¿Qué tan seguido usted…?","Compara precios en internet antes de comprar_¿Qué tan seguido usted…?","Elabora un presupuesto mensual para monitorear mis gastos_¿Qué tan seguido usted…?","Evita dejar luces prendidas en ambiente desocupados _¿Qué tan frecuente usted…?","Corta el agua mientras se lava los dientes. _¿Qué tan frecuente usted…?","Toma duchas cortas_¿Qué tan frecuente usted…?","Espera que los alimentos se enfríen antes de guardarlos en el refrigerador. _¿Qué tan frecuente usted…?","Desenchufa aparatos eléctricos cuando no los está ocupando. _¿Qué tan frecuente usted…?","Separa la basura de su hogar para reciclaje. _¿Qué tan frecuente usted…?","Re-utiliza papel en la impresión de documentos. _¿Qué tan frecuente usted…?","Planifica compra de alimentos. _¿Qué tan frecuente usted…?","Planifica compras de vestuario. _¿Qué tan frecuente usted…?","Lee la etiqueta de los productos antes de decidir compra. _¿Qué tan frecuente usted…?","Compra productos orgánicos o naturales. _¿Qué tan frecuente usted…?","Compra productos hechos con material reciclado. _¿Qué tan frecuente usted…?","Comenta información sobre los productos y empresas. _¿Qué tan frecuente usted…?","Pide la boleta de los productos que compra _¿Qué tan frecuente usted…?","Deja de comprar un producto porque se ha enterado de que daña el medioambiente, aunque sea más barato._¿Qué tan seguido usted…?","Intenta influir en lo que consumen otras personas_¿Qué tan seguido usted…?","Uso mis redes sociales para promover productos o empresas que considero éticas o sostenibles_¿Qué tan seguido usted…?","Compra un producto exclusivamente porque no daña el medioambiente en desmedro de otro, aunque sea más caro._¿Qué tan seguido usted…?","Realiza un reclamo o demanda colectiva en el Sernac_¿Qué tan seguido usted…?","Realiza un reclamo en el lugar de venta cuando un producto o servicio no lo satisface_¿Qué tan seguido usted…?","Se informa respecto de dónde viene la ropa, alimentos y otros productos que consume_¿Qué tan seguido usted…?","Participa en asociaciones de consumidores, cooperativas o grupos organizados de compradores_¿Qué tan seguido usted…?","Participa en marchas o movilizaciones_¿Qué tan seguido usted…?","Compra en pequeños negocios_¿Qué tan seguido usted…?","Es necesario hacerse cargo de las tareas de reciclaje_¿Qué le parecen las siguientes afirmaciones?","Es fácil entender el etiquetado de los envases para separar el reciclaje_¿Qué le parecen las siguientes afirmaciones?","Es fácil llevar mi reciclaje hasta los centros de acopio_¿Qué le parecen las siguientes afirmaciones?","No tengo tiempo para hacerme cargo de todo lo que implica reciclar_¿Qué le parecen las siguientes afirmaciones?","En mi comuna o barrio es fácil reciclar_¿Qué le parecen las siguientes afirmaciones?","En mi hogar, todos/as reciclamos_¿Qué le parecen las siguientes afirmaciones?","Me cuesta creer que un envase reciclado sirva de algo para el medioambiente_¿Qué le parecen las siguientes afirmaciones?","Reciclar es bueno para la economía_¿Qué le parecen las siguientes afirmaciones?","Consumir menos es mejor que reciclar_¿Qué le parecen las siguientes afirmaciones?","Con la vida apurada de hoy, es mejor comprar algo nuevo que reparar algo que no funciona_¿Qué le parecen las siguientes afirmaciones?","Lo que compramos o dejamos de comprar es un problema de cada persona_¿Qué le parecen las siguientes afirmaciones?","Me considero más un ciudadano que un consumidor_¿Qué le parecen las siguientes afirmaciones?"],["C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","C3","O1","O1","O1","O1","O1","O1","O1","O1","O1","O1","O2","O2","O2","O2","O2","O2","O2","O2","O2","O2","O2","O2","O2","O2","O3","O3","O3","O3","O3","O3","O3","O3","O3","O3","O4","O4","O4","O4","O4","O4","O4","O4","O4","O4","O4","O4"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Variable<\/th>\n      <th>Etiqueta<\/th>\n      <th>Batería<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"width":"60%","targets":2},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"Variable","targets":1},{"name":"Etiqueta","targets":2},{"name":"Batería","targets":3}],"order":[],"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="análisis-de-clases-latentes-por-baterías-de-variables" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-clases-latentes-por-baterías-de-variables">Análisis de clases latentes por baterías de variables</h2>
+<section id="batería-c3-variables-de-actitudes-hacia-el-consumo" class="level3">
+<h3 class="anchored" data-anchor-id="batería-c3-variables-de-actitudes-hacia-el-consumo">Batería C3: Variables de actitudes hacia el consumo</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar LCA para C3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lca_c3 <span class="ot">&lt;-</span> <span class="fu">realizar_lca</span>(datos, vars_c3, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"C3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 2 clases...
+Ajustando modelo con 3 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 4 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 5 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 6 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo óptimo según BIC: 4 clases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de resultados</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_c3<span class="sc">$</span>resultados, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Comparación de modelos - Batería C3"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparación de modelos - Batería C3</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Log_likelihood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-25070.30</td>
+<td style="text-align: right;">50717.18</td>
+<td style="text-align: right;">50296.60</td>
+<td style="text-align: right;">15.51</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-24521.72</td>
+<td style="text-align: right;">49960.04</td>
+<td style="text-align: right;">49291.43</td>
+<td style="text-align: right;">15.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-24294.96</td>
+<td style="text-align: right;">49846.57</td>
+<td style="text-align: right;">48929.93</td>
+<td style="text-align: right;">15.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-24144.01</td>
+<td style="text-align: right;">49884.70</td>
+<td style="text-align: right;">48720.02</td>
+<td style="text-align: right;">15.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-24069.36</td>
+<td style="text-align: right;">50075.44</td>
+<td style="text-align: right;">48662.72</td>
+<td style="text-align: right;">15.04</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar gráficos de criterios de información</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(lca_c3<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p1, lca_c3<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-c3-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultado del modelo óptimo según BIC</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>vis_c3 <span class="ot">&lt;-</span> <span class="fu">visualizar_lca</span>(lca_c3, vars_c3, etiquetas_c3, <span class="at">nombre_conjunto =</span> <span class="st">"C3"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>vis_c3<span class="sc">$</span>grafico_probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-c3-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vis_c3<span class="sc">$</span>grafico_covs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-c3-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="batería-o1-variables-de-opiniones-generales" class="level3">
+<h3 class="anchored" data-anchor-id="batería-o1-variables-de-opiniones-generales">Batería O1: Variables de opiniones generales</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar LCA para O1</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lca_o1 <span class="ot">&lt;-</span> <span class="fu">realizar_lca</span>(datos, vars_o1, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"O1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 2 clases...
+Ajustando modelo con 3 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 4 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 5 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 6 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo óptimo según BIC: 3 clases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de resultados</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_o1<span class="sc">$</span>resultados, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Comparación de modelos - Batería O1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparación de modelos - Batería O1</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Log_likelihood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-15033.63</td>
+<td style="text-align: right;">30466.44</td>
+<td style="text-align: right;">30175.27</td>
+<td style="text-align: right;">9.33</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-14846.33</td>
+<td style="text-align: right;">30343.15</td>
+<td style="text-align: right;">29868.65</td>
+<td style="text-align: right;">9.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-14722.86</td>
+<td style="text-align: right;">30347.54</td>
+<td style="text-align: right;">29689.72</td>
+<td style="text-align: right;">9.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-14631.79</td>
+<td style="text-align: right;">30416.75</td>
+<td style="text-align: right;">29575.59</td>
+<td style="text-align: right;">9.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-15140.00</td>
+<td style="text-align: right;">31684.49</td>
+<td style="text-align: right;">30660.00</td>
+<td style="text-align: right;">9.43</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar gráficos de criterios de información</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(lca_o1<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p1, lca_o1<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o1-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultado del modelo óptimo según BIC</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>vis_o1 <span class="ot">&lt;-</span> <span class="fu">visualizar_lca</span>(lca_o1, vars_o1, etiquetas_o1, <span class="at">nombre_conjunto =</span> <span class="st">"O1"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>vis_o1<span class="sc">$</span>grafico_probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o1-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vis_o1<span class="sc">$</span>grafico_covs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o1-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="batería-o2-variables-de-satisfacción" class="level3">
+<h3 class="anchored" data-anchor-id="batería-o2-variables-de-satisfacción">Batería O2: Variables de satisfacción</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar LCA para O2</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lca_o2 <span class="ot">&lt;-</span> <span class="fu">realizar_lca</span>(datos, vars_o2, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"O2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 2 clases...
+Ajustando modelo con 3 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 4 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 5 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 6 clases...
+Modelo óptimo según BIC: 4 clases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de resultados</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_o2<span class="sc">$</span>resultados, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Comparación de modelos - Batería O2"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparación de modelos - Batería O2</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Log_likelihood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-19576.63</td>
+<td style="text-align: right;">39670.70</td>
+<td style="text-align: right;">39293.25</td>
+<td style="text-align: right;">12.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-19280.71</td>
+<td style="text-align: right;">39389.32</td>
+<td style="text-align: right;">38785.42</td>
+<td style="text-align: right;">11.97</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-19017.10</td>
+<td style="text-align: right;">39172.57</td>
+<td style="text-align: right;">38342.20</td>
+<td style="text-align: right;">11.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-18894.80</td>
+<td style="text-align: right;">39238.44</td>
+<td style="text-align: right;">38181.60</td>
+<td style="text-align: right;">11.76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-20610.53</td>
+<td style="text-align: right;">42980.37</td>
+<td style="text-align: right;">41697.07</td>
+<td style="text-align: right;">12.79</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar gráficos de criterios de información</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(lca_o2<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p1, lca_o2<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o2-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultado del modelo óptimo según BIC</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>vis_o2 <span class="ot">&lt;-</span> <span class="fu">visualizar_lca</span>(lca_o2, vars_o2, etiquetas_o2, <span class="at">nombre_conjunto =</span> <span class="st">"O2"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>vis_o2<span class="sc">$</span>grafico_probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o2-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>vis_o2<span class="sc">$</span>grafico_covs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o2-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="batería-o3-variables-de-creencias" class="level3">
+<h3 class="anchored" data-anchor-id="batería-o3-variables-de-creencias">Batería O3: Variables de creencias</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar LCA para O3</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>lca_o3 <span class="ot">&lt;-</span> <span class="fu">realizar_lca</span>(datos, vars_o3, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"O3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 2 clases...
+Ajustando modelo con 3 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 4 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 5 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 6 clases...
+Modelo óptimo según BIC: 4 clases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de resultados</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_o3<span class="sc">$</span>resultados, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Comparación de modelos - Batería O3"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparación de modelos - Batería O3</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Log_likelihood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-13387.24</td>
+<td style="text-align: right;">27173.65</td>
+<td style="text-align: right;">26882.48</td>
+<td style="text-align: right;">8.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-13176.40</td>
+<td style="text-align: right;">27003.30</td>
+<td style="text-align: right;">26528.80</td>
+<td style="text-align: right;">8.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-12979.06</td>
+<td style="text-align: right;">26859.94</td>
+<td style="text-align: right;">26202.12</td>
+<td style="text-align: right;">8.08</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-14200.95</td>
+<td style="text-align: right;">29555.05</td>
+<td style="text-align: right;">28713.90</td>
+<td style="text-align: right;">8.82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-14225.57</td>
+<td style="text-align: right;">29855.62</td>
+<td style="text-align: right;">28831.13</td>
+<td style="text-align: right;">8.82</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar gráficos de criterios de información</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(lca_o3<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p1, lca_o3<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o3-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultado del modelo óptimo según BIC</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>vis_o3 <span class="ot">&lt;-</span> <span class="fu">visualizar_lca</span>(lca_o3, vars_o3, etiquetas_o3, <span class="at">nombre_conjunto =</span> <span class="st">"O3"</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>vis_o3<span class="sc">$</span>grafico_probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o3-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>vis_o3<span class="sc">$</span>grafico_covs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o3-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="batería-o4-variables-de-valores" class="level3">
+<h3 class="anchored" data-anchor-id="batería-o4-variables-de-valores">Batería O4: Variables de valores</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar LCA para O4</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>lca_o4 <span class="ot">&lt;-</span> <span class="fu">realizar_lca</span>(datos, vars_o4, <span class="at">n_clases =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">nombre_conjunto =</span> <span class="st">"O4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 2 clases...
+Ajustando modelo con 3 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 4 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 5 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ajustando modelo con 6 clases...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Modelo óptimo según BIC: 4 clases</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabla de resultados</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lca_o4<span class="sc">$</span>resultados, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Comparación de modelos - Batería O4"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparación de modelos - Batería O4</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Log_likelihood</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">AIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-18519.37</td>
+<td style="text-align: right;">37497.05</td>
+<td style="text-align: right;">37162.74</td>
+<td style="text-align: right;">11.46</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-18029.67</td>
+<td style="text-align: right;">36798.55</td>
+<td style="text-align: right;">36259.34</td>
+<td style="text-align: right;">11.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">-17855.46</td>
+<td style="text-align: right;">36731.02</td>
+<td style="text-align: right;">35986.92</td>
+<td style="text-align: right;">11.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-17826.16</td>
+<td style="text-align: right;">36953.32</td>
+<td style="text-align: right;">36004.32</td>
+<td style="text-align: right;">11.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-19084.49</td>
+<td style="text-align: right;">39750.88</td>
+<td style="text-align: right;">38596.98</td>
+<td style="text-align: right;">11.85</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar gráficos de criterios de información</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(lca_o4<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p1, lca_o4<span class="sc">$</span>graficos_criterios<span class="sc">$</span>p2, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o4-1.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultado del modelo óptimo según BIC</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>vis_o4 <span class="ot">&lt;-</span> <span class="fu">visualizar_lca</span>(lca_o4, vars_o4, etiquetas_o4, <span class="at">nombre_conjunto =</span> <span class="st">"O4"</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>vis_o4<span class="sc">$</span>grafico_probs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o4-2.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>vis_o4<span class="sc">$</span>grafico_covs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="03_reporte_files/figure-html/lca-o4-3.png" class="img-fluid figure-img" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="resumen-de-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-de-resultados">Resumen de resultados</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear dataframe de resumen</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  Batería <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"C3"</span>, <span class="st">"O1"</span>, <span class="st">"O2"</span>, <span class="st">"O3"</span>, <span class="st">"O4"</span>),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Variables =</span> <span class="fu">c</span>(</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"C3_1 a C3_16 ("</span>, <span class="fu">length</span>(vars_c3), <span class="st">" vars)"</span>),</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"O1_1 a O1_10 ("</span>, <span class="fu">length</span>(vars_o1), <span class="st">" vars)"</span>),</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"O2_1 a O2_14 ("</span>, <span class="fu">length</span>(vars_o2), <span class="st">" vars)"</span>),</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"O3_1 a O3_10 ("</span>, <span class="fu">length</span>(vars_o3), <span class="st">" vars)"</span>),</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"O4_1 a O4_12 ("</span>, <span class="fu">length</span>(vars_o4), <span class="st">" vars)"</span>)</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  Clases_Ó<span class="at">ptimas =</span> <span class="fu">c</span>(</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>    lca_c3<span class="sc">$</span>clase_optima,</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    lca_o1<span class="sc">$</span>clase_optima,</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    lca_o2<span class="sc">$</span>clase_optima,</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>    lca_o3<span class="sc">$</span>clase_optima,</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    lca_o4<span class="sc">$</span>clase_optima</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">BIC =</span> <span class="fu">c</span>(</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(lca_c3<span class="sc">$</span>resultados<span class="sc">$</span>BIC),</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(lca_o1<span class="sc">$</span>resultados<span class="sc">$</span>BIC),</span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(lca_o2<span class="sc">$</span>resultados<span class="sc">$</span>BIC),</span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(lca_o3<span class="sc">$</span>resultados<span class="sc">$</span>BIC),</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(lca_o4<span class="sc">$</span>resultados<span class="sc">$</span>BIC)</span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>  Entropía <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>    lca_c3<span class="sc">$</span>resultados<span class="sc">$</span>Entropia[<span class="fu">which.min</span>(lca_c3<span class="sc">$</span>resultados<span class="sc">$</span>BIC)],</span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a>    lca_o1<span class="sc">$</span>resultados<span class="sc">$</span>Entropia[<span class="fu">which.min</span>(lca_o1<span class="sc">$</span>resultados<span class="sc">$</span>BIC)],</span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a>    lca_o2<span class="sc">$</span>resultados<span class="sc">$</span>Entropia[<span class="fu">which.min</span>(lca_o2<span class="sc">$</span>resultados<span class="sc">$</span>BIC)],</span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a>    lca_o3<span class="sc">$</span>resultados<span class="sc">$</span>Entropia[<span class="fu">which.min</span>(lca_o3<span class="sc">$</span>resultados<span class="sc">$</span>BIC)],</span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a>    lca_o4<span class="sc">$</span>resultados<span class="sc">$</span>Entropia[<span class="fu">which.min</span>(lca_o4<span class="sc">$</span>resultados<span class="sc">$</span>BIC)]</span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar tabla de resumen</span></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(resumen, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">caption =</span> <span class="st">"Resumen de resultados por batería de variables"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>), <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Resumen de resultados por batería de variables</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Batería</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variables</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Clases_Óptimas</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">BIC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Entropía</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C3</td>
+<td style="text-align: left;">C3_1 a C3_16 (16 vars)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">49846.57</td>
+<td style="text-align: right;">15.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O1</td>
+<td style="text-align: left;">O1_1 a O1_10 (10 vars)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">30343.15</td>
+<td style="text-align: right;">9.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O2</td>
+<td style="text-align: left;">O2_1 a O2_14 (14 vars)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">39172.57</td>
+<td style="text-align: right;">11.80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O3</td>
+<td style="text-align: left;">O3_1 a O3_10 (10 vars)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">26859.94</td>
+<td style="text-align: right;">8.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">O4</td>
+<td style="text-align: left;">O4_1 a O4_12 (12 vars)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">36731.02</td>
+<td style="text-align: right;">11.05</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="distribución-de-clases-por-batería" class="level2">
+<h2 class="anchored" data-anchor-id="distribución-de-clases-por-batería">Distribución de clases por batería</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para obtener distribución de clases</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>obtener_distribucion <span class="ot">&lt;-</span> <span class="cf">function</span>(resultado_lca, datos, vars, nombre_conjunto) {</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraer modelo óptimo</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  modelo_optimo <span class="ot">&lt;-</span> resultado_lca<span class="sc">$</span>modelo_optimo</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  n_clases <span class="ot">&lt;-</span> resultado_lca<span class="sc">$</span>clase_optima</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtener probabilidades posteriores</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  posterior_probs <span class="ot">&lt;-</span> modelo_optimo<span class="sc">$</span>posterior</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Asignar cada observación a la clase con mayor probabilidad posterior</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  clase_asignada <span class="ot">&lt;-</span> <span class="fu">apply</span>(posterior_probs, <span class="dv">1</span>, which.max)</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Preparar datos para conteo</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  indices_validos <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">rowSums</span>(<span class="fu">as.matrix</span>(datos[, vars]))))</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Contar observaciones por clase</span></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  tabla <span class="ot">&lt;-</span> <span class="fu">table</span>(clase_asignada)</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  porcentajes <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">prop.table</span>(tabla) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Crear dataframe</span></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">Conjunto =</span> nombre_conjunto,</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Clase =</span> <span class="fu">paste</span>(<span class="st">"Clase"</span>, <span class="fu">names</span>(tabla)),</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Observaciones =</span> <span class="fu">as.numeric</span>(tabla),</span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">Porcentaje =</span> porcentajes</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener distribuciones</span></span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>dist_c3 <span class="ot">&lt;-</span> <span class="fu">obtener_distribucion</span>(lca_c3, datos, vars_c3, <span class="st">"C3"</span>)</span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>dist_o1 <span class="ot">&lt;-</span> <span class="fu">obtener_distribucion</span>(lca_o1, datos, vars_o1, <span class="st">"O1"</span>)</span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>dist_o2 <span class="ot">&lt;-</span> <span class="fu">obtener_distribucion</span>(lca_o2, datos, vars_o2, <span class="st">"O2"</span>)</span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>dist_o3 <span class="ot">&lt;-</span> <span class="fu">obtener_distribucion</span>(lca_o3, datos, vars_o3, <span class="st">"O3"</span>)</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>dist_o4 <span class="ot">&lt;-</span> <span class="fu">obtener_distribucion</span>(lca_o4, datos, vars_o4, <span class="st">"O4"</span>)</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinar en un solo dataframe</span></span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>distribuciones <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(dist_c3, dist_o1, dist_o2, dist_o3, dist_o4)</span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar tabla</span></span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>distribuciones <span class="sc">%&gt;%</span></span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  DT<span class="sc">::</span><span class="fu">datatable</span>(</span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Distribución de observaciones por clase latente"</span>,</span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">20</span>, <span class="at">dom =</span> <span class="st">'tip'</span>),</span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">rownames =</span> <span class="cn">FALSE</span></span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-63c950249fdf52fe7538" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-63c950249fdf52fe7538">{"x":{"filter":"none","vertical":false,"caption":"<caption>Distribución de observaciones por clase latente<\/caption>","data":[["C3","C3","C3","C3","O1","O1","O1","O2","O2","O2","O2","O3","O3","O3","O3","O4","O4","O4","O4"],["Clase 1","Clase 2","Clase 3","Clase 4","Clase 1","Clase 2","Clase 3","Clase 1","Clase 2","Clase 3","Clase 4","Clase 1","Clase 2","Clase 3","Clase 4","Clase 1","Clase 2","Clase 3","Clase 4"],[600,43,461,519,648,678,297,362,337,98,826,605,625,170,223,426,70,567,560],["1","2","3","4","1","2","3","1","2","3","4","1","2","3","4","1","2","3","4"],[37,2.6,28.4,32,39.9,41.8,18.3,22.3,20.8,6,50.9,37.3,38.5,10.5,13.7,26.2,4.3,34.9,34.5]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Conjunto<\/th>\n      <th>Clase<\/th>\n      <th>Observaciones<\/th>\n      <th>Porcentaje.clase_asignada<\/th>\n      <th>Porcentaje.Freq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":20,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[2,4]},{"name":"Conjunto","targets":0},{"name":"Clase","targets":1},{"name":"Observaciones","targets":2},{"name":"Porcentaje.clase_asignada","targets":3},{"name":"Porcentaje.Freq","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,20,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{cantillan2025,
+  author = {Cantillan, Roberto},
+  title = {Análisis de {Clases} {Latentes} Baterias Encuesta de Consumo
+    Crítico},
+  date = {2025},
+  langid = {en},
+  abstract = {Este documento presenta un análisis de clases latentes
+    aplicado a datos de una encuesta sobre sociedad de consumo. Mediante
+    la identificación de patrones subyacentes de respuesta, el análisis
+    examina cinco baterías de variables (C3, O1, O2, O3, O4)
+    relacionadas con actitudes, opiniones, satisfacción, creencias y
+    valores. La metodología incluye la recodificación de escalas Likert
+    a tres categorías (desacuerdo, neutral, acuerdo), el ajuste de
+    modelos con diferente número de clases, y la evaluación de criterios
+    de información para seleccionar el modelo óptimo. El análisis
+    también explora la influencia de covariables sociodemográficas
+    (sexo, edad y nivel socioeconómico) en la pertenencia a cada clase
+    latente.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cantillan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Cantillan, Roberto. 2025. <span>“Análisis de Clases Latentes Baterias
+Encuesta de Consumo Crítico.”</span> <em>Documentos de Trabajo</em>.
+</div></div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
