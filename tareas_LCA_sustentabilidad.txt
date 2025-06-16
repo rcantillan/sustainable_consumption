@@ -1,0 +1,29 @@
+
+
+En general, el análisis le gusto mucho, 
+y quieren profundizar el modelo con covariables (por supuesto). 
+
+
+* Esto son otros sociodemográficos relevantes que quieren considerar y evaluar (ver si los modelos se mantienen estables y no se pierden todos los grados de libertad)
+
+- Constuir indicador de Clase. (Ingreso total, o tramo, ocupación, entre otros) (Muy importante)
+- Indicador de posición política (no tan importante) 
+- Religión (menos importante) 
+- Nacionalidad (menos importante) 
+- urbano rural (subjetiva u objetiva) 
+
+
+
+* Después del modelo de regresión multinomial que describe la composición sociodemográfica de las clases. 
+** Hay que hacer otro modelo que use las la variable de clasificación de las clases latentes por individuo como independiente para explicar cuestiones de movilidad, y acá no hay nada claro. Hay que explorar que variables de movilidad (de comportamiento le dices) tiene más sentido. 
+
+(Al final del modulo "O" están las variables de movilidad) -------------------------------------------------
+
+- Probar ese tipo de cosas cómo variable dependiente. 
+- Cómo cada clase correlaciona a las preguntas sobre transporte y movilidad 
+- Cómo se movilidad hoy y en el futuro a su casa, lugar de trabajo o estudio. 
+- Viajes cortos y largos 
+- Uso de bicicleta, por que si y por que no (razones). 
+- Cercanía (a su lugar de trabajo?) 
+
+

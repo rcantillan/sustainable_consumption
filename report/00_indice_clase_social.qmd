@@ -57,7 +57,7 @@ Utilizamos la función `read_sav()` del paquete haven para importar la base de d
 
 ```{r load-data}
 # Cargar datos desde archivo SPSS
-datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM 2810.sav"))
+datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM Codificada 20220307.sav"))
 ```
 
 # Marco teórico y conceptual
@@ -448,7 +448,7 @@ Para examinar las relaciones entre los diferentes componentes del índice, calcu
 ```{r correlation}
 # Matriz de correlación entre componentes
 componentes <- datos_clase %>%
-  select(nivel_educ, nivel_ocup, indice_posesiones, indice_gastos)
+  dplyr::select(nivel_educ, nivel_ocup, indice_posesiones, indice_gastos)
 
 cor_matrix <- cor(componentes, use = "pairwise.complete.obs")
 

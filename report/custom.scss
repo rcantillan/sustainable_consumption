@@ -87,5 +87,8 @@ $toc-inactive-border: #f1f1f1; // Color del borde izquierdo para ítems inactivo
   text-align: center;
 }
 
-
+.content-block {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 

@@ -8,7 +8,7 @@ library(here)
 library(haven) # Necesario para read_sav
 
 # Cargar datos
-datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM 2810.sav"))
+datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM Codificada 20220307.sav"))
 
 # Escala de Modo de Vida Imperial (MVI)
 vars_mvi <- c("P7_2", "P7_4", "P7_5", "P4_2", "P4_4")
