@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Roberto Cantillan">
-<meta name="dcterms.date" content="2025-04-20">
+<meta name="dcterms.date" content="2025-06-15">
 
 <title>Análisis de Clases Latentes y Patrones de Movilidad</title>
 <style>
@@ -65,10 +65,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="02_reporte_completo_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="02_reporte_completo_files/libs/quarto-html/anchor.min.js"></script>
 <link href="02_reporte_completo_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="02_reporte_completo_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="02_reporte_completo_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="02_reporte_completo_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="02_reporte_completo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="02_reporte_completo_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="02_reporte_completo_files/libs/bootstrap/bootstrap-2307b71a298ed1cfb9f74c0c6b4d35d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <style>
 
       .quarto-title-block .quarto-title-banner h1,
@@ -130,7 +130,7 @@ background: featured.jpg;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 20, 2025</p>
+        <p class="date">June 15, 2025</p>
       </div>
     </div>
     
@@ -223,7 +223,7 @@ background: featured.jpg;
 <h2 class="anchored" data-anchor-id="carga-de-datos-base">Carga de datos base</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar datos desde archivo SPSS</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="fu">here</span>(<span class="st">"datos"</span>, <span class="st">"BBDD Consolidada Maule UCM 2810.sav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="fu">here</span>(<span class="st">"datos"</span>, <span class="st">"BBDD Consolidada Maule UCM Codificada 20220307.sav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="creación-del-indicador-de-clase-social" class="level2">
@@ -1191,37 +1191,37 @@ X-squared = 9.1303, df = 8, p-value = 0.3314</code></pre>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>academic_table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 5
-  `Modo transporte` Variable                          RRR    `IC 95%`  `Valor p`
-  &lt;chr&gt;             &lt;chr&gt;                             &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;
-1 A pie             clase_latente_factorClase 2 (13%) 0.960  [0.604, …    0.864 
-2 A pie             clase_latente_factorClase 3 (27%) 1.011  [0.707, …    0.953 
-3 En bicicleta      clase_latente_factorClase 2 (13%) 0.946  [0.546, …    0.842 
-4 En bicicleta      clase_latente_factorClase 3 (27%) 1.579* [1.077, …    0.0191
-5 Moto/Scooter      clase_latente_factorClase 2 (13%) 0.000  [0.000, …    0.817 
-6 Moto/Scooter      clase_latente_factorClase 3 (27%) 1.166  [0.467, …    0.742 
-7 Auto/Camioneta    clase_latente_factorClase 2 (13%) 0.819  [0.561, …    0.303 
-8 Auto/Camioneta    clase_latente_factorClase 3 (27%) 1.151  [0.867, …    0.330 </code></pre>
+  `Modo transporte` Variable                          RRR     `IC 95%` `Valor p`
+  &lt;chr&gt;             &lt;chr&gt;                             &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
+1 A pie             clase_latente_factorClase 2 (13%) 0.967   [0.609,…    0.888 
+2 A pie             clase_latente_factorClase 3 (27%) 1.014   [0.710,…    0.938 
+3 En bicicleta      clase_latente_factorClase 2 (13%) 0.952   [0.550,…    0.861 
+4 En bicicleta      clase_latente_factorClase 3 (27%) 1.580*  [1.079,…    0.0188
+5 Moto/Scooter      clase_latente_factorClase 2 (13%) 0.000*… [0.000,…    0     
+6 Moto/Scooter      clase_latente_factorClase 3 (27%) 1.168   [0.467,…    0.740 
+7 Auto/Camioneta    clase_latente_factorClase 2 (13%) 0.823   [0.563,…    0.315 
+8 Auto/Camioneta    clase_latente_factorClase 3 (27%) 1.157   [0.872,…    0.312 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>academic_table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 5
    Variable               `A pie` `En bicicleta` `Moto/Scooter` `Auto/Camioneta`
    &lt;chr&gt;                  &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;           
- 1 (Intercept)            0.932   0.922          0.132**        1.295           
- 2 Clase Latente: Clase … 0.960   0.946          0.000          0.819           
- 3 Clase Latente: Clase … 1.011   1.579*         1.166          1.151           
- 4 Sexo: 2                0.353*… 0.255***       0.394*         0.311***        
- 5 Edad: 25 a 34 años     1.376   1.358          1.157          2.167***        
- 6 Edad: 35 a 44 años     1.164   0.970          1.859          2.585***        
- 7 Edad: 45 a 54 años     1.138   0.498*         1.116          2.260***        
- 8 Edad: 55 a 64 años     1.044   0.216***       0.375          1.566*          
- 9 Edad: 65 años o más    0.923   0.372**        0.001          1.689*          
-10 Clase social: Media-b… 0.880   0.767          0.646          1.150           
-11 Clase social: Media    1.277   1.088          0.782          1.766**         
-12 Clase social: Media-a… 1.797   0.869          1.263          3.185***        
-13 Clase social: Alta     1.545   0.523          1.993          2.713**         
-14 Entorno: Rural         0.749   1.153          1.013          1.334           
-15 Entorno: Mixto         1.223   1.698**        0.853          1.250           </code></pre>
+ 1 (Intercept)            0.911   0.910          0.129**        1.279           
+ 2 Clase Latente: Clase … 0.967   0.952          0.000***       0.823           
+ 3 Clase Latente: Clase … 1.014   1.580*         1.168          1.157           
+ 4 Sexo: 2                0.356*… 0.257***       0.402*         0.312***        
+ 5 Edad: 25 a 34 años     1.350   1.328          1.140          2.135***        
+ 6 Edad: 35 a 44 años     1.158   0.963          1.842          2.569***        
+ 7 Edad: 45 a 54 años     1.135   0.495*         1.123          2.251***        
+ 8 Edad: 55 a 64 años     1.043   0.215***       0.376          1.573*          
+ 9 Edad: 65 años o más    0.926   0.371**        0.000          1.688*          
+10 Clase social: Media-b… 0.894   0.775          0.650          1.159           
+11 Clase social: Media    1.299   1.098          0.794          1.790**         
+12 Clase social: Media-a… 1.813   0.868          1.273          3.193***        
+13 Clase social: Alta     1.595   0.536          1.997          2.763**         
+14 Entorno: Rural         0.764   1.174          1.047          1.352           
+15 Entorno: Mixto         1.237   1.716**        0.862          1.259           </code></pre>
 </div>
 </div>
 </section>
@@ -1344,35 +1344,35 @@ X-squared = 9.1303, df = 8, p-value = 0.3314</code></pre>
 <pre><code># A tibble: 8 × 5
   `Modo transporte` Variable                          RRR    `IC 95%`  `Valor p`
   &lt;chr&gt;             &lt;chr&gt;                             &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;
-1 A pie             clase_latente_factorClase 2 (13%) 1.067  [0.473, …    0.876 
-2 A pie             clase_latente_factorClase 3 (27%) 1.758* [1.044, …    0.0338
-3 En bicicleta      clase_latente_factorClase 2 (13%) 1.250  [0.669, …    0.485 
-4 En bicicleta      clase_latente_factorClase 3 (27%) 1.149  [0.745, …    0.529 
-5 Moto/Scooter      clase_latente_factorClase 2 (13%) 1.327  [0.663, …    0.424 
-6 Moto/Scooter      clase_latente_factorClase 3 (27%) 1.295  [0.800, …    0.293 
-7 Auto/Camioneta    clase_latente_factorClase 2 (13%) 1.560  [0.841, …    0.158 
-8 Auto/Camioneta    clase_latente_factorClase 3 (27%) 1.335  [0.866, …    0.191 </code></pre>
+1 A pie             clase_latente_factorClase 2 (13%) 1.068  [0.474, …    0.873 
+2 A pie             clase_latente_factorClase 3 (27%) 1.759* [1.045, …    0.0336
+3 En bicicleta      clase_latente_factorClase 2 (13%) 1.247  [0.667, …    0.488 
+4 En bicicleta      clase_latente_factorClase 3 (27%) 1.151  [0.746, …    0.525 
+5 Moto/Scooter      clase_latente_factorClase 2 (13%) 1.327  [0.663, …    0.425 
+6 Moto/Scooter      clase_latente_factorClase 3 (27%) 1.293  [0.798, …    0.297 
+7 Auto/Camioneta    clase_latente_factorClase 2 (13%) 1.557  [0.840, …    0.160 
+8 Auto/Camioneta    clase_latente_factorClase 3 (27%) 1.332  [0.864, …    0.195 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>academic_table2_fut</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 5
    Variable               `A pie` `En bicicleta` `Moto/Scooter` `Auto/Camioneta`
    &lt;chr&gt;                  &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;           
- 1 (Intercept)            1.719   13.704***      3.142**        10.259***       
- 2 Clase Latente: Clase … 1.067   1.250          1.327          1.560           
- 3 Clase Latente: Clase … 1.758*  1.149          1.295          1.335           
- 4 Sexo: 2                0.306*… 0.451***       0.419***       0.473***        
- 5 Edad: 25 a 34 años     1.081   0.838          0.669          1.093           
- 6 Edad: 35 a 44 años     1.403   0.723          0.595          1.044           
- 7 Edad: 45 a 54 años     1.051   0.348**        0.378*         0.563           
- 8 Edad: 55 a 64 años     0.846   0.199***       0.323**        0.373**         
- 9 Edad: 65 años o más    0.748   0.077***       0.240***       0.352**         
-10 Clase social: Media-b… 0.870   0.737          1.130          0.631           
-11 Clase social: Media    0.811   1.149          1.730          0.640           
-12 Clase social: Media-a… 0.792   0.623          1.139          0.528*          
-13 Clase social: Alta     1.494   0.739          1.582          1.156           
-14 Entorno: Rural         0.750   1.258          1.515          0.845           
-15 Entorno: Mixto         0.933   1.829**        1.677*         1.348           </code></pre>
+ 1 (Intercept)            1.716   13.831***      3.147**        10.345***       
+ 2 Clase Latente: Clase … 1.068   1.247          1.327          1.557           
+ 3 Clase Latente: Clase … 1.759*  1.151          1.293          1.332           
+ 4 Sexo: 2                0.306*… 0.449***       0.419***       0.472***        
+ 5 Edad: 25 a 34 años     1.078   0.846          0.669          1.091           
+ 6 Edad: 35 a 44 años     1.404   0.723          0.595          1.044           
+ 7 Edad: 45 a 54 años     1.051   0.348**        0.379*         0.562           
+ 8 Edad: 55 a 64 años     0.845   0.199***       0.324**        0.376**         
+ 9 Edad: 65 años o más    0.748   0.077***       0.240***       0.351**         
+10 Clase social: Media-b… 0.871   0.731          1.130          0.628           
+11 Clase social: Media    0.811   1.144          1.729          0.637           
+12 Clase social: Media-a… 0.793   0.618          1.139          0.526*          
+13 Clase social: Alta     1.496   0.734          1.581          1.151           
+14 Entorno: Rural         0.751   1.251          1.515          0.841           
+15 Entorno: Mixto         0.934   1.825**        1.676*         1.343           </code></pre>
 </div>
 </div>
 </section>
@@ -1503,8 +1503,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1615,7 +1613,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

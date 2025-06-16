@@ -86,7 +86,7 @@ library(scales)       # Para formato en gráficos
 
 ```{r}
 # Cargar datos desde archivo SPSS
-datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM 2810.sav"))
+datos <- read_sav(here("datos", "BBDD Consolidada Maule UCM Codificada 20220307.sav"))
 ```
 
 ## Creación del Indicador de Clase Social

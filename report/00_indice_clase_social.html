@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="R. Cantillan">
-<meta name="dcterms.date" content="2025-03-27">
+<meta name="dcterms.date" content="2025-06-15">
 
 <title>Construcción de indicador de clase social utilizando prestigio ocupacional</title>
 <style>
@@ -84,10 +84,10 @@ div.csl-indent {
 <script src="00_indice_clase_social_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="00_indice_clase_social_files/libs/quarto-html/anchor.min.js"></script>
 <link href="00_indice_clase_social_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="00_indice_clase_social_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="00_indice_clase_social_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="00_indice_clase_social_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="00_indice_clase_social_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="00_indice_clase_social_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="00_indice_clase_social_files/libs/bootstrap/bootstrap-2307b71a298ed1cfb9f74c0c6b4d35d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <style>
 
       .quarto-title-block .quarto-title-banner h1,
@@ -136,7 +136,7 @@ background: featured.jpg;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 27, 2025</p>
+        <p class="date">June 15, 2025</p>
       </div>
     </div>
     
@@ -230,7 +230,7 @@ background: featured.jpg;
 <p>Utilizamos la función <code>read_sav()</code> del paquete haven para importar la base de datos en formato SPSS. La función <code>here()</code> facilita la gestión de rutas relativas, mejorando la reproducibilidad del código independientemente del directorio de trabajo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar datos desde archivo SPSS</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="fu">here</span>(<span class="st">"datos"</span>, <span class="st">"BBDD Consolidada Maule UCM 2810.sav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="fu">here</span>(<span class="st">"datos"</span>, <span class="st">"BBDD Consolidada Maule UCM Codificada 20220307.sav"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -771,7 +771,7 @@ background: featured.jpg;
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlación entre componentes</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>componentes <span class="ot">&lt;-</span> datos_clase <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nivel_educ, nivel_ocup, indice_posesiones, indice_gastos)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(nivel_educ, nivel_ocup, indice_posesiones, indice_gastos)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(componentes, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -953,8 +953,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1065,7 +1063,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
