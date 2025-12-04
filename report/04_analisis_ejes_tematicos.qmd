@@ -30,7 +30,7 @@ author:
         email: "rcantillan@uc.cl"
 
 abstract: |
-  Este documento presenta un análisis de validación y extensión de las tres clases latentes identificadas (Eco-modernismo reformista 60%, Conciencia crítica encerrada 13%, y Modernización ecológica redistributiva 27%) mediante su relación con tres ejes temáticos adicionales: (1) percepción de responsabilidad en la crisis ambiental, (2) consumo de carne y sustentabilidad, y (3) consumo digital y sustentabilidad. A través de análisis bivariados, modelos logísticos y comparaciones sistemáticas, se evalúa la coherencia entre el diagnóstico que cada clase hace de la crisis ambiental y su disposición a cambiar comportamientos concretos en alimentación y uso de Internet. Los resultados revelan tensiones significativas entre percepciones y prácticas, especialmente en relación con el consumo de carne, donde la brecha entre conciencia ambiental y disposición al cambio es más pronunciada que en el ámbito digital.
+  Este documento valida y extiende la comprensión de tres clases latentes sobre consumo sustentable mediante su relación con tres ejes temáticos: (1) percepción de responsabilidad ambiental, (2) consumo de carne, y (3) consumo digital. Mediante análisis bivariados y modelos logísticos, se evalúa la coherencia entre diagnóstico de la crisis y disposición al cambio. Los resultados revelan tensiones significativas entre percepciones y prácticas, especialmente en consumo de carne donde la brecha conciencia-acción es más pronunciada que en el ámbito digital.
   
 keywords: [Clases Latentes, Consumo Sustentable, Percepción de Responsabilidad, Alimentación, Consumo Digital, Coherencia Actitud-Comportamiento]
 
@@ -67,6 +67,12 @@ library(nnet)
 library(broom)
 library(scales)
 ```
+
+::: {.callout-note}
+## Nota sobre interpretaciones
+
+Este reporte contiene secciones marcadas con `[...]` que deben completarse después de ejecutar el script `code/05_analisis_bivariado_ejes.R` y renderizar el documento con los datos reales. Las interpretaciones se generarán automáticamente basadas en los resultados del análisis.
+:::
 
 # Introducción
 
