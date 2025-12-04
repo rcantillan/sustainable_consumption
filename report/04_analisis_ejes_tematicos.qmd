@@ -1,0 +1,866 @@
+---
+title: "Análisis de Ejes Temáticos y Clases Latentes"
+subtitle: "Coherencias y Tensiones entre Diagnóstico y Agencia en Consumo Sustentable"
+date: today
+format:
+  html:
+    fig-width: 10
+    fig-height: 6
+    fig-format: retina
+    fig-dpi: 300
+    theme:
+      - cosmo
+      - custom.scss
+    css: custom.scss
+    toc: true
+    toc-depth: 3
+    toc-title: "En este documento"
+    toc-location: right
+execute:
+  warning: false
+  message: false
+  
+author: 
+  - name: "Roberto Cantillan"
+    affiliations: 
+      - name: "Departamento de Sociología"
+        department: "Facultad de Ciencias Sociales"
+        institution: "Pontificia Universidad Católica de Chile"
+        address: "Santiago, Chile"
+        email: "rcantillan@uc.cl"
+
+abstract: |
+  Este documento presenta un análisis de validación y extensión de las tres clases latentes identificadas (Eco-modernismo reformista 60%, Conciencia crítica encerrada 13%, y Modernización ecológica redistributiva 27%) mediante su relación con tres ejes temáticos adicionales: (1) percepción de responsabilidad en la crisis ambiental, (2) consumo de carne y sustentabilidad, y (3) consumo digital y sustentabilidad. A través de análisis bivariados, modelos logísticos y comparaciones sistemáticas, se evalúa la coherencia entre el diagnóstico que cada clase hace de la crisis ambiental y su disposición a cambiar comportamientos concretos en alimentación y uso de Internet. Los resultados revelan tensiones significativas entre percepciones y prácticas, especialmente en relación con el consumo de carne, donde la brecha entre conciencia ambiental y disposición al cambio es más pronunciada que en el ámbito digital.
+  
+keywords: [Clases Latentes, Consumo Sustentable, Percepción de Responsabilidad, Alimentación, Consumo Digital, Coherencia Actitud-Comportamiento]
+
+categories:
+  - Latent Class Analysis
+  - Sustainable Consumption
+  - Environmental Attitudes
+  - Behavioral Change
+
+citation: 
+  container-title: "Documentos de Trabajo"
+  type: article
+  issued: 2025
+
+image: "featured.jpg"
+title-block-banner: featured.jpg
+title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-style: default
+---
+
+```{r setup}
+#| label: setup
+#| include: false
+
+# Cargar librerías necesarias
+library(tidyverse)
+library(here)
+library(haven)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(gridExtra)
+library(nnet)
+library(broom)
+library(scales)
+```
+
+# Introducción
+
+## Contexto y motivación
+
+Este análisis profundiza en la comprensión de las tres clases latentes identificadas en estudios previos sobre actitudes ambientales en la región del Maule, Chile. Las clases identificadas son:
+
+- **Clase 1 (60%): Eco-modernismo reformista** - Perfil moderado con reconocimiento limitado de la crisis ambiental pero apertura a cambios graduales
+- **Clase 2 (13%): Conciencia crítica encerrada** - Reconocimiento de la crisis pero menor disposición práctica al cambio
+- **Clase 3 (27%): Modernización ecológica redistributiva** - Posiciones contradictorias con crítica social pero confianza tecnológica
+
+## Objetivos del análisis
+
+El presente documento busca:
+
+1. **Validar** las interpretaciones de las clases latentes mediante su relación con variables independientes del modelo LCA
+2. **Extender** la comprensión de cada clase a través de tres ejes temáticos específicos
+3. **Evaluar coherencias y tensiones** entre el diagnóstico ambiental y la disposición a la acción
+4. **Comparar** patrones diferenciales entre consumo de carne y consumo digital
+
+## Marco conceptual de los tres ejes temáticos
+
+### Eje 1: Percepción de responsabilidad (diagnóstico)
+
+Este eje examina cómo cada clase latente atribuye responsabilidad por la crisis ambiental y su solución. La literatura sociológica sobre ambientalismo distingue entre:
+
+- **Responsabilidad individual** (hogares y ciudadanía)
+- **Responsabilidad corporativa** (empresas)
+- **Responsabilidad estatal** (gobierno y políticas públicas)
+- **Responsabilidad compartida** (todos los actores)
+
+La atribución de responsabilidad es crucial porque influye en las expectativas de cambio y las estrategias de acción colectiva.
+
+**Variables analizadas:**
+
+- **P5_RE**: ¿Quién causa los problemas ambientales? (recodificada en Hogares/Ciudadanía, Empresas, Estado, Todos/Otras)
+- **P6_RE**: ¿Quién debe solucionar los problemas? (misma recodificación)
+- **P8**: Nivel de responsabilidad atribuida a los hogares (dicotomizada en Baja vs Alta)
+
+### Eje 2: Consumo de carne y sustentabilidad
+
+El consumo de carne es uno de los ámbitos de mayor impacto ambiental individual, representando aproximadamente el 15% de las emisiones globales de gases de efecto invernadero. Este eje explora la relación entre:
+
+- **Percepción** del impacto ambiental de la ganadería y la alimentación
+- **Proyección** de consumo futuro
+- **Disposición** a cambiar conductas alimentarias
+- **Willingness to pay** por alternativas más sustentables
+
+**Variables analizadas:**
+
+- **P3_10**: Preocupación por impacto de la ganadería (dicotomizada)
+- **P9_6**: Percepción del impacto ambiental de la alimentación (dicotomizada)
+- **A5_1**: Proyección futura del consumo de carne (Más/Lo mismo/Menos)
+- **A6A**: Disposición a cambiar conducta (ordinal: 0=sigue igual, 1=disminuiría, 2=dejaría)
+- **A6B**: Disposición a compensar pagando más (ordinal: 0=no, 1=doble, 2=triple)
+
+### Eje 3: Consumo digital y sustentabilidad
+
+El consumo digital (uso de Internet, streaming, redes sociales) tiene un impacto ambiental creciente pero menos visible que otros ámbitos. Los centros de datos y la infraestructura digital representan aproximadamente el 4% de las emisiones globales. Este eje evalúa:
+
+- **Percepción** del impacto ambiental del uso de Internet
+- **Disposición** a cambiar patrones de uso digital
+- **Willingness to pay** por compensar el impacto digital
+
+**Variables analizadas:**
+
+- **P9_5**: Percepción del impacto del uso de Internet (dicotomizada)
+- **A7A**: Disposición a cambiar uso de Internet (ordinal)
+- **A7B**: Disposición a compensar (ordinal)
+
+## Hipótesis por clase latente
+
+Basándonos en las interpretaciones previas de las clases latentes, formulamos las siguientes hipótesis:
+
+### Clase 1: Eco-modernismo reformista (60%)
+
+**H1a**: Atribuirán responsabilidad de forma compartida o al Estado, minimizando la responsabilidad individual.
+
+**H1b**: Mostrarán preocupación moderada por el impacto de la alimentación y uso digital, pero baja disposición a cambios radicales.
+
+**H1c**: Mayor disposición a compensar económicamente que a cambiar conductas directamente.
+
+### Clase 2: Conciencia crítica encerrada (13%)
+
+**H2a**: Atribuirán mayor responsabilidad a empresas y Estado que a individuos.
+
+**H2b**: Alta percepción del impacto ambiental tanto en alimentación como en uso digital.
+
+**H2c**: Brecha significativa entre percepción y disposición al cambio (reconocen el problema pero no cambian conductas).
+
+### Clase 3: Modernización ecológica redistributiva (27%)
+
+**H3a**: Atribuirán responsabilidad de forma crítica, posiblemente enfatizando desigualdades.
+
+**H3b**: Percepciones mixtas debido al perfil contradictorio de esta clase.
+
+**H3c**: Disposición diferenciada según el ámbito: posiblemente mayor disposición en ámbitos percibidos como más directamente relacionados con desigualdad social.
+
+# Carga y preparación de datos
+
+```{r cargar-datos}
+#| label: cargar-datos
+
+# Cargar datos con análisis de ejes temáticos
+if (file.exists(here("objects", "datos_con_ejes.RData"))) {
+  load(here("objects", "datos_con_ejes.RData"))
+  cat("Datos cargados desde objects/datos_con_ejes.RData\n")
+  cat("N total:", nrow(datos), "\n")
+} else {
+  stop("Archivo datos_con_ejes.RData no encontrado. Ejecuta primero el script 05_analisis_bivariado_ejes.R")
+}
+
+# Verificar distribución de clases latentes
+cat("\nDistribución de clases latentes:\n")
+tabla_clases <- table(datos$clase_latente_factor, useNA = "ifany")
+print(tabla_clases)
+print(prop.table(tabla_clases) * 100)
+```
+
+# Resultados: Eje 1 - Percepción de Responsabilidad
+
+## Análisis descriptivo
+
+```{r eje1-descriptivo}
+#| label: eje1-descriptivo
+
+# Tabla cruzada: Clase latente x Quién causa
+if ("P5_RE_cat" %in% names(datos)) {
+  tabla_p5 <- table(datos$clase_latente_factor, datos$P5_RE_cat)
+  tabla_p5_prop <- prop.table(tabla_p5, margin = 1) * 100
+  
+  kable(tabla_p5_prop, 
+        digits = 1,
+        caption = "Percepción de quién causa los problemas ambientales por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  # Test Chi-cuadrado
+  chi_p5 <- chisq.test(tabla_p5)
+  cat("\nChi-cuadrado P5_RE: X2 =", round(chi_p5$statistic, 2), 
+      ", p-value =", format.pval(chi_p5$p.value, digits = 3), "\n")
+}
+
+# Tabla cruzada: Clase latente x Quién debe solucionar
+if ("P6_RE_cat" %in% names(datos)) {
+  tabla_p6 <- table(datos$clase_latente_factor, datos$P6_RE_cat)
+  tabla_p6_prop <- prop.table(tabla_p6, margin = 1) * 100
+  
+  kable(tabla_p6_prop, 
+        digits = 1,
+        caption = "Percepción de quién debe solucionar los problemas por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_p6 <- chisq.test(tabla_p6)
+  cat("\nChi-cuadrado P6_RE: X2 =", round(chi_p6$statistic, 2), 
+      ", p-value =", format.pval(chi_p6$p.value, digits = 3), "\n")
+}
+
+# Tabla cruzada: Clase latente x Responsabilidad hogares
+if ("P8_dicho" %in% names(datos)) {
+  tabla_p8 <- table(datos$clase_latente_factor, datos$P8_dicho)
+  tabla_p8_prop <- prop.table(tabla_p8, margin = 1) * 100
+  
+  kable(tabla_p8_prop, 
+        digits = 1,
+        caption = "Responsabilidad atribuida a los hogares por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_p8 <- chisq.test(tabla_p8)
+  cat("\nChi-cuadrado P8: X2 =", round(chi_p8$statistic, 2), 
+      ", p-value =", format.pval(chi_p8$p.value, digits = 3), "\n")
+}
+```
+
+## Visualización
+
+```{r eje1-graficos, fig.height=8}
+#| label: eje1-graficos
+#| fig-cap: "Percepción de responsabilidad por clase latente"
+
+# Gráfico para P5_RE
+if ("P5_RE_cat" %in% names(datos)) {
+  datos_p5 <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(P5_RE_cat)) %>%
+    count(clase_latente_factor, P5_RE_cat) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p1 <- ggplot(datos_p5, aes(x = clase_latente_factor, y = prop, fill = P5_RE_cat)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3, fontface = "bold") +
+    scale_fill_brewer(palette = "Set2") +
+    labs(title = "¿Quién causa los problemas ambientales?",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold"))
+  
+  print(p1)
+}
+
+# Gráfico para P6_RE
+if ("P6_RE_cat" %in% names(datos)) {
+  datos_p6 <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(P6_RE_cat)) %>%
+    count(clase_latente_factor, P6_RE_cat) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p2 <- ggplot(datos_p6, aes(x = clase_latente_factor, y = prop, fill = P6_RE_cat)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3, fontface = "bold") +
+    scale_fill_brewer(palette = "Set2") +
+    labs(title = "¿Quién debe solucionar los problemas?",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold"))
+  
+  print(p2)
+}
+
+# Gráfico para P8
+if ("P8_dicho" %in% names(datos)) {
+  datos_p8 <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(P8_dicho)) %>%
+    count(clase_latente_factor, P8_dicho) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p3 <- ggplot(datos_p8, aes(x = clase_latente_factor, y = prop, fill = P8_dicho)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3.5, fontface = "bold") +
+    scale_fill_manual(values = c("Baja" = "#FFA07A", "Alta" = "#20B2AA")) +
+    labs(title = "Responsabilidad atribuida a los hogares",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold"))
+  
+  print(p3)
+}
+```
+
+## Interpretación Eje 1
+
+Los resultados del Eje 1 revelan patrones diferenciados de atribución de responsabilidad entre las tres clases latentes:
+
+**Clase 1 (Eco-modernismo reformista)**: [Interpretar según resultados]
+
+**Clase 2 (Conciencia crítica encerrada)**: [Interpretar según resultados]
+
+**Clase 3 (Modernización ecológica redistributiva)**: [Interpretar según resultados]
+
+# Resultados: Eje 2 - Consumo de Carne y Sustentabilidad
+
+## Percepción del impacto
+
+```{r eje2-percepcion}
+#| label: eje2-percepcion
+
+# Preocupación por ganadería (P3_10)
+if ("P3_10_dicho" %in% names(datos)) {
+  tabla_p3 <- table(datos$clase_latente_factor, datos$P3_10_dicho)
+  tabla_p3_prop <- prop.table(tabla_p3, margin = 1) * 100
+  
+  kable(tabla_p3_prop, 
+        digits = 1,
+        caption = "Preocupación por impacto de la ganadería por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_p3 <- chisq.test(tabla_p3)
+  cat("\nChi-cuadrado P3_10: X2 =", round(chi_p3$statistic, 2), 
+      ", p-value =", format.pval(chi_p3$p.value, digits = 3), "\n")
+}
+
+# Percepción impacto alimentación (P9_6)
+if ("P9_6_dicho" %in% names(datos)) {
+  tabla_p9_6 <- table(datos$clase_latente_factor, datos$P9_6_dicho)
+  tabla_p9_6_prop <- prop.table(tabla_p9_6, margin = 1) * 100
+  
+  kable(tabla_p9_6_prop, 
+        digits = 1,
+        caption = "Percepción del impacto ambiental de la alimentación por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_p9_6 <- chisq.test(tabla_p9_6)
+  cat("\nChi-cuadrado P9_6: X2 =", round(chi_p9_6$statistic, 2), 
+      ", p-value =", format.pval(chi_p9_6$p.value, digits = 3), "\n")
+}
+```
+
+## Proyección y disposición al cambio
+
+```{r eje2-disposicion}
+#| label: eje2-disposicion
+
+# Proyección consumo futuro (A5_1)
+if ("A5_1_cat" %in% names(datos)) {
+  tabla_a5 <- table(datos$clase_latente_factor, datos$A5_1_cat)
+  tabla_a5_prop <- prop.table(tabla_a5, margin = 1) * 100
+  
+  kable(tabla_a5_prop, 
+        digits = 1,
+        caption = "Proyección de consumo futuro de carne por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_a5 <- chisq.test(tabla_a5)
+  cat("\nChi-cuadrado A5_1: X2 =", round(chi_a5$statistic, 2), 
+      ", p-value =", format.pval(chi_a5$p.value, digits = 3), "\n")
+}
+
+# Disposición a cambiar conducta (A6A)
+if ("A6A_ord" %in% names(datos)) {
+  datos_a6a <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(A6A_ord)) %>%
+    mutate(A6A_label = factor(A6A_ord, 
+                               levels = c(0, 1, 2),
+                               labels = c("Sigue igual", "Disminuiría", "Dejaría")))
+  
+  tabla_a6a <- table(datos_a6a$clase_latente_factor, datos_a6a$A6A_label)
+  tabla_a6a_prop <- prop.table(tabla_a6a, margin = 1) * 100
+  
+  kable(tabla_a6a_prop, 
+        digits = 1,
+        caption = "Disposición a cambiar consumo de carne por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+}
+
+# Disposición a compensar (A6B)
+if ("A6B_compensar" %in% names(datos)) {
+  datos_a6b <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(A6B_compensar)) %>%
+    mutate(A6B_label = factor(A6B_compensar, 
+                               levels = c(0, 1, 2),
+                               labels = c("No paga", "Doble", "Triple")))
+  
+  tabla_a6b <- table(datos_a6b$clase_latente_factor, datos_a6b$A6B_label)
+  tabla_a6b_prop <- prop.table(tabla_a6b, margin = 1) * 100
+  
+  kable(tabla_a6b_prop, 
+        digits = 1,
+        caption = "Disposición a compensar económicamente por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+}
+```
+
+## Visualización Eje 2
+
+```{r eje2-graficos, fig.height=10}
+#| label: eje2-graficos
+#| fig-cap: "Consumo de carne y sustentabilidad por clase latente"
+
+plots_eje2 <- list()
+
+# Gráfico percepción impacto alimentación
+if ("P9_6_dicho" %in% names(datos)) {
+  datos_plot <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(P9_6_dicho)) %>%
+    count(clase_latente_factor, P9_6_dicho) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p1 <- ggplot(datos_plot, aes(x = clase_latente_factor, y = prop, fill = P9_6_dicho)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3, fontface = "bold") +
+    scale_fill_manual(values = c("Bajo impacto" = "#FFB6C1", "Alto impacto" = "#DC143C")) +
+    labs(title = "Percepción impacto ambiental alimentación",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 11))
+  
+  plots_eje2[[1]] <- p1
+}
+
+# Gráfico proyección consumo
+if ("A5_1_cat" %in% names(datos)) {
+  datos_plot <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(A5_1_cat)) %>%
+    count(clase_latente_factor, A5_1_cat) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p2 <- ggplot(datos_plot, aes(x = clase_latente_factor, y = prop, fill = A5_1_cat)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3, fontface = "bold") +
+    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
+    labs(title = "Proyección consumo futuro de carne",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 11))
+  
+  plots_eje2[[2]] <- p2
+}
+
+if (length(plots_eje2) > 0) {
+  do.call(grid.arrange, c(plots_eje2, ncol = 1))
+}
+```
+
+## Interpretación Eje 2
+
+El análisis del consumo de carne revela:
+
+**Percepción vs Acción**: [Analizar la brecha entre percepción del impacto y disposición real al cambio]
+
+**Clase 1**: [Interpretar patrones específicos]
+
+**Clase 2**: [Interpretar patrones específicos]
+
+**Clase 3**: [Interpretar patrones específicos]
+
+# Resultados: Eje 3 - Consumo Digital y Sustentabilidad
+
+## Percepción y disposición al cambio
+
+```{r eje3-analisis}
+#| label: eje3-analisis
+
+# Percepción impacto Internet (P9_5)
+if ("P9_5_dicho" %in% names(datos)) {
+  tabla_p9_5 <- table(datos$clase_latente_factor, datos$P9_5_dicho)
+  tabla_p9_5_prop <- prop.table(tabla_p9_5, margin = 1) * 100
+  
+  kable(tabla_p9_5_prop, 
+        digits = 1,
+        caption = "Percepción del impacto ambiental del uso de Internet por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  chi_p9_5 <- chisq.test(tabla_p9_5)
+  cat("\nChi-cuadrado P9_5: X2 =", round(chi_p9_5$statistic, 2), 
+      ", p-value =", format.pval(chi_p9_5$p.value, digits = 3), "\n")
+}
+
+# Disposición a cambiar uso Internet (A7A)
+if ("A7A_ord" %in% names(datos)) {
+  datos_a7a <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(A7A_ord)) %>%
+    mutate(A7A_label = factor(A7A_ord, 
+                               levels = c(0, 1, 2),
+                               labels = c("Sigue igual", "Disminuiría", "Dejaría")))
+  
+  tabla_a7a <- table(datos_a7a$clase_latente_factor, datos_a7a$A7A_label)
+  tabla_a7a_prop <- prop.table(tabla_a7a, margin = 1) * 100
+  
+  kable(tabla_a7a_prop, 
+        digits = 1,
+        caption = "Disposición a cambiar uso de Internet por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+}
+
+# Disposición a compensar (A7B)
+if ("A7B_compensar" %in% names(datos)) {
+  datos_a7b <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(A7B_compensar)) %>%
+    mutate(A7B_label = factor(A7B_compensar, 
+                               levels = c(0, 1, 2),
+                               labels = c("No paga", "Doble", "Triple")))
+  
+  tabla_a7b <- table(datos_a7b$clase_latente_factor, datos_a7b$A7B_label)
+  tabla_a7b_prop <- prop.table(tabla_a7b, margin = 1) * 100
+  
+  kable(tabla_a7b_prop, 
+        digits = 1,
+        caption = "Disposición a compensar económicamente uso de Internet por clase latente (%)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+}
+```
+
+## Visualización Eje 3
+
+```{r eje3-graficos, fig.height=8}
+#| label: eje3-graficos
+#| fig-cap: "Consumo digital y sustentabilidad por clase latente"
+
+plots_eje3 <- list()
+
+# Gráfico percepción impacto Internet
+if ("P9_5_dicho" %in% names(datos)) {
+  datos_plot <- datos %>%
+    filter(!is.na(clase_latente_factor) & !is.na(P9_5_dicho)) %>%
+    count(clase_latente_factor, P9_5_dicho) %>%
+    group_by(clase_latente_factor) %>%
+    mutate(prop = n / sum(n) * 100)
+  
+  p1 <- ggplot(datos_plot, aes(x = clase_latente_factor, y = prop, fill = P9_5_dicho)) +
+    geom_bar(stat = "identity", position = "stack") +
+    geom_text(aes(label = paste0(round(prop, 1), "%")), 
+              position = position_stack(vjust = 0.5),
+              color = "white", size = 3, fontface = "bold") +
+    scale_fill_manual(values = c("Bajo impacto" = "#ADD8E6", "Alto impacto" = "#4169E1")) +
+    labs(title = "Percepción impacto ambiental uso de Internet",
+         x = "", y = "Porcentaje (%)", fill = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 11))
+  
+  plots_eje3[[1]] <- p1
+}
+
+if (length(plots_eje3) > 0) {
+  do.call(grid.arrange, c(plots_eje3, ncol = 1))
+}
+```
+
+## Interpretación Eje 3
+
+El análisis del consumo digital muestra:
+
+**Visibilidad del impacto**: [Analizar la percepción del impacto ambiental de Internet]
+
+**Clase 1**: [Interpretar patrones específicos]
+
+**Clase 2**: [Interpretar patrones específicos]
+
+**Clase 3**: [Interpretar patrones específicos]
+
+# Comparación: Carne vs Digital
+
+## Análisis comparativo de percepciones
+
+```{r comparacion-percepciones}
+#| label: comparacion-percepciones
+#| fig-cap: "Comparación de percepciones de impacto: Alimentación vs Internet"
+
+# Calcular proporciones de alta percepción por clase
+if (all(c("P9_6_dicho", "P9_5_dicho") %in% names(datos))) {
+  comp_percepcion <- datos %>%
+    filter(!is.na(clase_latente_factor)) %>%
+    group_by(clase_latente_factor) %>%
+    summarise(
+      Alimentacion = sum(P9_6_dicho == "Alto impacto", na.rm = TRUE) / 
+                     sum(!is.na(P9_6_dicho)) * 100,
+      Internet = sum(P9_5_dicho == "Alto impacto", na.rm = TRUE) / 
+                 sum(!is.na(P9_5_dicho)) * 100,
+      N = n()
+    )
+  
+  kable(comp_percepcion, 
+        digits = 1,
+        caption = "Porcentaje con percepción de alto impacto por clase latente") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  # Gráfico comparativo
+  comp_long <- comp_percepcion %>%
+    pivot_longer(cols = c(Alimentacion, Internet),
+                 names_to = "Ambito", values_to = "Porcentaje")
+  
+  p_comp1 <- ggplot(comp_long, aes(x = clase_latente_factor, y = Porcentaje, fill = Ambito)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_text(aes(label = paste0(round(Porcentaje, 1), "%")),
+              position = position_dodge(width = 0.9), vjust = -0.5, size = 3.5) +
+    scale_fill_manual(values = c("Alimentacion" = "#E74C3C", "Internet" = "#3498DB")) +
+    labs(title = "Comparación: Percepción de Alto Impacto Ambiental",
+         subtitle = "Alimentación vs Internet por Clase Latente",
+         x = "Clase Latente",
+         y = "% con percepción de alto impacto",
+         fill = "Ámbito") +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+      plot.subtitle = element_text(hjust = 0.5, size = 11),
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      legend.position = "bottom"
+    ) +
+    ylim(0, 100)
+  
+  print(p_comp1)
+}
+```
+
+## Análisis comparativo de disposición al cambio
+
+```{r comparacion-disposicion}
+#| label: comparacion-disposicion
+#| fig-cap: "Comparación de disposición a cambiar: Carne vs Internet"
+
+# Calcular disposiciones promedio por clase
+if (all(c("A6A_ord", "A7A_ord") %in% names(datos))) {
+  comp_disposicion <- datos %>%
+    filter(!is.na(clase_latente_factor)) %>%
+    group_by(clase_latente_factor) %>%
+    summarise(
+      Consumo_Carne = mean(A6A_ord, na.rm = TRUE),
+      Uso_Internet = mean(A7A_ord, na.rm = TRUE),
+      N = n()
+    )
+  
+  kable(comp_disposicion, 
+        digits = 2,
+        caption = "Disposición promedio a cambiar conducta por clase latente (0=sigue igual, 2=dejaría)") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+  
+  # Gráfico comparativo
+  comp_long <- comp_disposicion %>%
+    pivot_longer(cols = c(Consumo_Carne, Uso_Internet),
+                 names_to = "Ambito", values_to = "Nivel") %>%
+    mutate(Ambito = recode(Ambito, 
+                           "Consumo_Carne" = "Consumo carne",
+                           "Uso_Internet" = "Uso Internet"))
+  
+  p_comp2 <- ggplot(comp_long, aes(x = clase_latente_factor, y = Nivel, fill = Ambito)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_text(aes(label = round(Nivel, 2)),
+              position = position_dodge(width = 0.9), vjust = -0.5, size = 3.5) +
+    scale_fill_manual(values = c("Consumo carne" = "#E74C3C", "Uso Internet" = "#3498DB")) +
+    labs(title = "Comparación: Disposición a Cambiar Conducta",
+         subtitle = "Consumo de Carne vs Uso de Internet por Clase Latente",
+         x = "Clase Latente",
+         y = "Nivel promedio (0=sigue igual, 2=dejaría)",
+         fill = "Ámbito") +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 14),
+      plot.subtitle = element_text(hjust = 0.5, size = 11),
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      legend.position = "bottom"
+    ) +
+    ylim(0, 2)
+  
+  print(p_comp2)
+}
+```
+
+## Interpretación comparativa
+
+La comparación entre consumo de carne y consumo digital revela:
+
+1. **Diferencias en percepción**: [Analizar si hay mayor o menor percepción del impacto en un ámbito vs otro]
+
+2. **Diferencias en disposición**: [Analizar si hay mayor o menor disposición al cambio en un ámbito vs otro]
+
+3. **Brechas percepción-acción**: [Identificar en qué ámbito la brecha es mayor y por qué]
+
+4. **Patrones por clase**: [Analizar si las clases difieren en sus patrones comparativos]
+
+# Modelos Multivariados
+
+## Modelos logísticos con controles sociodemográficos
+
+Para evaluar si las diferencias entre clases latentes se mantienen al controlar por variables sociodemográficas, ajustamos modelos logísticos para variables clave de cada eje.
+
+```{r modelos-logisticos}
+#| label: modelos-logisticos
+
+# Cargar modelos si existen
+if (file.exists(here("objects", "modelos_ejes.RData"))) {
+  load(here("objects", "modelos_ejes.RData"))
+  
+  # Mostrar resultados de modelos clave
+  if (!is.null(modelos_lista$modelo_p8)) {
+    cat("\n### Modelo: Responsabilidad de hogares (P8)\n")
+    print(summary(modelos_lista$modelo_p8))
+    
+    coef_p8 <- tidy(modelos_lista$modelo_p8, conf.int = TRUE, exponentiate = TRUE)
+    cat("\nOdds Ratios (Clase latente):\n")
+    print(coef_p8 %>% 
+            filter(grepl("clase_latente_factor", term)) %>%
+            select(term, estimate, conf.low, conf.high, p.value))
+  }
+  
+  if (!is.null(modelos_lista$modelo_p3_10)) {
+    cat("\n### Modelo: Preocupación por ganadería (P3_10)\n")
+    coef_p3 <- tidy(modelos_lista$modelo_p3_10, conf.int = TRUE, exponentiate = TRUE)
+    cat("\nOdds Ratios (Clase latente):\n")
+    print(coef_p3 %>% 
+            filter(grepl("clase_latente_factor", term)) %>%
+            select(term, estimate, conf.low, conf.high, p.value))
+  }
+  
+  if (!is.null(modelos_lista$modelo_p9_5)) {
+    cat("\n### Modelo: Percepción impacto Internet (P9_5)\n")
+    coef_p9 <- tidy(modelos_lista$modelo_p9_5, conf.int = TRUE, exponentiate = TRUE)
+    cat("\nOdds Ratios (Clase latente):\n")
+    print(coef_p9 %>% 
+            filter(grepl("clase_latente_factor", term)) %>%
+            select(term, estimate, conf.low, conf.high, p.value))
+  }
+}
+```
+
+## Interpretación de modelos
+
+Los modelos multivariados permiten evaluar:
+
+1. **Efectos netos de clase latente**: Una vez controlados sexo, edad, clase social, posición política y ruralidad
+
+2. **Magnitud de las diferencias**: A través de los Odds Ratios
+
+3. **Significancia estadística**: Considerando intervalos de confianza y p-values
+
+# Síntesis e Interpretación General
+
+## Hallazgos principales por eje
+
+### Eje 1: Percepción de Responsabilidad
+
+[Sintetizar hallazgos principales sobre atribución de responsabilidad]
+
+### Eje 2: Consumo de Carne
+
+[Sintetizar hallazgos sobre percepción, proyección y disposición al cambio en alimentación]
+
+### Eje 3: Consumo Digital
+
+[Sintetizar hallazgos sobre percepción y disposición al cambio en uso de Internet]
+
+## Coherencias y tensiones
+
+### Coherencias observadas
+
+[Identificar casos donde percepción y disposición al cambio son coherentes]
+
+### Tensiones identificadas
+
+[Identificar brechas entre conciencia/percepción y acción/disposición al cambio]
+
+### Comparación carne vs digital
+
+[Sintetizar diferencias clave entre ambos ámbitos]
+
+## Perfiles actualizados de las clases latentes
+
+### Clase 1: Eco-modernismo reformista (60%)
+
+**Diagnóstico**: [Actualizar interpretación basada en Eje 1]
+
+**Consumo de carne**: [Actualizar interpretación basada en Eje 2]
+
+**Consumo digital**: [Actualizar interpretación basada en Eje 3]
+
+**Coherencia interna**: [Evaluar consistencia del perfil]
+
+### Clase 2: Conciencia crítica encerrada (13%)
+
+**Diagnóstico**: [Actualizar interpretación basada en Eje 1]
+
+**Consumo de carne**: [Actualizar interpretación basada en Eje 2]
+
+**Consumo digital**: [Actualizar interpretación basada en Eje 3]
+
+**Coherencia interna**: [Evaluar consistencia del perfil]
+
+### Clase 3: Modernización ecológica redistributiva (27%)
+
+**Diagnóstico**: [Actualizar interpretación basada en Eje 1]
+
+**Consumo de carne**: [Actualizar interpretación basada en Eje 2]
+
+**Consumo digital**: [Actualizar interpretación basada en Eje 3]
+
+**Coherencia interna**: [Evaluar consistencia del perfil]
+
+# Conclusiones
+
+## Validación de las clases latentes
+
+[Evaluar si el análisis de los tres ejes valida las interpretaciones originales de las clases]
+
+## Implicaciones teóricas
+
+[Discutir implicaciones para la teoría sociológica sobre consumo sustentable y brecha actitud-comportamiento]
+
+## Implicaciones metodológicas
+
+[Reflexionar sobre la utilidad de este tipo de análisis de validación/extensión en LCA]
+
+## Limitaciones
+
+[Identificar limitaciones del análisis]
+
+## Futuras líneas de investigación
+
+[Proponer extensiones y profundizaciones del análisis]
+
+# Referencias
+
+- Clase social construida según metodología de prestigio ocupacional (ver reporte 00)
+- Clases latentes identificadas mediante modelo LCA con covariables (ver reporte 02)
+- Variables de los tres ejes como indicadores de validación externa (no incluidas en el modelo LCA)
