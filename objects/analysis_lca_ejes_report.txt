@@ -1,0 +1,41 @@
+INICIO pipeline LCA y recodificaciones 
+Fecha: 2025-12-06 01:45:33.251682 
+Leyendo SPSS... 
+Archivo cargado. Dimensiones: 2000 x 206 
+Indicador de clase social creado. 
+Preparando variables para LCA... 
+Datos LCA preparados. 
+Ajustando poLCA (3 clases)... 
+Clases: Clase 1 (59.7%); Clase 2 (13%); Clase 3 (27.4%) 
+LCA asignada. Distribución: 
+ Clase 1 (59.7%)   Clase 2 (13%) Clase 3 (27.4%)             1277             214             509  
+Recodificando Eje 1 (P5, P6, P8)... 
+P5 recodificado. 
+P6 recodificado. 
+P8 recodificado. 
+Recodificando Eje 2 (carne)... 
+P3_10 recodificado. 
+P9_6 recodificado. 
+A5_1 recodificado. 
+A6A ordinal creada. 
+Índices carne creados. 
+Recodificando Eje 3 (internet)... 
+P9_5 recodificado. 
+A7A ordinal creada. 
+Índices internet creados. 
+Ejecutando bivariados por clase_latente_factor... 
+Bivariate saved for P5_RE_macro N = 2000 
+Bivariate saved for P5_resp_hogares N = 2000 
+Bivariate saved for P6_RE_macro N = 2000 
+Bivariate saved for P6_resp_hogares N = 2000 
+Bivariate saved for P8_high N = 2000 
+Bivariate saved for P3_10_high N = 2000 
+Bivariate saved for P9_6_high N = 2000 
+Bivariate saved for A5_1_want_less N = 2000 
+Bivariate saved for conducta_carne_factor N = 1904 
+Bivariate saved for pago_carne_factor N = 1356 
+Bivariate saved for P9_5_high N = 2000 
+Bivariate saved for conducta_internet_factor N = 2000 
+Bivariate saved for pago_internet_factor N = 1782 
+Guardado: objects/datos_recodificados_con_lca.RData 
+Pipeline terminado. 

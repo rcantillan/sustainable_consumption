@@ -1,0 +1,222 @@
+---
+title: "Revisión: LCA y Recodificaciones — Tablas cruzadas, tests y heatmaps"
+subtitle: ""
+date: today
+format:
+  html:
+    fig-width: 10
+    fig-height: 6
+    fig-format: retina
+    fig-dpi: 300
+    theme:
+      - cosmo
+      - custom.scss
+    css: custom.scss
+    toc: true
+    toc-depth: 3
+    toc-title: "En este documento"
+    toc-location: right
+execute:
+  warning: false
+  message: false
+  output: asis
+
+author: 
+  - name: "Roberto Cantillan"
+    affiliations: 
+      - name: "Departamento de Sociología"
+        department: "Facultad de Ciencias Sociales"
+        institution: "Pontificia Universidad Católica de Chile"
+        address: "Santiago, Chile"
+        email: "rcantillan@uc.cl"
+
+abstract: |
+  Este documento presenta un análisis sociológico que identifica perfiles ambientales mediante modelos de clases latentes (LCA) y examina su relación con patrones de movilidad en la región del Maule, Chile. Utilizando datos de encuestas sobre actitudes ambientales, se identifican tres clases latentes: Ambientalismo Moderado (60%), Modo de Vida Imperial (13%) y Ambientalismo Crítico (27%).Se incluyen bivariados con distintas variables a evaluar para profundización. 
+
+Keywords: [Clases Latentes, Actitudes Ambientales, Movilidad Sostenible, Sociología Ambiental, Análisis Multinomial]
+
+categories:
+  - Latent Class Analysis
+  - Multinomial regression
+  - Sustenaible Mobility
+  - Sustenaible Development
+
+citation: 
+  container-title: "Documentos de Trabajo"
+  type: article
+  issued: 2025
+
+image: "featured.jpg"
+title-block-banner: featured.jpg
+title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-style: default
+---
+
+```{r}
+# Librerías
+library(here)
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(tibble)
+```
+
+# Introducción
+
+Este documento reproduce en formato .qmd la revisión de resultados del pipeline:
+
+- carga objects/datos_recodificados_con_lca.RData
+- muestra la distribución de las clases latentes
+- para cada variable recodificada de los ejes produce la tabla de contingencia (clase_latente_factor × variable), los porcentajes por fila y aplica el test estadístico apropiado (Fisher / Chi-cuadrado / Chi-cuadrado con simulación).
+- Además, cuando la relación es estadísticamente significativa (p < 0.05) se genera un heatmap académico con proporciones por clase para esa variable.
+
+# Carga de datos
+
+```{r}
+rdata_file <- here("objects", "datos_recodificados_con_lca.RData")
+if (!file.exists(rdata_file)) stop("No se encontró: ", rdata_file, "\nEjecuta el pipeline previamente.")
+load(rdata_file) # debe crear 'datos' y, opcionalmente, 'modelo_lca'
+if (!exists("datos")) stop("El RData no contiene el objeto 'datos'.")
+cat("Dimensiones de 'datos':", dim(datos)[1], "x", dim(datos)[2], "\n")
+```
+
+# Distribución de clases latentes
+
+```{r}
+if ("clase_latente_factor" %in% names(datos)) {
+  df_clases <- as.data.frame(table(datos$clase_latente_factor, useNA = "ifany"))
+  names(df_clases) <- c("clase","freq")
+  df_clases$prop <- round(100 * df_clases$freq / sum(df_clases$freq[!is.na(df_clases$clase)]), 2)
+  kbl(df_clases, caption = "Distribución de clases latentes", booktabs = TRUE) %>%
+    kable_styling(full_width = FALSE)
+} else {
+  cat("AVISO: 'clase_latente_factor' no está en los datos.\n")
+}
+```
+
+# Información del modelo LCA (si está)
+
+```{r}
+if (exists("modelo_lca") && !is.null(modelo_lca)) {
+  cat("Proporciones (modelo_lca$P):", paste(round(modelo_lca$P*100,2), collapse = ", "), "\n\n")
+  if (!is.null(modelo_lca$posterior)) {
+    mp <- apply(modelo_lca$posterior, 1, max, na.rm = TRUE)
+    print(summary(mp))
+    cat("\n% observaciones con max posterior >= 0.8:", round(100 * mean(mp >= 0.8, na.rm=TRUE), 2), "%\n")
+  } else {
+    cat("modelo_lca$posterior no disponible.\n")
+  }
+} else {
+  cat("Objeto 'modelo_lca' no encontrado en el RData.\n")
+}
+```
+
+# Variables a evaluar (recodificadas y derivadas)
+
+```{r}
+vars_check <- c(
+  "P5_RE_macro","P6_RE_macro","P8_high",
+  "P3_10_high","P9_6_high","A5_1_want_less",
+  "conducta_carne_factor","pago_carne_factor",
+  "P9_5_high","conducta_internet_factor","pago_internet_factor"
+)
+present <- vars_check[vars_check %in% names(datos)]
+cat("Variables disponibles (", length(present), "):\n")
+print(present)
+```
+
+# Tablas cruzadas, tests y heatmaps
+
+```{r asis}
+# Función para elegir y ejecutar el test estadístico apropiado
+run_appropriate_test <- function(tab, simulate_B = 5000) {
+  if (any(dim(tab) == 0)) return(list(name = "no_table", res = NULL, p.value = NA))
+  tab2 <- tab[rowSums(tab) > 0, colSums(tab) > 0, drop = FALSE]
+  if (nrow(tab2) == 0 || ncol(tab2) == 0) return(list(name = "no_valid_cells", res = NULL, p.value = NA))
+  if (nrow(tab2) == 2 && ncol(tab2) == 2) {
+    res <- tryCatch(fisher.test(tab2), error = function(e) {
+      tryCatch(chisq.test(tab2, simulate.p.value = TRUE, B = simulate_B), error = function(e2) NULL)
+    })
+    pv <- if (!is.null(res)) res$p.value else NA
+    return(list(name = "fisher_or_sim_chisq", res = res, p.value = pv))
+  }
+  expected <- tryCatch(chisq.test(tab2, correct = FALSE)$expected, error = function(e) NULL)
+  use_sim <- is.null(expected) || any(expected < 5, na.rm = TRUE)
+  if (use_sim) {
+    res <- tryCatch(chisq.test(tab2, simulate.p.value = TRUE, B = simulate_B), error = function(e) NULL)
+    pv <- if (!is.null(res)) res$p.value else NA
+    return(list(name = "chisq_simulated", res = res, p.value = pv))
+  } else {
+    res <- tryCatch(chisq.test(tab2, correct = FALSE), error = function(e) NULL)
+    pv <- if (!is.null(res)) res$p.value else NA
+    return(list(name = "chisq_standard", res = res, p.value = pv))
+  }
+}
+
+# Iterar variables y mostrar tabla + porcentajes + test + (heatmap si p < .05)
+for (v in present) {
+  cat("\n\n--- Variable:", v, "---\n\n")
+  # extraer columna de forma segura
+  varvec <- tryCatch(datos[[v]], error = function(e) as.data.frame(datos)[, v, drop = TRUE])
+  if (is.data.frame(varvec)) {
+    warning("La variable ", v, " es un data.frame/list-column; se colapsa a texto por fila.")
+    varvec <- apply(varvec, 1, function(r) paste(r, collapse = "|"))
+  }
+  clase_vec <- datos[["clase_latente_factor"]]
+  dfc <- data.frame(clase = clase_vec, var = varvec, stringsAsFactors = FALSE)
+  dfc <- dfc[!is.na(dfc$clase) & !is.na(dfc$var), , drop = FALSE]
+  n_obs <- nrow(dfc)
+  cat("Observaciones con datos completos (clase +", v, "):", n_obs, "\n\n")
+  if (n_obs < 10) { cat("Muy pocos casos (<10). Se omite.\n"); next }
+  tab <- tryCatch(table(dfc$clase, dfc$var, useNA = "no"), error = function(e) NULL)
+  if (is.null(tab)) { cat("No se pudo construir la tabla. Se omite.\n"); next }
+  # mostrar tabla y porcentajes (kable)
+  df_tab <- as.data.frame.matrix(tab)
+  kbl(df_tab, caption = paste("Frecuencias: clase_latente ×", v), booktabs = TRUE) %>%
+    kable_styling(full_width = FALSE) %>%
+    print()
+  pct_row <- prop.table(tab, margin = 1) * 100
+  cat("\nPorcentajes por fila (dentro de cada clase) [%]:\n")
+  #print(round(pct_row, 2))
+  # ejecutar test
+  test_info <- run_appropriate_test(tab, simulate_B = 5000)
+  cat("\nTest seleccionado:", test_info$name, "\n")
+  cat("p-value:", format.pval(test_info$p.value, digits = 4), "\n")
+  if (!is.null(test_info$res)) {
+    res <- test_info$res
+    if (!is.null(res$statistic)) cat("Estadístico:", format(res$statistic), "\n")
+    if (!is.null(res$parameter)) cat("df:", format(res$parameter), "\n")
+  }
+  # si significativa (p < 0.05) -> heatmap de proporciones por clase
+  if (!is.na(test_info$p.value) && test_info$p.value < 0.05) {
+    cat("\nRelación significativa (p < 0.05). Generando heatmap de proporciones por clase...\n")
+    # FIX: use as.data.frame.matrix to get a rectangular data.frame suitable for pivot_longer
+    pct_df <- as.data.frame.matrix(pct_row) %>%
+      tibble::rownames_to_column(var = "clase") %>%
+      pivot_longer(cols = -clase, names_to = "categoria", values_to = "porc")
+    # ordenar clases as in factor levels
+    pct_df$clase <- factor(pct_df$clase, levels = levels(datos$clase_latente_factor))
+    pct_df$porc <- as.numeric(pct_df$porc)
+    # plot
+    p <- ggplot(pct_df, aes(x = categoria, y = clase, fill = porc)) +
+      geom_tile(color = "white") +
+      geom_text(aes(label = paste0(round(porc,1), "%")), color = "white", size = 3) +
+      scale_fill_gradient(low = "#f7fbff", high = "#08306b", na.value = "grey90", name = "% dentro clase") +
+      labs(title = paste0("Heatmap: proporción dentro de cada clase — ", v),
+           x = "Categoría", y = "Clase latente") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            panel.grid = element_blank(),
+            plot.title = element_text(face = "bold"))
+    print(p)
+  } else {
+    cat("\nRelación no significativa (p ≥ 0.05) — no se genera heatmap.\n")
+  }
+}
+```
+
+
+

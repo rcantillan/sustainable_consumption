@@ -1,6 +1,0 @@
-
-	Pearson's Chi-squared test
-
-data:  tabla
-X-squared = 69.62, df = 4, p-value = 2.73e-14
-
