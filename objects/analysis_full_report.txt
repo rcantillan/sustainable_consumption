@@ -1,0 +1,623 @@
+INFORME: pipeline corregido (multinom robusto) 
+Fecha: 2025-12-05 10:39:19.366144 
+Objects in RData: datos_con_clases 
+Using data.frame: datos_con_clases dim: 2000 x 189 
+COLUMN DETECTION: 
+LCA items: P4_1=P4_1; P4_2=P4_2; P4_3=P4_3; P4_4=P4_4; P7_1=P7_1; P7_2=P7_2; P7_3=P7_3; P7_4=P7_4; P7_5=P7_5 
+A6A: A6A A7A: A7A 
+Created A6B1_1_pago 
+Created A6B2_2_pago 
+Created A7B1_1_pago 
+Created A7B2_1_pago 
+clase_latente_factor created from clase_latente 
+Saved cleaned snapshot 
+
+--- BIVARIADOS por clase_latente y ejes --- 
+
+Bivariate clase_latente_factor vs P4_1_high 
+   
+    Bajo Alto
+  1    6  749
+  2    0 1070
+  3  109   66 
+Row %:
+    
+      Bajo   Alto
+  1   0.79  99.21
+  2   0.00 100.00
+  3  62.29  37.71 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 1131.6, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_1_ord 
+   
+      1   2   3   4
+  1   4   2  89 660
+  2   0   0 131 939
+  3  75  34   8  58 
+Row %:
+    
+        1     2     3     4
+  1  0.53  0.26 11.79 87.42
+  2  0.00  0.00 12.24 87.76
+  3 42.86 19.43  4.57 33.14 
+Test result:
+ 
+	Pearson's Chi-squared test with simulated p-value (based on 5000 replicates)
+
+data:  tab
+X-squared = 1131.7, df = NA, p-value = 2e-04
+ 
+
+Bivariate clase_latente_factor vs P4_2_high 
+   
+    Bajo Alto
+  1  313  442
+  2  934  136
+  3  125   50 
+Row %:
+    
+     Bajo  Alto
+  1 41.46 58.54
+  2 87.29 12.71
+  3 71.43 28.57 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 432.4, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_2_ord 
+   
+      1   2   3   4
+  1 199 114 183 259
+  2 651 283  61  75
+  3  79  46  20  30 
+Row %:
+    
+        1     2     3     4
+  1 26.36 15.10 24.24 34.30
+  2 60.84 26.45  5.70  7.01
+  3 45.14 26.29 11.43 17.14 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 437.63, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_3_high 
+   
+    Bajo Alto
+  1   37  718
+  2   74  996
+  3  124   51 
+Row %:
+    
+     Bajo  Alto
+  1  4.90 95.10
+  2  6.92 93.08
+  3 70.86 29.14 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 647.88, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_3_ord 
+   
+      1   2   3   4
+  1  10  27 143 575
+  2  29  45 222 774
+  3  74  50  20  31 
+Row %:
+    
+        1     2     3     4
+  1  1.32  3.58 18.94 76.16
+  2  2.71  4.21 20.75 72.34
+  3 42.29 28.57 11.43 17.71 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 697.02, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_4_high 
+   
+    Bajo Alto
+  1   41  714
+  2  473  597
+  3  111   64 
+Row %:
+    
+     Bajo  Alto
+  1  5.43 94.57
+  2 44.21 55.79
+  3 63.43 36.57 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 402.21, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P4_4_ord 
+   
+      1   2   3   4
+  1  10  31 313 401
+  2 143 330 328 269
+  3  45  66  31  33 
+Row %:
+    
+        1     2     3     4
+  1  1.32  4.11 41.46 53.11
+  2 13.36 30.84 30.65 25.14
+  3 25.71 37.71 17.71 18.86 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 428.31, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_1_high 
+   
+    Bajo Alto
+  1   21  734
+  2  105  965
+  3   52  123 
+Row %:
+    
+     Bajo  Alto
+  1  2.78 97.22
+  2  9.81 90.19
+  3 29.71 70.29 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 129.47, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_1_ord 
+   
+      1   2   3   4
+  1   8  13 143 591
+  2  31  74 250 715
+  3  22  30  35  88 
+Row %:
+    
+        1     2     3     4
+  1  1.06  1.72 18.94 78.28
+  2  2.90  6.92 23.36 66.82
+  3 12.57 17.14 20.00 50.29 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 147.06, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_2_high 
+   
+    Bajo Alto
+  1  179  576
+  2  809  261
+  3   80   95 
+Row %:
+    
+     Bajo  Alto
+  1 23.71 76.29
+  2 75.61 24.39
+  3 45.71 54.29 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 483.69, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_2_ord 
+   
+      1   2   3   4
+  1  49 130 343 233
+  2 249 560 207  54
+  3  35  45  53  42 
+Row %:
+    
+        1     2     3     4
+  1  6.49 17.22 45.43 30.86
+  2 23.27 52.34 19.35  5.05
+  3 20.00 25.71 30.29 24.00 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 516.92, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_3_high 
+   
+    Bajo Alto
+  1  197  558
+  2  773  297
+  3   93   82 
+Row %:
+    
+     Bajo  Alto
+  1 26.09 73.91
+  2 72.24 27.76
+  3 53.14 46.86 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 378.62, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_3_ord 
+   
+      1   2   3   4
+  1  64 133 271 287
+  2 300 473 174 123
+  3  52  41  35  47 
+Row %:
+    
+        1     2     3     4
+  1  8.48 17.62 35.89 38.01
+  2 28.04 44.21 16.26 11.50
+  3 29.71 23.43 20.00 26.86 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 400.16, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_4_high 
+   
+    Bajo Alto
+  1   39  716
+  2  139  931
+  3   70  105 
+Row %:
+    
+     Bajo  Alto
+  1  5.17 94.83
+  2 12.99 87.01
+  3 40.00 60.00 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 159.45, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_4_ord 
+   
+      1   2   3   4
+  1  17  22 171 545
+  2  49  90 278 653
+  3  33  37  27  78 
+Row %:
+    
+        1     2     3     4
+  1  2.25  2.91 22.65 72.19
+  2  4.58  8.41 25.98 61.03
+  3 18.86 21.14 15.43 44.57 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 173.46, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_5_high 
+   
+    Bajo Alto
+  1  208  547
+  2  933  137
+  3  106   69 
+Row %:
+    
+     Bajo  Alto
+  1 27.55 72.45
+  2 87.20 12.80
+  3 60.57 39.43 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 671.13, df = 2, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P7_5_ord 
+   
+      1   2   3   4
+  1  91 117 265 282
+  2 530 403  87  50
+  3  62  44  37  32 
+Row %:
+    
+        1     2     3     4
+  1 12.05 15.50 35.10 37.35
+  2 49.53 37.66  8.13  4.67
+  3 35.43 25.14 21.14 18.29 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 685.47, df = 6, p-value < 2.2e-16
+ 
+
+Bivariate clase_latente_factor vs P3_10_high 
+   
+    Bajo Alto
+  1  212  543
+  2  439  631
+  3   71  104 
+Row %:
+    
+     Bajo  Alto
+  1 28.08 71.92
+  2 41.03 58.97
+  3 40.57 59.43 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 33.836, df = 2, p-value = 4.494e-08
+ 
+
+Bivariate clase_latente_factor vs P9_5_high 
+   
+    Bajo Alto
+  1  344  411
+  2  642  428
+  3   97   78 
+Row %:
+    
+     Bajo  Alto
+  1 45.56 54.44
+  2 60.00 40.00
+  3 55.43 44.57 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 37.287, df = 2, p-value = 8.001e-09
+ 
+
+Bivariate clase_latente_factor vs P9_6_high 
+   
+    Bajo Alto
+  1  168  587
+  2  302  768
+  3   63  112 
+Row %:
+    
+     Bajo  Alto
+  1 22.25 77.75
+  2 28.22 71.78
+  3 36.00 64.00 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 16.655, df = 2, p-value = 0.0002418
+ 
+
+Bivariate clase_latente_factor vs A6A_reduce 
+   
+     No  Sí
+  1 223 505
+  2 263 745
+  3  62 106 
+Row %:
+    
+       No    Sí
+  1 30.63 69.37
+  2 26.09 73.91
+  3 36.90 63.10 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 10.183, df = 2, p-value = 0.006148
+ 
+
+Bivariate clase_latente_factor vs A7A_reduce 
+   
+     No  Sí
+  1 111 644
+  2  76 994
+  3  31 144 
+Row %:
+    
+       No    Sí
+  1 14.70 85.30
+  2  7.10 92.90
+  3 17.71 82.29 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 35.49, df = 2, p-value = 1.965e-08
+ 
+
+Bivariate clase_latente_factor vs A6B1_1_pago 
+   
+    NoPago Pago
+  1    505    0
+  2    745    0
+  3    106    0 
+Row %:
+    
+    NoPago Pago
+  1    100    0
+  2    100    0
+  3    100    0 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = NaN, df = 2, p-value = NA
+ 
+
+Bivariate clase_latente_factor vs A6B2_2_pago 
+   
+    NoPago Pago
+  1    260    0
+  2    406    0
+  3     34    0 
+Row %:
+    
+    NoPago Pago
+  1    100    0
+  2    100    0
+  3    100    0 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = NaN, df = 2, p-value = NA
+ 
+
+Bivariate clase_latente_factor vs A7B1_1_pago 
+   
+    NoPago Pago
+  1    644    0
+  2    994    0
+  3    144    0 
+Row %:
+    
+    NoPago Pago
+  1    100    0
+  2    100    0
+  3    100    0 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = NaN, df = 2, p-value = NA
+ 
+
+Bivariate clase_latente_factor vs A7B2_1_pago 
+   
+    NoPago Pago
+  1    330    0
+  2    578    0
+  3     63    0 
+Row %:
+    
+    NoPago Pago
+  1    100    0
+  2    100    0
+  3    100    0 
+Test result:
+ 
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = NaN, df = 2, p-value = NA
+ 
+
+--- MODELOS LOGÍSTICOS (A6A_reduce, A7A_reduce) --- 
+
+Outcome: A6A_reduce 
+Model formula: A6A_reduce ~ clase_latente_factor + sexo + edad_cat 
+Complete cases: 1901 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)            1.21844    0.12494   9.752  < 2e-16 ***
+clase_latente_factor2  0.09717    0.11162   0.871  0.38400    
+clase_latente_factor3 -0.23422    0.18143  -1.291  0.19672    
+sexo2                  0.06023    0.10618   0.567  0.57058    
+edad_cat35-54         -0.35374    0.12579  -2.812  0.00492 ** 
+edad_cat55+           -0.78455    0.13324  -5.888 3.91e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2281.7  on 1900  degrees of freedom
+Residual deviance: 2235.8  on 1895  degrees of freedom
+AIC: 2247.8
+
+Number of Fisher Scoring iterations: 4
+ 
+
+Outcome: A7A_reduce 
+Model formula: A7A_reduce ~ clase_latente_factor + sexo + edad_cat 
+Complete cases: 1997 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                      Estimate Std. Error z value Pr(>|z|)    
+(Intercept)             2.6517     0.2040  13.000  < 2e-16 ***
+clase_latente_factor2   0.5149     0.1644   3.133  0.00173 ** 
+clase_latente_factor3  -0.1679     0.2311  -0.727  0.46748    
+sexo2                   0.1867     0.1565   1.193  0.23292    
+edad_cat35-54          -0.5328     0.2223  -2.397  0.01655 *  
+edad_cat55+            -1.6687     0.2056  -8.116 4.82e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1377.0  on 1996  degrees of freedom
+Residual deviance: 1252.7  on 1991  degrees of freedom
+AIC: 1264.7
+
+Number of Fisher Scoring iterations: 5
+ 
+
+--- MULTINOMIAL ROBUSTO: clase_latente_factor como DV --- 
+Initial multinom predictors: P3_10_high, P9_5_high, P9_6_high, A6A_reduce, A7A_reduce, sexo, edad_cat 
+Multinomial fitted. Formula used: 
+clase_latente_factor ~ P3_10_high + P9_5_high + P9_6_high + A6A_reduce +      A7A_reduce + sexo + edad_cat 
+Complete cases used: 1901 
+Could not compute vcov/coeftest robustly; showing summary output instead. 
+NULL 
+Saved multinom fit (fixed). 
+
+Saved analysis_full_results_multinom_fixed.RData (contains cleaned data, bivariates, models). 
+FIN. Revisa archivos en 'objects/'. 

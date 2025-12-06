@@ -1,0 +1,28 @@
+== 12_fix_and_retry_models_fixed.R: inicio == 
+Objetos dentro del RData: datos_con_clases 
+Usando data.frame: datos_con_clases | dimensiones: 2000 x 189 
+Variables detectadas: 
+ A6A_orig: A6A  | A6A_reduce exists: NA 
+ A7A_orig: A7A  | A7A_reduce exists: NA 
+ clase factor: clase_social_cat  | clase idx: indice_clase_social 
+ clase latente: clase_latente 
+ sexo: M1  | edad: M5 
+Creada variable A6A_reduce a partir de A6A | count Sí: 1356 
+Creada variable A7A_reduce a partir de A7A | count Sí: 1782 
+Creada 'sexo' a partir de M1 
+Creada 'edad_cat' a partir de M5 
+Creada 'clase_latente_factor' a partir de clase_latente 
+Creada 'clase_social_final' a partir de clase_social_cat 
+Creada 'indice_clase_social_final' a partir de indice_clase_social 
+Resumen de variables tras creación guardado: objects/diagnostics_vars_after_fix.csv 
+Outcome elegido: A6A_reduce 
+Casos completos: 1997 
+Guardada freq para: clase_latente_factor ( 3 niveles ) 
+Guardada freq para: sexo ( 2 niveles ) 
+Guardada freq para: edad_cat ( 3 niveles ) 
+Guardada freq para: clase_social_final ( 5 niveles ) 
+Formula tentativa: A6A_reduce ~ clase_latente_factor + sexo + edad_cat + clase_social_final 
+Model.matrix dims rows: 1997  cols: 10 
+Intentando ajuste directo con df_complete... 
+Ajuste directo exitoso. Guardado. 
+== Fin del script corregido == 

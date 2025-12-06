@@ -1,0 +1,14 @@
+Starting code/17_complete_analysis_final.R 
+Loaded RData. Objects: datos_con_clases 
+Using data.frame: datos_con_clases dim: 2000 x 189 
+Created A6A_reduce from A6A: Sí=1356, No=548, NA=96 
+Created A7A_reduce from A7A: Sí=1782, No=218, NA=0 
+Bivariate for A6A_reduce 
+Bivariate for A7A_reduce 
+Modeling outcome: A6A_reduce 
+Attempt 1 | dep=A6A_reduce | preds=clase_latente_factor,sexo,edad_cat,clase_social_final | complete cases=1901 
+Attempt 1 | dep=A6A_reduce | preds=clase_latente_factor,sexo,edad_cat,indice_clase_social_final | complete cases=1901 
+Modeling outcome: A7A_reduce 
+Attempt 1 | dep=A7A_reduce | preds=clase_latente_factor,sexo,edad_cat,clase_social_final | complete cases=1997 
+Attempt 1 | dep=A7A_reduce | preds=clase_latente_factor,sexo,edad_cat,indice_clase_social_final | complete cases=1997 
+Pipeline finished successfully. 

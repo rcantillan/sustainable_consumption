@@ -1,0 +1,115 @@
+============================================================ 
+INFORME: Pipeline Completo con Ejes 1, 2 y 3 
+Fecha: 2025-12-05 09:40:09.500021 
+============================================================ 
+Objetos en RData: datos_con_clases 
+Usando data.frame: datos_con_clases | Dimensiones: 2000 x 189 
+
+=== COLUMNAS DETECTADAS === 
+Eje 1 - P5: P5 | P6: P6 | P8: P8 
+Eje 2 - P3_10: P3_10 | P9_6: P9_6 | A5_1: A5_1 
+Eje 2 - A6A: A6A 
+Eje 3 - P9_5: P9_5 | A7A: A7A 
+Clase latente: clase_latente 
+
+=== EJE 1: PERCEPCIÓN DE RESPONSABILIDAD === 
+P5_RE_macro - Distribución: 
+
+Hogares_Ciudadania           Empresas             Estado        Todos_Otras 
+               825                638                104                433  
+P5_resp_hogares - Distribución: 
+
+  No   Sí 
+1175  825  
+P6_RE_macro - Distribución: 
+
+Hogares_Ciudadania           Empresas             Estado        Todos_Otras 
+               662                153                622                563  
+P6_resp_hogares - Distribución: 
+
+  No   Sí 
+1338  662  
+P8_high - Distribución: 
+
+Bajo Alto 
+ 770 1230  
+
+=== EJE 2: CONSUMO DE CARNE === 
+A5_1_want_less - Distribución: 
+
+ Otro Menos 
+  783  1217  
+
+=== EJE 3: CONSUMO DIGITAL === 
+
+Clase latente - Distribución: 
+
+   1    2    3 
+ 755 1070  175  
+
+Datos procesados guardados en: datos_procesados_ejes123.RData 
+
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+=
+= 
+ANÁLISIS BIVARIADOS POR CLASE LATENTE 
+============================================================ 
+
+--- EJE 2: Consumo de Carne --- 

@@ -1,0 +1,6 @@
+
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 16.655, df = 2, p-value = 0.0002418
+

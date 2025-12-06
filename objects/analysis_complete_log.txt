@@ -1,0 +1,9 @@
+=== Inicio del pipeline completo con Eje 1 === 
+Cargando datos... 
+Detectando columnas... 
+Aplicando recodificaciones... 
+Creada P8_high desde P8 | Alto=1230 Bajo=770 NA=0 
+Creada P3_10_high desde P3_10 | Alto=1278 Bajo=722 NA=0 
+Creada A6A_reduce desde A6A | Sí=1356 No=548 NA=96 
+Creada P9_5_high desde P9_5 | Alto=917 Bajo=1083 NA=0 
+Creada A7A_reduce desde A7A | Sí=1782 No=218 NA=0 

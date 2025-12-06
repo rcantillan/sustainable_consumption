@@ -1,0 +1,281 @@
+=== INFORME DE ANALISIS COMPLETO === 
+Fecha: 2025-12-04 23:51:48.799595 
+Resumen: bivariados y modelos logísticos (factor e índice). 
+Objetos en RData: datos_con_clases 
+Usando data.frame: datos_con_clases dim: 2000 x 189 
+
+--- NORMALIZACION Y CREACION DE VARIABLES --- 
+Heuristics: 
+A6A_orig: A6A 
+A7A_orig: A7A 
+clase_factor_col: clase_social_cat 
+clase_idx_col: indice_clase_social 
+clase_latente_col: clase_latente 
+sexo_col: M1 
+edad_col: M5 
+Created sexo from M1 
+Created edad_cat from M5 
+Created clase_latente_factor from clase_latente 
+Created clase_social_final from clase_social_cat 
+Created indice_clase_social_final from indice_clase_social 
+Saved snapshot: objects/datos_cleaned_for_analysis.RData 
+
+--- BIVARIADOS (TABLAS Y TESTS) --- 
+
+Outcome: A6A_reduce 
+FREQUENCIES (class x outcome): 
+            
+              No  Sí
+  Alta        17  78
+  Baja       172 317
+  Media      122 344
+  Media-alta  42 143
+  Media-baja 195 474 
+PERCENTAGES (by row):             
+                No    Sí
+  Alta       17.89 82.11
+  Baja       35.17 64.83
+  Media      26.18 73.82
+  Media-alta 22.70 77.30
+  Media-baja 29.15 70.85 
+TEST RESULT: 
+	Pearson's Chi-squared test
+
+data:  tabla
+X-squared = 20.158, df = 4, p-value = 0.0004647
+ 
+FREQUENCIES (latent class x outcome): 
+   
+     No  Sí
+  1 223 505
+  2 263 745
+  3  62 106 
+PERCENTAGES (by row):    
+       No    Sí
+  1 30.63 69.37
+  2 26.09 73.91
+  3 36.90 63.10 
+TEST RESULT: 
+	Pearson's Chi-squared test
+
+data:  tabla
+X-squared = 10.183, df = 2, p-value = 0.006148
+ 
+
+Outcome: A7A_reduce 
+FREQUENCIES (class x outcome): 
+            
+              No  Sí
+  Alta         3  97
+  Baja       100 400
+  Media       29 471
+  Media-alta  10 190
+  Media-baja  76 624 
+PERCENTAGES (by row):             
+                No    Sí
+  Alta        3.00 97.00
+  Baja       20.00 80.00
+  Media       5.80 94.20
+  Media-alta  5.00 95.00
+  Media-baja 10.86 89.14 
+TEST RESULT: 
+	Pearson's Chi-squared test
+
+data:  tabla
+X-squared = 69.62, df = 4, p-value = 2.73e-14
+ 
+FREQUENCIES (latent class x outcome): 
+   
+     No  Sí
+  1 111 644
+  2  76 994
+  3  31 144 
+PERCENTAGES (by row):    
+       No    Sí
+  1 14.70 85.30
+  2  7.10 92.90
+  3 17.71 82.29 
+TEST RESULT: 
+	Pearson's Chi-squared test
+
+data:  tabla
+X-squared = 35.49, df = 2, p-value = 1.965e-08
+ 
+
+--- MODELOS LOGISTICOS (ADAPTATIVOS) --- 
+
+## Outcome modelado: A6A_reduce 
+Fórmula (factor): A6A_reduce ~ clase_latente_factor + sexo + edad_cat + clase_social_final 
+AIC: 2242.788  McFadden pseudo-R2: NA 
+GLM summary: 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                   1.85659    0.30062   6.176 6.58e-10 ***
+clase_latente_factor2         0.06246    0.11256   0.555  0.57895    
+clase_latente_factor3        -0.19608    0.18233  -1.075  0.28220    
+sexo2                         0.04875    0.10686   0.456  0.64827    
+edad_cat35-54                -0.37183    0.12751  -2.916  0.00354 ** 
+edad_cat55+                  -0.76961    0.13775  -5.587 2.31e-08 ***
+clase_social_finalBaja       -0.78068    0.28776  -2.713  0.00667 ** 
+clase_social_finalMedia      -0.56803    0.29094  -1.952  0.05089 .  
+clase_social_finalMedia-alta -0.28690    0.32247  -0.890  0.37363    
+clase_social_finalMedia-baja -0.68556    0.28417  -2.412  0.01585 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2281.7  on 1900  degrees of freedom
+Residual deviance: 2222.8  on 1891  degrees of freedom
+AIC: 2242.8
+
+Number of Fisher Scoring iterations: 4
+ 
+Coeficientes (ORs y CIs): 
+# A tibble: 10 × 7
+   term                         estimate std.error statistic  p.value conf.low conf.high
+   <chr>                           <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+ 1 (Intercept)                     6.40      0.301     6.18  6.58e-10    3.63     11.9  
+ 2 clase_latente_factor2           1.06      0.113     0.555 5.79e- 1    0.853     1.33 
+ 3 clase_latente_factor3           0.822     0.182    -1.08  2.82e- 1    0.576     1.18 
+ 4 sexo2                           1.05      0.107     0.456 6.48e- 1    0.852     1.30 
+ 5 edad_cat35-54                   0.689     0.128    -2.92  3.54e- 3    0.537     0.885
+ 6 edad_cat55+                     0.463     0.138    -5.59  2.31e- 8    0.353     0.606
+ 7 clase_social_finalBaja          0.458     0.288    -2.71  6.67e- 3    0.253     0.788
+ 8 clase_social_finalMedia         0.567     0.291    -1.95  5.09e- 2    0.312     0.981
+ 9 clase_social_finalMedia-alta    0.751     0.322    -0.890 3.74e- 1    0.391     1.39 
+10 clase_social_finalMedia-baja    0.504     0.284    -2.41  1.58e- 2    0.280     0.859 
+Guardado model_fit and tidy (factor). 
+Fórmula (index): A6A_reduce ~ clase_latente_factor + sexo + edad_cat + indice_clase_social_final 
+AIC: 2234.846  McFadden pseudo-R2: NA 
+GLM summary (index): 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                1.22456    0.12577   9.737  < 2e-16 ***
+clase_latente_factor2      0.06306    0.11253   0.560 0.575259    
+clase_latente_factor3     -0.18809    0.18252  -1.031 0.302758    
+sexo2                      0.04104    0.10668   0.385 0.700422    
+edad_cat35-54             -0.33408    0.12632  -2.645 0.008177 ** 
+edad_cat55+               -0.71005    0.13524  -5.250 1.52e-07 ***
+indice_clase_social_final  0.29684    0.07742   3.834 0.000126 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 2281.7  on 1900  degrees of freedom
+Residual deviance: 2220.8  on 1894  degrees of freedom
+AIC: 2234.8
+
+Number of Fisher Scoring iterations: 4
+ 
+Coeficientes (ORs y CIs): 
+# A tibble: 7 × 7
+  term                      estimate std.error statistic  p.value conf.low conf.high
+  <chr>                        <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)                  3.40     0.126      9.74  2.11e-22    2.67      4.37 
+2 clase_latente_factor2        1.07     0.113      0.560 5.75e- 1    0.854     1.33 
+3 clase_latente_factor3        0.829    0.183     -1.03  3.03e- 1    0.581     1.19 
+4 sexo2                        1.04     0.107      0.385 7.00e- 1    0.846     1.29 
+5 edad_cat35-54                0.716    0.126     -2.64  8.18e- 3    0.558     0.917
+6 edad_cat55+                  0.492    0.135     -5.25  1.52e- 7    0.377     0.640
+7 indice_clase_social_final    1.35     0.0774     3.83  1.26e- 4    1.16      1.57  
+Guardado model_fit and tidy (index). 
+
+## Outcome modelado: A7A_reduce 
+Fórmula (factor): A7A_reduce ~ clase_latente_factor + sexo + edad_cat + clase_social_final 
+AIC: 1235.007  McFadden pseudo-R2: NA 
+GLM summary: 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                   3.93868    0.63049   6.247 4.18e-10 ***
+clase_latente_factor2         0.42901    0.16751   2.561  0.01043 *  
+clase_latente_factor3        -0.06792    0.23467  -0.289  0.77224    
+sexo2                         0.12826    0.15875   0.808  0.41915    
+edad_cat35-54                -0.50687    0.22522  -2.251  0.02441 *  
+edad_cat55+                  -1.55068    0.21305  -7.278 3.38e-13 ***
+clase_social_finalBaja       -1.76115    0.60393  -2.916  0.00354 ** 
+clase_social_finalMedia      -0.77901    0.62322  -1.250  0.21131    
+clase_social_finalMedia-alta -0.46686    0.67615  -0.690  0.48990    
+clase_social_finalMedia-baja -1.42159    0.60538  -2.348  0.01886 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1377  on 1996  degrees of freedom
+Residual deviance: 1215  on 1987  degrees of freedom
+AIC: 1235
+
+Number of Fisher Scoring iterations: 6
+ 
+Coeficientes (ORs y CIs): 
+# A tibble: 10 × 7
+   term                         estimate std.error statistic  p.value conf.low conf.high
+   <chr>                           <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+ 1 (Intercept)                    51.4       0.630     6.25  4.18e-10  17.3      222.   
+ 2 clase_latente_factor2           1.54      0.168     2.56  1.04e- 2   1.11       2.14 
+ 3 clase_latente_factor3           0.934     0.235    -0.289 7.72e- 1   0.595      1.50 
+ 4 sexo2                           1.14      0.159     0.808 4.19e- 1   0.835      1.56 
+ 5 edad_cat35-54                   0.602     0.225    -2.25  2.44e- 2   0.384      0.932
+ 6 edad_cat55+                     0.212     0.213    -7.28  3.38e-13   0.138      0.319
+ 7 clase_social_finalBaja          0.172     0.604    -2.92  3.54e- 3   0.0413     0.479
+ 8 clase_social_finalMedia         0.459     0.623    -1.25  2.11e- 1   0.107      1.35 
+ 9 clase_social_finalMedia-alta    0.627     0.676    -0.690 4.90e- 1   0.137      2.13 
+10 clase_social_finalMedia-baja    0.241     0.605    -2.35  1.89e- 2   0.0578     0.675 
+Guardado model_fit and tidy (factor). 
+Fórmula (index): A7A_reduce ~ clase_latente_factor + sexo + edad_cat + indice_clase_social_final 
+AIC: 1225.126  McFadden pseudo-R2: NA 
+GLM summary (index): 
+
+Call:
+glm(formula = formula_obj, family = binomial(), data = df_complete)
+
+Coefficients:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                2.72585    0.20869  13.062  < 2e-16 ***
+clase_latente_factor2      0.40792    0.16802   2.428   0.0152 *  
+clase_latente_factor3     -0.06854    0.23498  -0.292   0.7705    
+sexo2                      0.12284    0.15898   0.773   0.4397    
+edad_cat35-54             -0.44974    0.22429  -2.005   0.0449 *  
+edad_cat55+               -1.46947    0.21069  -6.975 3.07e-12 ***
+indice_clase_social_final  0.73730    0.11968   6.161 7.25e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1377.0  on 1996  degrees of freedom
+Residual deviance: 1211.1  on 1990  degrees of freedom
+AIC: 1225.1
+
+Number of Fisher Scoring iterations: 5
+ 
+Coeficientes (ORs y CIs): 
+# A tibble: 7 × 7
+  term                      estimate std.error statistic  p.value conf.low conf.high
+  <chr>                        <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+1 (Intercept)                 15.3       0.209    13.1   5.46e-39   10.3      23.3  
+2 clase_latente_factor2        1.50      0.168     2.43  1.52e- 2    1.08      2.09 
+3 clase_latente_factor3        0.934     0.235    -0.292 7.71e- 1    0.595     1.50 
+4 sexo2                        1.13      0.159     0.773 4.40e- 1    0.830     1.55 
+5 edad_cat35-54                0.638     0.224    -2.01  4.49e- 2    0.408     0.985
+6 edad_cat55+                  0.230     0.211    -6.97  3.07e-12    0.150     0.344
+7 indice_clase_social_final    2.09      0.120     6.16  7.25e-10    1.66      2.65  
+Guardado model_fit and tidy (index). 
+
+Objetos guardados en analysis_full_results.RData: datos_clean, biv_results, model_results 
+CSV, test.txt, RDS y este informe están en la carpeta 'objects/' 
+Fin del informe. Fecha: 2025-12-04 23:51:51.304354 

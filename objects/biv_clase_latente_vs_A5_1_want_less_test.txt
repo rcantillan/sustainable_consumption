@@ -1,0 +1,6 @@
+
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = NaN, df = 2, p-value = NA
+

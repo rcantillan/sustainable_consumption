@@ -1,0 +1,9 @@
+Start pipeline (multinom fixed) 
+RData loaded: /home/rober/Documentos/sustainable_consumption/datos/datos_con_clases.RData 
+Using data.frame: datos_con_clases 
+safe_create_reduce: A6A_reduce <- A6A | Sí=1356 No=548 NA=96 
+safe_create_reduce: A7A_reduce <- A7A | Sí=1782 No=218 NA=0 
+Attempt 1 | dep=A6A_reduce | preds=clase_latente_factor,sexo,edad_cat | complete cases=1901 
+Attempt 1 | dep=A7A_reduce | preds=clase_latente_factor,sexo,edad_cat | complete cases=1997 
+fit_multinom_robust: sandwich/coeftest failed: número de items para para sustituir no es un múltiplo de la longitud del reemplazo 
+Fixed pipeline finished 
