@@ -1,0 +1,3463 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Roberto Cantillan">
+<meta name="dcterms.date" content="2025-12-10">
+
+<title>Revisión: LCA y Determinantes del Compromiso</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="06_ejes_updated_files/libs/clipboard/clipboard.min.js"></script>
+<script src="06_ejes_updated_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="06_ejes_updated_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="06_ejes_updated_files/libs/quarto-html/popper.min.js"></script>
+<script src="06_ejes_updated_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="06_ejes_updated_files/libs/quarto-html/anchor.min.js"></script>
+<link href="06_ejes_updated_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="06_ejes_updated_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="06_ejes_updated_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="06_ejes_updated_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="06_ejes_updated_files/libs/bootstrap/bootstrap-85ca17616d439092cab8928cb242219f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<style>
+
+      .quarto-title-block .quarto-title-banner h1,
+      .quarto-title-block .quarto-title-banner h2,
+      .quarto-title-block .quarto-title-banner h3,
+      .quarto-title-block .quarto-title-banner h4,
+      .quarto-title-block .quarto-title-banner h5,
+      .quarto-title-block .quarto-title-banner h6
+      {
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .quarto-title-block .quarto-title-banner {
+        color: rgba(0, 0, 0, 0.8);
+background: featured.jpg;
+      }
+</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="custom.scss">
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Revisión: LCA y Determinantes del Compromiso</h1>
+            <p class="subtitle lead">Análisis Bivariado y Modelos Multinomiales Predictivos</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Latent Class Analysis</div>
+                <div class="quarto-category">Multinomial Regression</div>
+                <div class="quarto-category">Environmental Sociology</div>
+                <div class="quarto-category">Sustainable Behavior</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Roberto Cantillan </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              Departamento de Sociología
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 10, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      <p>Este documento profundiza en la caracterización sociológica de perfiles ambientales identificados mediante Modelos de Clases Latentes (LCA): Ambientalismo Moderado (60%), Modo de Vida Imperial (13%) y Ambientalismo Crítico (27%). Se propone y valida un nuevo <strong>Gradiente de Compromiso Ambiental</strong> de cuatro niveles que permite distinguir entre la <em>Adaptación Privada</em> (cambio conductual sin apoyo fiscal) y el <em>Compromiso Eco-Fiscal</em>. Mediante modelos de regresión logística multinomial ajustados por edad y nivel socioeconómico, se demuestra que la disposición al sacrificio personal desvinculada de la responsabilidad fiscal es un predictor clave para diferenciar los perfiles latentes, revelando tensiones importantes entre la conducta individual y el apoyo a políticas estructurales.</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En este documento</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción">1. Introducción</a></li>
+  <li><a href="#carga-y-recodificación" id="toc-carga-y-recodificación" class="nav-link" data-scroll-target="#carga-y-recodificación">2. Carga y Recodificación</a></li>
+  <li><a href="#análisis-bivariado" id="toc-análisis-bivariado" class="nav-link" data-scroll-target="#análisis-bivariado">3. Análisis Bivariado</a>
+  <ul class="collapse">
+  <li><a href="#variable-nivel_compromiso_carne" id="toc-variable-nivel_compromiso_carne" class="nav-link" data-scroll-target="#variable-nivel_compromiso_carne">Variable: nivel_compromiso_carne</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><img src="06_ejes_updated_files/figure-html/loop-bivariado-1.png" class="img-fluid" width="3600"></a>
+  <ul class="collapse">
+  <li><a href="#variable-nivel_compromiso_internet" id="toc-variable-nivel_compromiso_internet" class="nav-link" data-scroll-target="#variable-nivel_compromiso_internet">Variable: nivel_compromiso_internet</a></li>
+  <li><a href="#variable-p5_re_macro" id="toc-variable-p5_re_macro" class="nav-link" data-scroll-target="#variable-p5_re_macro">Variable: P5_RE_macro</a></li>
+  <li><a href="#variable-p6_re_macro" id="toc-variable-p6_re_macro" class="nav-link" data-scroll-target="#variable-p6_re_macro">Variable: P6_RE_macro</a></li>
+  <li><a href="#variable-p8_high" id="toc-variable-p8_high" class="nav-link" data-scroll-target="#variable-p8_high">Variable: P8_high</a></li>
+  <li><a href="#variable-p3_10_high" id="toc-variable-p3_10_high" class="nav-link" data-scroll-target="#variable-p3_10_high">Variable: P3_10_high</a></li>
+  <li><a href="#variable-p9_6_high" id="toc-variable-p9_6_high" class="nav-link" data-scroll-target="#variable-p9_6_high">Variable: P9_6_high</a></li>
+  </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><img src="06_ejes_updated_files/figure-html/loop-bivariado-2.png" class="img-fluid" width="3600"></a>
+  <ul class="collapse">
+  <li><a href="#variable-a5_1_want_less" id="toc-variable-a5_1_want_less" class="nav-link" data-scroll-target="#variable-a5_1_want_less">Variable: A5_1_want_less</a></li>
+  </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><img src="06_ejes_updated_files/figure-html/loop-bivariado-3.png" class="img-fluid" width="3600"></a>
+  <ul class="collapse">
+  <li><a href="#variable-p9_5_high" id="toc-variable-p9_5_high" class="nav-link" data-scroll-target="#variable-p9_5_high">Variable: P9_5_high</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#modelado-multivariado-variables-significativas" id="toc-modelado-multivariado-variables-significativas" class="nav-link" data-scroll-target="#modelado-multivariado-variables-significativas">4. Modelado Multivariado (Variables Significativas)</a>
+  <ul class="collapse">
+  <li><a href="#predictor-nivel_compromiso_carne" id="toc-predictor-nivel_compromiso_carne" class="nav-link" data-scroll-target="#predictor-nivel_compromiso_carne">Predictor: nivel_compromiso_carne</a>
+  <ul class="collapse">
+  <li><a href="#tabla-de-regresión-odds-ratios" id="toc-tabla-de-regresión-odds-ratios" class="nav-link" data-scroll-target="#tabla-de-regresión-odds-ratios">Tabla de Regresión (Odds Ratios)</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introducción" class="level1">
+<h1>1. Introducción</h1>
+<p>Este documento presenta un análisis secuencial:</p>
+<ol type="1">
+<li><strong>Recodificación Experta:</strong> Creación de gradientes de compromiso.</li>
+<li><strong>Tamizaje Bivariado:</strong> Identificación de variables significativas.</li>
+<li><strong>Modelado Multivariado:</strong> Tablas de regresión comparativas y gráficos de probabilidad.</li>
+</ol>
+</section>
+<section id="carga-y-recodificación" class="level1">
+<h1>2. Carga y Recodificación</h1>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rdata_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"objects"</span>, <span class="st">"datos_recodificados_con_lca.RData"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(rdata_file)) {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">"ERROR: No se encontró el archivo: "</span>, rdata_file)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(rdata_file) </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># --- RECODIFICACIÓN EXPERTA (Lógica Jerárquica) ---</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># CARNE</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_compromiso_carne =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A6A) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">4</span>, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A6A) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> (<span class="fu">as.numeric</span>(A6B1_1) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> <span class="fu">as.numeric</span>(A6B2_2) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="dv">3</span>, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A6A) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">2</span>, </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A6A) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># INTERNET</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_compromiso_internet =</span> <span class="fu">case_when</span>(</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A7A) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A7A) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> (<span class="fu">as.numeric</span>(A7B1_1) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> <span class="fu">as.numeric</span>(A7B2_1) <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A7A) <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">as.numeric</span>(A7A) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_real_</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_compromiso_carne =</span> <span class="fu">factor</span>(nivel_compromiso_carne, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1. Resistencia"</span>, <span class="st">"2. Adaptación Privada"</span>, </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                                               <span class="st">"3. Compromiso Eco-Fiscal"</span>, <span class="st">"4. Abandono Radical"</span>)),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">nivel_compromiso_internet =</span> <span class="fu">factor</span>(nivel_compromiso_internet, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1. Resistencia"</span>, <span class="st">"2. Adaptación Privada"</span>, </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                                                  <span class="st">"3. Compromiso Eco-Fiscal"</span>, <span class="st">"4. Abandono Radical"</span>))</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="análisis-bivariado" class="level1">
+<h1>3. Análisis Bivariado</h1>
+<p>Se ha optado por transformar las combinaciones de conducta y disposición a pagar en una <strong>variable ordinal de 4 niveles</strong> por tres razones estadísticas y sociológicas fundamentales:</p>
+<ol type="1">
+<li><p><strong>Poder Estadístico y Robustez:</strong> Las categorías intermedias originales (ej. “Status Quo + Pagar Triple”) presentaban frecuencias marginales extremadamente bajas (<span class="math inline">\(n &lt; 30\)</span>), lo que viola los supuestos de las pruebas de Chi-cuadrado y genera inestabilidad en modelos de regresión. La nueva categorización garantiza grupos robustos con <span class="math inline">\(n\)</span> suficiente para el análisis inferencial.</p></li>
+<li><p><strong>Identificación de la “Adaptación Privada” (Nivel 2):</strong> El análisis exploratorio reveló que el grupo mayoritario (~28%) está dispuesto a modificar su conducta personal (consumir menos) pero rechaza los mecanismos fiscales (impuestos). Este grupo quedaba oculto o mal clasificado en escalas binarias tradicionales. La categoría 2 captura explícitamente este fenómeno de “individualización de la responsabilidad sin costo fiscal”.</p></li>
+<li><p><strong>Linealidad del Compromiso (Gradiente):</strong> La nueva variable ordena teóricamente la intensidad del sacrificio percibido:</p></li>
+</ol>
+<ul>
+<li><em>Nivel 1:</em> Sin costo (Status Quo).</li>
+<li><em>Nivel 2:</em> Costo de hábito / estilo de vida.</li>
+<li><em>Nivel 3:</em> Costo de hábito + Costo económico.</li>
+<li><em>Nivel 4:</em> Costo máximo (Abandono total).</li>
+</ul>
+<section id="variable-nivel_compromiso_carne" class="level3">
+<h3 class="anchored" data-anchor-id="variable-nivel_compromiso_carne">Variable: nivel_compromiso_carne</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: nivel_compromiso_carne
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+<ol type="1">
+<li>Resistencia
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="2" type="1">
+<li>Adaptación Privada
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="3" type="1">
+<li>Compromiso Eco-Fiscal
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="4" type="1">
+<li>Abandono Radical
+</li></ol></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+355
+</td>
+<td style="text-align:right;">
+422
+</td>
+<td style="text-align:right;">
+343
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+50
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:right;">
+155
+</td>
+<td style="text-align:right;">
+157
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.01484</p>
+<blockquote class="blockquote">
+<p><strong>RESULTADO SIGNIFICATIVO: Se incluirá en modelo multivariado.</strong></p>
+</blockquote>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"><img src="06_ejes_updated_files/figure-html/loop-bivariado-1.png" class="img-fluid" width="3600"></h2>
+<section id="variable-nivel_compromiso_internet" class="level3">
+<h3 class="anchored" data-anchor-id="variable-nivel_compromiso_internet">Variable: nivel_compromiso_internet</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: nivel_compromiso_internet
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+<ol type="1">
+<li>Resistencia
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="2" type="1">
+<li>Adaptación Privada
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="3" type="1">
+<li>Compromiso Eco-Fiscal
+</li></ol></th>
+<th style="text-align:right;">
+<ol start="4" type="1">
+<li>Abandono Radical
+</li></ol></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+321
+</td>
+<td style="text-align:right;">
+353
+</td>
+<td style="text-align:right;">
+452
+</td>
+<td style="text-align:right;">
+151
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+54
+</td>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:right;">
+79
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+121
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+179
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.5113</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+<section id="variable-p5_re_macro" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p5_re_macro">Variable: P5_RE_macro</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P5_RE_macro
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Hogares_Ciudadania
+</th>
+<th style="text-align:right;">
+Empresas
+</th>
+<th style="text-align:right;">
+Estado
+</th>
+<th style="text-align:right;">
+Todos_Otras
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+447
+</td>
+<td style="text-align:right;">
+427
+</td>
+<td style="text-align:right;">
+69
+</td>
+<td style="text-align:right;">
+334
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:right;">
+70
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+167
+</td>
+<td style="text-align:right;">
+166
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+149
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.8965</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+<section id="variable-p6_re_macro" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p6_re_macro">Variable: P6_RE_macro</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P6_RE_macro
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Hogares_Ciudadania
+</th>
+<th style="text-align:right;">
+Empresas
+</th>
+<th style="text-align:right;">
+Estado
+</th>
+<th style="text-align:right;">
+Todos_Otras
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+388
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+399
+</td>
+<td style="text-align:right;">
+396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+68
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+61
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+137
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+162
+</td>
+<td style="text-align:right;">
+167
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.6614</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+<section id="variable-p8_high" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p8_high">Variable: P8_high</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P8_high
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Bajo
+</th>
+<th style="text-align:right;">
+Alto
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+482
+</td>
+<td style="text-align:right;">
+795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+132
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+206
+</td>
+<td style="text-align:right;">
+303
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.5638</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+<section id="variable-p3_10_high" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p3_10_high">Variable: P3_10_high</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P3_10_high
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Bajo
+</th>
+<th style="text-align:right;">
+Alto
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+464
+</td>
+<td style="text-align:right;">
+813
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+136
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+180
+</td>
+<td style="text-align:right;">
+329
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.9224</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+<section id="variable-p9_6_high" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p9_6_high">Variable: P9_6_high</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P9_6_high
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Bajo
+</th>
+<th style="text-align:right;">
+Alto
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+343
+</td>
+<td style="text-align:right;">
+934
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+172
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+148
+</td>
+<td style="text-align:right;">
+361
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.03076</p>
+<blockquote class="blockquote">
+<p><strong>RESULTADO SIGNIFICATIVO: Se incluirá en modelo multivariado.</strong></p>
+</blockquote>
+</section>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"><img src="06_ejes_updated_files/figure-html/loop-bivariado-2.png" class="img-fluid" width="3600"></h2>
+<section id="variable-a5_1_want_less" class="level3">
+<h3 class="anchored" data-anchor-id="variable-a5_1_want_less">Variable: A5_1_want_less</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: A5_1_want_less
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Otro
+</th>
+<th style="text-align:right;">
+Menos
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+470
+</td>
+<td style="text-align:right;">
+807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+90
+</td>
+<td style="text-align:right;">
+124
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+223
+</td>
+<td style="text-align:right;">
+286
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.01538</p>
+<blockquote class="blockquote">
+<p><strong>RESULTADO SIGNIFICATIVO: Se incluirá en modelo multivariado.</strong></p>
+</blockquote>
+</section>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"><img src="06_ejes_updated_files/figure-html/loop-bivariado-3.png" class="img-fluid" width="3600"></h2>
+<section id="variable-p9_5_high" class="level3">
+<h3 class="anchored" data-anchor-id="variable-p9_5_high">Variable: P9_5_high</h3>
+<table class="table" style="width: auto !important; ">
+<caption>
+Frecuencias: P9_5_high
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Clase Latente
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Categorías
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Bajo
+</th>
+<th style="text-align:right;">
+Alto
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Clase 1 (59.7%)
+</td>
+<td style="text-align:right;">
+696
+</td>
+<td style="text-align:right;">
+581
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 2 (13%)
+</td>
+<td style="text-align:right;">
+117
+</td>
+<td style="text-align:right;">
+97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clase 3 (27.4%)
+</td>
+<td style="text-align:right;">
+270
+</td>
+<td style="text-align:right;">
+239
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test:</strong> Chi-sq Pearson | <strong>p-value:</strong> 0.8446</p>
+<blockquote class="blockquote">
+<p>Relación no significativa.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+</section>
+<section id="modelado-multivariado-variables-significativas" class="level1">
+<h1>4. Modelado Multivariado (Variables Significativas)</h1>
+<p>En esta sección se ajustan modelos <strong>Multinomiales</strong> controlando por <strong>Edad</strong> y <strong>Grupo Socioeconómico</strong>.</p>
+<p>Las tablas a continuación presentan los <strong>Odds Ratios (OR)</strong>.</p>
+<ul>
+<li><strong>Referencia:</strong> Clase 1 (59.7%).</li>
+<li>Los coeficientes se presentan en columnas lado a lado para facilitar la comparación.</li>
+</ul>
+<!-- end list -->
+<section id="predictor-nivel_compromiso_carne" class="level2">
+<h2 class="anchored" data-anchor-id="predictor-nivel_compromiso_carne">Predictor: nivel_compromiso_carne</h2>
+<section id="tabla-de-regresión-odds-ratios" class="level3">
+<h3 class="anchored">Tabla de Regresión (Odds Ratios)</h3>
+<div id="qfcnnxzcqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qfcnnxzcqz table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#qfcnnxzcqz thead, #qfcnnxzcqz tbody, #qfcnnxzcqz tfoot, #qfcnnxzcqz tr, #qfcnnxzcqz td, #qfcnnxzcqz th {
+  border-style: none;
+}
+
+#qfcnnxzcqz p {
+  margin: 0;
+  padding: 0;
+}
+
+#qfcnnxzcqz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qfcnnxzcqz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qfcnnxzcqz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qfcnnxzcqz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qfcnnxzcqz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qfcnnxzcqz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qfcnnxzcqz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qfcnnxzcqz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qfcnnxzcqz .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#qfcnnxzcqz .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#qfcnnxzcqz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qfcnnxzcqz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qfcnnxzcqz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qfcnnxzcqz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qfcnnxzcqz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfcnnxzcqz .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qfcnnxzcqz .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qfcnnxzcqz .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#qfcnnxzcqz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfcnnxzcqz .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qfcnnxzcqz .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfcnnxzcqz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qfcnnxzcqz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfcnnxzcqz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qfcnnxzcqz .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfcnnxzcqz .gt_left {
+  text-align: left;
+}
+
+#qfcnnxzcqz .gt_center {
+  text-align: center;
+}
+
+#qfcnnxzcqz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qfcnnxzcqz .gt_font_normal {
+  font-weight: normal;
+}
+
+#qfcnnxzcqz .gt_font_bold {
+  font-weight: bold;
+}
+
+#qfcnnxzcqz .gt_font_italic {
+  font-style: italic;
+}
+
+#qfcnnxzcqz .gt_super {
+  font-size: 65%;
+}
+
+#qfcnnxzcqz .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#qfcnnxzcqz .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qfcnnxzcqz .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#qfcnnxzcqz .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#qfcnnxzcqz .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#qfcnnxzcqz .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#qfcnnxzcqz .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#qfcnnxzcqz .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#qfcnnxzcqz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label">
+<span data-qmd-base64="PHN0cm9uZz5WYXJpYWJsZTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Variable</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate">
+<span data-qmd-base64="PHN0cm9uZz5PUjwvc3Ryb25nPg=="><span class="gt_from_md"><strong>OR</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="conf.low">
+<span data-qmd-base64="PHN0cm9uZz45NSUgQ0k8L3N0cm9uZz4="><span class="gt_from_md"><strong>95% CI</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value">
+<span data-qmd-base64="PHN0cm9uZz5wLXZhbG9yPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-valor</strong></span></span>
+</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 2 (13%)">
+Clase 2 (13%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+nivel_compromiso_carne
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;1. Resistencia
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;2. Adaptación Privada
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.47
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.72, 3.04
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;3. Compromiso Eco-Fiscal
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.26
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.62, 2.58
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.5
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;4. Abandono Radical
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+0.96
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.45, 2.06
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<blockquote class="blockquote">
+0.9
+</blockquote></td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.01
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.91, 1.13
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.8
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.08
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.92, 1.27
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 3 (27.4%)">
+Clase 3 (27.4%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+nivel_compromiso_carne
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;1. Resistencia
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;2. Adaptación Privada
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.58
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.37, 0.91
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center" style="font-weight: bold;">
+0.019
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;3. Compromiso Eco-Fiscal
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.55
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.35, 0.85
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center" style="font-weight: bold;">
+0.007
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;4. Abandono Radical
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.84
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.54, 1.32
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.4
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.96
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.89, 1.04
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+1.03
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.91, 1.16
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.6
+</td>
+</tr>
+</tbody>
+<tfoot class="gt_sourcenotes">
+<tr>
+<td class="gt_sourcenote" colspan="4">
+<span data-qmd-base64="QWJyZXZpYWNpb25lczogQ0kgPSBJbnRlcnZhbG8gZGUgY29uZmlhbnphLCBPUiA9IFJhesOzbiBkZSBwcm9iYWJpbGlkYWRlcw=="><span class="gt_from_md">Abreviaciones: CI = Intervalo de confianza, OR = Razón de probabilidades</span></span>
+</td>
+</tr>
+</tfoot>
+
+</table>
+</div>
+<section id="probabilidades-predichas-visualización" class="level3">
+<h3 class="anchored" data-anchor-id="probabilidades-predichas-visualización">Probabilidades Predichas (Visualización)</h3>
+<p><img src="06_ejes_updated_files/figure-html/loop-multinomial-1.png" class="img-fluid" width="4200"></p>
+<hr>
+</section>
+<section id="predictor-p9_6_high" class="level2">
+<h2 class="anchored" data-anchor-id="predictor-p9_6_high">Predictor: P9_6_high</h2>
+<section id="tabla-de-regresión-odds-ratios-1" class="level3">
+<h3 class="anchored">Tabla de Regresión (Odds Ratios)</h3>
+<div id="kolbxaingg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kolbxaingg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kolbxaingg thead, #kolbxaingg tbody, #kolbxaingg tfoot, #kolbxaingg tr, #kolbxaingg td, #kolbxaingg th {
+  border-style: none;
+}
+
+#kolbxaingg p {
+  margin: 0;
+  padding: 0;
+}
+
+#kolbxaingg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kolbxaingg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kolbxaingg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kolbxaingg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kolbxaingg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kolbxaingg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kolbxaingg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kolbxaingg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kolbxaingg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kolbxaingg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kolbxaingg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kolbxaingg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kolbxaingg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kolbxaingg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kolbxaingg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kolbxaingg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kolbxaingg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kolbxaingg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kolbxaingg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kolbxaingg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kolbxaingg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kolbxaingg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kolbxaingg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kolbxaingg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kolbxaingg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kolbxaingg .gt_left {
+  text-align: left;
+}
+
+#kolbxaingg .gt_center {
+  text-align: center;
+}
+
+#kolbxaingg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kolbxaingg .gt_font_normal {
+  font-weight: normal;
+}
+
+#kolbxaingg .gt_font_bold {
+  font-weight: bold;
+}
+
+#kolbxaingg .gt_font_italic {
+  font-style: italic;
+}
+
+#kolbxaingg .gt_super {
+  font-size: 65%;
+}
+
+#kolbxaingg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kolbxaingg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kolbxaingg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kolbxaingg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kolbxaingg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kolbxaingg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kolbxaingg .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#kolbxaingg .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#kolbxaingg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label">
+<span data-qmd-base64="PHN0cm9uZz5WYXJpYWJsZTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Variable</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate">
+<span data-qmd-base64="PHN0cm9uZz5PUjwvc3Ryb25nPg=="><span class="gt_from_md"><strong>OR</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="conf.low">
+<span data-qmd-base64="PHN0cm9uZz45NSUgQ0k8L3N0cm9uZz4="><span class="gt_from_md"><strong>95% CI</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value">
+<span data-qmd-base64="PHN0cm9uZz5wLXZhbG9yPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-valor</strong></span></span>
+</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 2 (13%)">
+Clase 2 (13%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+P9_6_high
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Bajo
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Alto
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.42
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.96, 2.12
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.081
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.01
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.91, 1.12
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.8
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.05
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.90, 1.23
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.5
+</td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 3 (27.4%)">
+Clase 3 (27.4%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+P9_6_high
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Bajo
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Alto
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+1.00
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.77, 1.31
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<blockquote class="blockquote">
+0.9
+</blockquote></td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.96
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.89, 1.04
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+1.04
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.93, 1.17
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.5
+</td>
+</tr>
+</tbody>
+<tfoot class="gt_sourcenotes">
+<tr>
+<td class="gt_sourcenote" colspan="4">
+<span data-qmd-base64="QWJyZXZpYWNpb25lczogQ0kgPSBJbnRlcnZhbG8gZGUgY29uZmlhbnphLCBPUiA9IFJhesOzbiBkZSBwcm9iYWJpbGlkYWRlcw=="><span class="gt_from_md">Abreviaciones: CI = Intervalo de confianza, OR = Razón de probabilidades</span></span>
+</td>
+</tr>
+</tfoot>
+
+</table>
+</div>
+<section id="probabilidades-predichas-visualización-1" class="level3">
+<h3 class="anchored" data-anchor-id="probabilidades-predichas-visualización-1">Probabilidades Predichas (Visualización)</h3>
+<p><img src="06_ejes_updated_files/figure-html/loop-multinomial-2.png" class="img-fluid" width="4200"></p>
+<hr>
+</section>
+<section id="predictor-a5_1_want_less" class="level2">
+<h2 class="anchored" data-anchor-id="predictor-a5_1_want_less">Predictor: A5_1_want_less</h2>
+<section id="tabla-de-regresión-odds-ratios-2" class="level3">
+<h3 class="anchored" data-anchor-id="tabla-de-regresión-odds-ratios-2">Tabla de Regresión (Odds Ratios)</h3>
+<div id="kzwsiizqvn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kzwsiizqvn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#kzwsiizqvn thead, #kzwsiizqvn tbody, #kzwsiizqvn tfoot, #kzwsiizqvn tr, #kzwsiizqvn td, #kzwsiizqvn th {
+  border-style: none;
+}
+
+#kzwsiizqvn p {
+  margin: 0;
+  padding: 0;
+}
+
+#kzwsiizqvn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#kzwsiizqvn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kzwsiizqvn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kzwsiizqvn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kzwsiizqvn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kzwsiizqvn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kzwsiizqvn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kzwsiizqvn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kzwsiizqvn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#kzwsiizqvn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#kzwsiizqvn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kzwsiizqvn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kzwsiizqvn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kzwsiizqvn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kzwsiizqvn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzwsiizqvn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#kzwsiizqvn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#kzwsiizqvn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#kzwsiizqvn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzwsiizqvn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#kzwsiizqvn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzwsiizqvn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kzwsiizqvn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzwsiizqvn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kzwsiizqvn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kzwsiizqvn .gt_left {
+  text-align: left;
+}
+
+#kzwsiizqvn .gt_center {
+  text-align: center;
+}
+
+#kzwsiizqvn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kzwsiizqvn .gt_font_normal {
+  font-weight: normal;
+}
+
+#kzwsiizqvn .gt_font_bold {
+  font-weight: bold;
+}
+
+#kzwsiizqvn .gt_font_italic {
+  font-style: italic;
+}
+
+#kzwsiizqvn .gt_super {
+  font-size: 65%;
+}
+
+#kzwsiizqvn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#kzwsiizqvn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#kzwsiizqvn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#kzwsiizqvn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#kzwsiizqvn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#kzwsiizqvn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#kzwsiizqvn .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#kzwsiizqvn .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#kzwsiizqvn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="label">
+<span data-qmd-base64="PHN0cm9uZz5WYXJpYWJsZTwvc3Ryb25nPg=="><span class="gt_from_md"><strong>Variable</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="estimate">
+<span data-qmd-base64="PHN0cm9uZz5PUjwvc3Ryb25nPg=="><span class="gt_from_md"><strong>OR</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="conf.low">
+<span data-qmd-base64="PHN0cm9uZz45NSUgQ0k8L3N0cm9uZz4="><span class="gt_from_md"><strong>95% CI</strong></span></span>
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="p.value">
+<span data-qmd-base64="PHN0cm9uZz5wLXZhbG9yPC9zdHJvbmc+"><span class="gt_from_md"><strong>p-valor</strong></span></span>
+</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 2 (13%)">
+Clase 2 (13%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+A5_1_want_less
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Otro
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Menos
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+0.83
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.60, 1.16
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.01
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.91, 1.12
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.8
+</td>
+</tr>
+<tr>
+<td headers="Clase 2 (13%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 2 (13%)  estimate" class="gt_row gt_center">
+1.06
+</td>
+<td headers="Clase 2 (13%)  conf.low" class="gt_row gt_center">
+0.90, 1.24
+</td>
+<td headers="Clase 2 (13%)  p.value" class="gt_row gt_center">
+0.5
+</td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="4" class="gt_group_heading" scope="colgroup" id="Clase 3 (27.4%)">
+Clase 3 (27.4%)
+</th>
+</tr>
+<tr class="gt_row_group_first">
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+A5_1_want_less
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+<br>
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Otro
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+—
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+<br>
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+&nbsp;&nbsp;&nbsp;&nbsp;Menos
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.74
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.58, 0.94
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center" style="font-weight: bold;">
+0.013
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+Edad en rangos
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+0.96
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.89, 1.04
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.3
+</td>
+</tr>
+<tr>
+<td headers="Clase 3 (27.4%)  label" class="gt_row gt_left">
+GSE Abreviado
+</td>
+<td headers="Clase 3 (27.4%)  estimate" class="gt_row gt_center">
+1.04
+</td>
+<td headers="Clase 3 (27.4%)  conf.low" class="gt_row gt_center">
+0.93, 1.17
+</td>
+<td headers="Clase 3 (27.4%)  p.value" class="gt_row gt_center">
+0.5
+</td>
+</tr>
+</tbody>
+<tfoot class="gt_sourcenotes">
+<tr>
+<td class="gt_sourcenote" colspan="4">
+<span data-qmd-base64="QWJyZXZpYWNpb25lczogQ0kgPSBJbnRlcnZhbG8gZGUgY29uZmlhbnphLCBPUiA9IFJhesOzbiBkZSBwcm9iYWJpbGlkYWRlcw=="><span class="gt_from_md">Abreviaciones: CI = Intervalo de confianza, OR = Razón de probabilidades</span></span>
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+</section>
+<section id="probabilidades-predichas-visualización-2" class="level3">
+<h3 class="anchored" data-anchor-id="probabilidades-predichas-visualización-2">Probabilidades Predichas (Visualización)</h3>
+<p><img src="06_ejes_updated_files/figure-html/loop-multinomial-3.png" class="img-fluid" width="4200"></p>
+<hr>
+</section>
+</section>
+</section></section></section></section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@misc{cantillan2025,
+  author = {Cantillan, Roberto},
+  title = {Revisión: {LCA} y {Determinantes} Del {Compromiso}},
+  date = {2025},
+  langid = {en},
+  abstract = {Este documento profundiza en la caracterización
+    sociológica de perfiles ambientales identificados mediante Modelos
+    de Clases Latentes (LCA): Ambientalismo Moderado (60\%), Modo de
+    Vida Imperial (13\%) y Ambientalismo Crítico (27\%). Se propone y
+    valida un nuevo **Gradiente de Compromiso Ambiental** de cuatro
+    niveles que permite distinguir entre la *Adaptación Privada* (cambio
+    conductual sin apoyo fiscal) y el *Compromiso Eco-Fiscal*. Mediante
+    modelos de regresión logística multinomial ajustados por edad y
+    nivel socioeconómico, se demuestra que la disposición al sacrificio
+    personal desvinculada de la responsabilidad fiscal es un predictor
+    clave para diferenciar los perfiles latentes, revelando tensiones
+    importantes entre la conducta individual y el apoyo a políticas
+    estructurales.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cantillan2025" class="csl-entry quarto-appendix-citeas" role="listitem">
+Cantillan, Roberto. 2025. <span>“Revisión: LCA y Determinantes Del
+Compromiso.”</span> <em>Documentos de Trabajo</em>.
+</div></div></section></div></main></div>
+
+
+
+
+
+
+
+
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+ <!-- /content -->
+
+
+
+
+</body></html>

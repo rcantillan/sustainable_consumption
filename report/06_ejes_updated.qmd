@@ -1,0 +1,316 @@
+---
+title: "Revisión: LCA y Determinantes del Compromiso"
+subtitle: "Análisis Bivariado y Modelos Multinomiales Predictivos"
+date: today
+format:
+  html:
+    fig-width: 12
+    fig-height: 8
+    fig-format: retina
+    fig-dpi: 300
+    theme:
+      - cosmo
+      - custom.scss
+    css: custom.scss
+    toc: true
+    toc-depth: 3
+    toc-title: "En este documento"
+    toc-location: right
+execute:
+  warning: false
+  message: false
+  output: asis
+
+author: 
+  - name: "Roberto Cantillan"
+    affiliations: 
+      - name: "Departamento de Sociología"
+        department: "Facultad de Ciencias Sociales"
+        institution: "Pontificia Universidad Católica de Chile"
+        address: "Santiago, Chile"
+        email: "rcantillan@uc.cl"
+
+abstract: |
+  Este documento profundiza en la caracterización sociológica de perfiles ambientales identificados mediante Modelos de Clases Latentes (LCA): Ambientalismo Moderado (60%), Modo de Vida Imperial (13%) y Ambientalismo Crítico (27%). Se propone y valida un nuevo **Gradiente de Compromiso Ambiental** de cuatro niveles que permite distinguir entre la *Adaptación Privada* (cambio conductual sin apoyo fiscal) y el *Compromiso Eco-Fiscal*. Mediante modelos de regresión logística multinomial ajustados por edad y nivel socioeconómico, se demuestra que la disposición al sacrificio personal desvinculada de la responsabilidad fiscal es un predictor clave para diferenciar los perfiles latentes, revelando tensiones importantes entre la conducta individual y el apoyo a políticas estructurales.
+
+Keywords: [Clases Latentes, Adaptación Privada, Compromiso Eco-Fiscal, Sociología Ambiental, Regresión Multinomial]
+
+categories:
+  - Latent Class Analysis
+  - Multinomial Regression
+  - Environmental Sociology
+  - Sustainable Behavior
+
+citation: 
+  container-title: "Documentos de Trabajo"
+  type: article
+  issued: 2025
+
+image: "featured.jpg"
+title-block-banner: featured.jpg
+title-block-banner-color: "rgba(0, 0, 0, 0.8)"
+title-block-style: default
+---
+
+```{r setup}
+#| label: setup
+#| include: false
+
+# Librerías esenciales
+library(here)
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(scales)
+library(tibble)
+library(haven) 
+library(nnet)       # Para modelos multinomiales
+library(ggeffects)  # Para efectos marginales
+library(gtsummary)  # <--- LA CLAVE PARA TABLAS ELEGANTES
+library(gt)         # Motor gráfico de tablas
+
+# Configuración global
+options(knitr.table.format = "html")
+
+# Configurar idioma de gtsummary a español
+theme_gtsummary_language("es")
+
+# --- PALETA DE COLORES COHERENTE ---
+mis_colores <- c(
+  "Clase 1 (59.7%)" = "#E41A1C",  # Rojo
+  "Clase 2 (13%)"   = "#377EB8",  # Azul
+  "Clase 3 (27.4%)" = "#4DAF4A"   # Verde
+)
+```
+
+# 1\. Introducción
+
+Este documento presenta un análisis secuencial:
+
+1.  **Recodificación Experta:** Creación de gradientes de compromiso.
+2.  **Tamizaje Bivariado:** Identificación de variables significativas.
+3.  **Modelado Multivariado:** Tablas de regresión comparativas y gráficos de probabilidad.
+
+# 2\. Carga y Recodificación
+
+```{r carga-datos}
+#| echo: true
+
+rdata_file <- here("objects", "datos_recodificados_con_lca.RData")
+
+if (!file.exists(rdata_file)) {
+  stop("ERROR: No se encontró el archivo: ", rdata_file)
+}
+load(rdata_file) 
+
+# --- RECODIFICACIÓN EXPERTA (Lógica Jerárquica) ---
+datos <- datos %>%
+  mutate(
+    # CARNE
+    nivel_compromiso_carne = case_when(
+      as.numeric(A6A) == 3 ~ 4, 
+      as.numeric(A6A) == 2 & (as.numeric(A6B1_1) == 1 | as.numeric(A6B2_2) == 1) ~ 3, 
+      as.numeric(A6A) == 2 ~ 2, 
+      as.numeric(A6A) == 1 ~ 1, 
+      TRUE ~ NA_real_
+    ),
+    # INTERNET
+    nivel_compromiso_internet = case_when(
+      as.numeric(A7A) == 3 ~ 4,
+      as.numeric(A7A) == 2 & (as.numeric(A7B1_1) == 1 | as.numeric(A7B2_1) == 1) ~ 3,
+      as.numeric(A7A) == 2 ~ 2,
+      as.numeric(A7A) == 1 ~ 1,
+      TRUE ~ NA_real_
+    )
+  ) %>%
+  mutate(
+    nivel_compromiso_carne = factor(nivel_compromiso_carne, levels = 1:4,
+                                    labels = c("1. Resistencia", "2. Adaptación Privada", 
+                                               "3. Compromiso Eco-Fiscal", "4. Abandono Radical")),
+    nivel_compromiso_internet = factor(nivel_compromiso_internet, levels = 1:4,
+                                       labels = c("1. Resistencia", "2. Adaptación Privada", 
+                                                  "3. Compromiso Eco-Fiscal", "4. Abandono Radical"))
+  )
+```
+
+# 3\. Análisis Bivariado 
+
+Se ha optado por transformar las combinaciones de conducta y disposición a pagar en una **variable ordinal de 4 niveles** por tres razones estadísticas y sociológicas fundamentales:
+  
+  1.  **Poder Estadístico y Robustez:**
+  Las categorías intermedias originales (ej. "Status Quo + Pagar Triple") presentaban frecuencias marginales extremadamente bajas ($n < 30$), lo que viola los supuestos de las pruebas de Chi-cuadrado y genera inestabilidad en modelos de regresión. La nueva categorización garantiza grupos robustos con $n$ suficiente para el análisis inferencial.
+
+2.  **Identificación de la "Adaptación Privada" (Nivel 2):**
+  El análisis exploratorio reveló que el grupo mayoritario (\~28%) está dispuesto a modificar su conducta personal (consumir menos) pero rechaza los mecanismos fiscales (impuestos). Este grupo quedaba oculto o mal clasificado en escalas binarias tradicionales. La categoría 2 captura explícitamente este fenómeno de "individualización de la responsabilidad sin costo fiscal".
+
+3.  **Linealidad del Compromiso (Gradiente):**
+  La nueva variable ordena teóricamente la intensidad del sacrificio percibido:
+  
+* *Nivel 1:* Sin costo (Status Quo).
+* *Nivel 2:* Costo de hábito / estilo de vida.
+* *Nivel 3:* Costo de hábito + Costo económico.
+* *Nivel 4:* Costo máximo (Abandono total).
+
+
+```{r loop-bivariado}
+#| results: asis
+#| echo: false
+
+# 1. Definir variables a evaluar
+vars_check <- c(
+  "nivel_compromiso_carne", 
+  "nivel_compromiso_internet",
+  "P5_RE_macro", "P6_RE_macro", "P8_high",
+  "P3_10_high", "P9_6_high", "A5_1_want_less", "P9_5_high"
+)
+present <- vars_check[vars_check %in% names(datos)]
+
+vars_significativas <- c()
+
+# Función Test
+run_test <- function(tab) {
+  tab2 <- tab[rowSums(tab)>0, colSums(tab)>0, drop=FALSE]
+  if(nrow(tab2)<2 || ncol(tab2)<2) return(list(p=NA, name="Insuficiente"))
+  
+  exp <- tryCatch(chisq.test(tab2)$expected, error=function(e) NULL)
+  if(is.null(exp) || any(exp < 5)) {
+    res <- tryCatch(chisq.test(tab2, simulate.p.value=TRUE, B=2000), error=function(e) NULL)
+    return(list(p=if(!is.null(res)) res$p.value else NA, name="Chi-sq (Sim)"))
+  } else {
+    res <- chisq.test(tab2)
+    return(list(p=res$p.value, name="Chi-sq Pearson"))
+  }
+}
+
+for (v in present) {
+  cat("\n### Variable:", v, "\n\n")
+  
+  dfc <- data.frame(clase = datos$clase_latente_factor, var = datos[[v]])
+  dfc <- dfc[complete.cases(dfc), ]
+  
+  if (nrow(dfc) < 10) { cat("N insuficiente.\n\n---\n"); next }
+  
+  tab <- table(dfc$clase, dfc$var)
+  
+  print(kbl(tab, caption = paste("Frecuencias:", v), booktabs = TRUE) %>%
+        kable_styling(full_width = FALSE, position = "left") %>%
+        add_header_above(c("Clase Latente" = 1, "Categorías" = ncol(tab))))
+  cat("\n\n")
+  
+  test_info <- run_test(tab)
+  pval <- test_info$p
+  
+  cat("**Test:**", test_info$name, "| **p-value:**", format.pval(pval, digits=4), "\n\n")
+  
+  if (!is.na(pval) && pval < 0.05) {
+    cat("> **RESULTADO SIGNIFICATIVO: Se incluirá en modelo multivariado.**\n\n")
+    vars_significativas <- c(vars_significativas, v) 
+    
+    pct_df <- as.data.frame.matrix(prop.table(tab, 1)*100) %>%
+      rownames_to_column("clase") %>%
+      pivot_longer(-clase, names_to="cat", values_to="val")
+    
+    p <- ggplot(pct_df, aes(x=cat, y=clase, fill=val)) +
+      geom_tile(color="white") +
+      geom_text(aes(label=round(val,1)), color=ifelse(pct_df$val>50,"white","black"), size = 5) +
+      scale_fill_gradient(low="#e6f5ff", high="#004c99") +
+      theme_minimal(base_size = 14) + 
+      theme(axis.text.x = element_text(angle=45, hjust=1))
+    print(p)
+  } else {
+    cat("> Relación no significativa.\n")
+  }
+  cat("\n---\n")
+}
+```
+
+# 4\. Modelado Multivariado (Variables Significativas)
+
+En esta sección se ajustan modelos **Multinomiales** controlando por **Edad** y **Grupo Socioeconómico**.
+
+Las tablas a continuación presentan los **Odds Ratios (OR)**.
+
+  * **Referencia:** Clase 1 (59.7%).
+  * Los coeficientes se presentan en columnas lado a lado para facilitar la comparación.
+
+<!-- end list -->
+
+```{r loop-multinomial}
+#| results: asis
+#| echo: false
+#| fig-height: 9
+#| fig-width: 14
+
+if (length(vars_significativas) == 0) {
+  cat("No se encontraron variables significativas para modelar.")
+} else {
+  
+  try({
+    datos$clase_latente_factor <- relevel(datos$clase_latente_factor, ref = "Clase 1 (59.7%)")
+  }, silent = TRUE)
+  
+  for (var_dep in vars_significativas) {
+    
+    cat("\n## Predictor: ", var_dep, "\n\n")
+    
+    # 1. Ajustar Modelo
+    formula_modelo <- as.formula(paste("clase_latente_factor ~", var_dep, "+ Edad_rangos + GSE_Abrev"))
+    modelo <- multinom(formula_modelo, data = datos, trace = FALSE, maxit = 1000)
+    
+    # 2. TABLA DE REGRESIÓN MEJORADA (GTSUMMARY)
+    # Genera columnas lado a lado automáticamente para multinomial
+    cat("### Tabla de Regresión (Odds Ratios)\n")
+    
+    tabla_reg <- tbl_regression(modelo, exponentiate = TRUE) %>% 
+      bold_p() %>%
+      modify_header(label = "**Variable**") %>%
+      as_gt() %>%
+      tab_options(table.font.size = 16) # Tamaño de letra de la tabla
+      
+    print(tabla_reg)
+    cat("\n\n")
+    
+    # 3. PREDICCIONES
+    term_call <- paste0(var_dep, " [all]") 
+    pred_data <- ggpredict(modelo, terms = term_call)
+    
+    # 4. VISUALIZACIÓN GIGANTE
+    cat("### Probabilidades Predichas (Visualización)\n")
+    
+    p_barras <- ggplot(pred_data, aes(x = x, y = predicted, fill = response.level)) +
+      geom_col(position = position_dodge(width = 0.8), width = 0.7, color = "white") +
+      
+      geom_text(aes(label = scales::percent(predicted, accuracy = 0.1)),
+                position = position_dodge(width = 0.8),
+                vjust = -0.5, 
+                size = 6,    
+                fontface = "bold") +
+      
+      scale_y_continuous(labels = scales::percent_format(), limits = c(0, 1.1), expand = c(0,0)) +
+      scale_fill_manual(values = mis_colores, name = "Clase Latente") + 
+      
+      labs(
+        title = paste("Efecto de", var_dep, "en la Clase Latente"),
+        subtitle = "Probabilidad predicha ajustada por Edad y GSE",
+        x = NULL,
+        y = "Probabilidad Estimada"
+      ) +
+      
+      theme_minimal(base_size = 18) + # Letra base gigante
+      theme(
+        plot.title = element_text(size = 24, face = "bold"),
+        plot.subtitle = element_text(size = 18, color = "gray40", margin = margin(b = 20)),
+        axis.text.x = element_text(angle = 30, hjust = 1, size = 16, face = "bold"), 
+        legend.position = "top",
+        legend.title = element_text(face = "bold"),
+        panel.grid.major.x = element_blank()
+      )
+    
+    print(p_barras)
+    cat("\n\n---\n")
+  }
+}
+```
+
