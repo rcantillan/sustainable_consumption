@@ -89,7 +89,7 @@ mis_colores <- c(
 
 Este documento presenta un análisis secuencial:
 
-1.  **Recodificación Experta:** Creación de gradientes de compromiso.
+1.  **Recodificación:** Creación de gradientes de compromiso.
 2.  **Tamizaje Bivariado:** Identificación de variables significativas.
 3.  **Modelado Multivariado:** Tablas de regresión comparativas y gráficos de probabilidad.
 
