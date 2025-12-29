@@ -93,6 +93,7 @@ Este documento presenta un análisis secuencial:
 2.  **Tamizaje Bivariado:** Identificación de variables significativas.
 3.  **Modelado Multivariado:** Tablas de regresión comparativas y gráficos de probabilidad.
 
+
 # 2\. Carga y Recodificación
 
 ```{r carga-datos}
@@ -313,4 +314,272 @@ if (length(vars_significativas) == 0) {
   }
 }
 ```
+
+# 5\. Benchmark y caracterizacion
+
+```{r}
+#| label: benchmark-p3
+#| results: asis
+#| echo: false
+
+# 1. Recodificación P3
+datos <- datos %>%
+  mutate(across(starts_with("P3_"), 
+                ~case_when(
+                  as.numeric(.) >= 4 ~ "High",
+                  as.numeric(.) < 4  ~ "Low",
+                  TRUE ~ NA_character_
+                ),
+                .names = "{.col}_high"))
+
+cat("# 5. Benchmark de Dimensiones Ambientales (P3)\n")
+
+vars_p3 <- paste0("P3_", 1:10, "_high")
+present_p3 <- vars_p3[vars_p3 %in% names(datos)]
+
+for (v in present_p3) {
+  cat("\n## Variable:", v, "\n\n")
+  
+  df_p3 <- datos %>% 
+    select(clase = clase_latente_factor, var = all_of(v)) %>% 
+    drop_na()
+  
+  if (nrow(df_p3) > 0) {
+    tab_frec <- table(df_p3$clase, df_p3$var)
+    chi_test <- chisq.test(tab_frec, simulate.p.value = TRUE)
+    
+    print(kbl(tab_frec, caption = paste("Frecuencias (N):", v), booktabs = TRUE) %>%
+            kable_styling(full_width = FALSE, position = "left"))
+    
+    cat("\n**Test:** Chi-sq Pearson | **p-value:**", format.pval(chi_test$p.value, digits=4), "\n\n")
+    
+    df_plot <- df_p3 %>%
+      group_by(clase, var) %>%
+      summarise(n = n(), .groups = 'drop') %>%
+      group_by(clase) %>%
+      mutate(pct = n / sum(n))
+    
+    p <- ggplot(df_plot, aes(x = clase, y = n, fill = var)) +
+      geom_col(position = "fill", alpha = 0.85, width = 0.7) +
+      geom_text(aes(label = paste0(round(pct*100, 1), "%\n(n=", n, ")")),
+                position = position_fill(vjust = 0.5), size = 3.5, fontface = "bold", color = "white") +
+      scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+      scale_fill_manual(values = c("High" = "#2c7bb6", "Low" = "#abd9e9"), name = "Respuesta") +
+      theme_minimal(base_size = 14) +
+      theme(legend.position = "top", panel.grid.major.x = element_blank())
+    
+    print(p)
+  }
+  cat("\n---\n")
+}
+```
+
+
+```{r}
+#| label: tabla-sociodemografica
+#| results: asis
+#| echo: false
+
+cat("\n# 6. Caracterización Sociodemográfica de los Perfiles\n")
+
+# 1. Preparación de datos con tus covariables exactas
+datos_modelo <- datos %>%
+  mutate(
+    # Variable de Clase Social solicitada
+    clase_social = if(exists("clase_social_cat")) clase_social_cat else datos_clase$clase_social_cat,
+    
+    # Categorización de edad basada en M5
+    edad = case_when(
+      M5 >= 18 & M5 <= 24 ~ 1,
+      M5 >= 25 & M5 <= 34 ~ 2,
+      M5 >= 35 & M5 <= 44 ~ 3,
+      M5 >= 45 & M5 <= 54 ~ 4,
+      M5 >= 55 & M5 <= 64 ~ 5,
+      M5 >= 65 ~ 6,
+      TRUE ~ NA_real_
+    ),
+    edad = factor(edad, 
+                  levels = c(1, 2, 3, 4, 5, 6),
+                  labels = c("18 a 24 años", "25 a 34 años", "35 a 44 años", 
+                             "45 a 54 años", "55 a 64 años", "65 años o más")),
+    
+    # Sexo (M1)
+    sexo = factor(M1, levels = 1:2, labels = c("Hombre", "Mujer")),
+    
+    # Posición política recodificada (M11)
+    posicion_politica = case_when(
+      M11 >= 1 & M11 <= 4 ~ "Izquierda",
+      M11 >= 5 & M11 <= 6 ~ "Centro",
+      M11 >= 7 & M11 <= 10 ~ "Derecha",
+      TRUE ~ NA_character_
+    ),
+    posicion_politica = factor(posicion_politica, levels = c("Izquierda", "Centro", "Derecha")),
+    
+    # Rural/Urbano (M12)
+    rural_urbano = factor(M12, levels = 1:3, labels = c("Urbano", "Rural", "Mixto"))
+  )
+
+# 2. Generación de la Tabla de Caracterización
+tabla_socio <- datos_modelo %>%
+  select(clase_latente_factor, sexo, edad, clase_social, posicion_politica, rural_urbano) %>%
+  tbl_summary(
+    by = clase_latente_factor,
+    percent = "column",
+    missing = "no",
+    label = list(
+      sexo ~ "Sexo",
+      edad ~ "Tramo de Edad",
+      clase_social ~ "Clase Social (Categoría)",
+      posicion_politica ~ "Posición Política",
+      rural_urbano ~ "Zona de Residencia"
+    )
+  ) %>%
+  add_p() %>% # Test estadístico de diferencia entre clases
+  bold_labels() %>%
+  modify_spanning_header(all_stat_cols() ~ "**Perfiles LCA**") %>%
+  as_gt() %>%
+  tab_header(
+    title = "Tabla: Caracterización Sociodemográfica por Clase Latente",
+    subtitle = "Distribución porcentual de covariables estructurales y políticas"
+  )
+
+# Mostrar tabla
+tabla_socio
+```
+
+# 6\. Tópicos
+
+```{r}
+#| label: stm-analisis-completo
+#| fig-width: 12
+#| fig-height: 14
+#| warning: false
+#| message: false
+
+# 1. LIBRERÍAS
+library(stm)
+library(quanteda)
+library(tidytext)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(tidyr)
+library(forcats)
+
+cat("\n# 7. Modelamiento de Tópicos: Contenido y Prevalencia\n")
+
+# 2. PREPARACIÓN Y LIMPIEZA PROFUNDA
+col_texto <- intersect(names(datos), c("P1", "P1_abierta", "frase_sustentabilidad"))[1]
+
+stop_words_custom <- c(
+  stopwords("es"), "algo", "que", "con", "del", "una", "para", "los", "las", "como", 
+  "esta", "tiene", "puede", "pueda", "mismo", "solo", "cosas", "nada", "manera", 
+  "bien", "sirve", "maneras", "hace", "donde", "cuando", "pero", "estos", "estas"
+)
+
+datos_prepro <- datos %>%
+  rename(texto = all_of(col_texto)) %>%
+  select(texto, clase_latente_factor) %>%
+  drop_na(texto) %>%
+  mutate(texto = str_to_lower(texto),
+         texto = str_replace_all(texto, "[[:punct:]]", " "),
+         texto = str_squish(texto))
+
+# 3. CREACIÓN DEL OBJETO STM
+corpus_stm <- corpus(datos_prepro, text_field = "texto")
+tokens_stm <- tokens(corpus_stm) %>%
+  tokens_remove(stop_words_custom) %>%
+  tokens_keep(min_nchar = 4)
+
+dfm_stm <- dfm(tokens_stm) %>%
+  dfm_trim(min_docfreq = 2)
+
+out <- convert(dfm_stm, to = "stm")
+
+# 4. ESTIMACIÓN DEL MODELO STM (K=4)
+# La clase latente predice la probabilidad de cada tópico
+modelo_stm <- stm(documents = out$documents, 
+                  vocab = out$vocab, 
+                  data = out$meta,
+                  K = 4, 
+                  prevalence =~ clase_latente_factor, 
+                  verbose = FALSE, 
+                  init.type = "Spectral")
+
+# ------------------------------------------------------------------------------
+# 5. VISUALIZACIÓN A: CONTENIDO DE LOS TÓPICOS (BETA)
+# ------------------------------------------------------------------------------
+td_beta <- tidy(modelo_stm, matrix = "beta")
+
+p_beta <- td_beta %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>%
+  ungroup() %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ paste("Tópico", topic), scales = "free") +
+  scale_y_reordered() +
+  labs(title = "Contenido de los Tópicos (Probabilidad Beta)",
+       subtitle = "Términos que definen cada 'bolsa de sentido'",
+       x = "Beta (Probabilidad de la palabra en el tópico)", y = NULL) +
+  theme_minimal(base_size = 13)
+
+print(p_beta)
+
+# ------------------------------------------------------------------------------
+# 6. VISUALIZACIÓN B: DIFERENCIAS DISCURSIVAS POR CLASE (GAMMA)
+# ------------------------------------------------------------------------------
+# Estimación de efectos
+efectos <- estimateEffect(1:4 ~ clase_latente_factor, 
+                          stmobj = modelo_stm, 
+                          metadata = out$meta)
+
+# Extracción manual de datos para ggplot2 (Solución al error 4, 3)
+prep <- plot(efectos, "clase_latente_factor", method = "pointestimate", omitPlot = TRUE)
+
+df_efectos <- data.frame()
+for (i in seq_along(prep$topics)) {
+  n_classes <- length(prep$uvals)
+  temp_df <- data.frame(
+    topic    = rep(prep$topics[i], n_classes),
+    clase    = prep$uvals,
+    estimate = as.numeric(prep$means[[i]]),
+    lower    = as.numeric(prep$cis[[i]][1, ]),
+    upper    = as.numeric(prep$cis[[i]][2, ])
+  )
+  df_efectos <- rbind(df_efectos, temp_df)
+}
+
+# Etiquetas dinámicas basadas en los resultados
+etiquetas <- c(
+  "1" = "Tópico 1: Recursos Naturales\n(medio, ambiente, agua)",
+  "2" = "Tópico 2: Acción Individual\n(reciclaje, cuidar, acciones)",
+  "3" = "Tópico 3: Bienestar Social\n(bueno, beneficioso, sustento)",
+  "4" = "Tópico 4: Visión Sistémica\n(tiempo, mantener, perdura)"
+)
+df_efectos$topic_label <- etiquetas[as.character(df_efectos$topic)]
+
+# Gráfico final de efectos
+p_efectos <- ggplot(df_efectos, aes(x = estimate, y = topic_label, color = clase)) +
+  geom_point(size = 4, position = position_dodge(width = 0.5)) +
+  geom_errorbarh(aes(xmin = lower, xmax = upper), 
+                 height = 0.3, size = 1.1, 
+                 position = position_dodge(width = 0.5)) +
+  scale_color_manual(values = mis_colores) + # Rojo, Azul, Verde
+  labs(
+    title = "Diferencias en el Discurso sobre Sustentabilidad",
+    subtitle = "Probabilidad predicha según Clase Latente (STM con Covariables)",
+    x = "Probabilidad Estimada del Tópico",
+    y = NULL, color = "Clase Latente"
+  ) +
+  theme_minimal(base_size = 15) +
+  theme(legend.position = "top", 
+        axis.text.y = element_text(face = "bold", color = "black"),
+        plot.title = element_text(face = "bold"))
+
+print(p_efectos)
+```
+
+
 
